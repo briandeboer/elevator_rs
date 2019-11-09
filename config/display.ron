@@ -1,0 +1,4 @@
+(
+  title: "Rusty Elevator!",
+  dimensions: Some((500, 500)),
+)
