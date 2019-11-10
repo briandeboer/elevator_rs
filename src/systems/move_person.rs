@@ -1,10 +1,8 @@
-use amethyst::core::{timing::Time, Transform, SystemDesc};
+use amethyst::core::{timing::Time, SystemDesc, Transform};
 use amethyst::derive::SystemDesc;
 use amethyst::ecs::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage};
 
-use crate::{
-    components::Player,
-};
+use crate::components::Player;
 
 #[derive(SystemDesc)]
 pub struct MovePersonSystem;
@@ -27,4 +25,4 @@ impl<'s> System<'s> for MovePersonSystem {
 
 // movement component??
 // possible states
-// walking, ducking, jumping, 
+// walking, ducking, jumping,

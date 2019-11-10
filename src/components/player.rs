@@ -1,6 +1,4 @@
-use amethyst::{
-    ecs::prelude::{Component, DenseVecStorage},
-};
+use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
 pub const PLAYER_HEIGHT: f32 = 16.0;
 pub const PLAYER_WIDTH: f32 = 16.0;

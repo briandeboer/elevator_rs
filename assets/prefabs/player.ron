@@ -1,0 +1,304 @@
+#![enable(implicit_some)]
+Prefab(
+    entities: [
+        // Player
+        PrefabEntity(
+            data: AnimationPrefabData(
+                // SpriteScenePrefab
+                sprite_scene: (
+                    // SpriteSheetPrefab with index 0
+                    sheet: Sheet(
+                        // TexturePrefab
+                        texture: File("texture/player.png", (
+                            "IMAGE", (
+                                sampler_info: (
+                                    min_filter: Nearest,
+                                    mag_filter: Nearest,
+                                    mip_filter: Nearest,
+                                    wrap_mode: (Tile, Tile, Tile),
+                                    lod_bias: (0),
+                                    lod_range: (
+                                        start: ( 0 ),
+                                        end: ( 8000 ),
+                                    ),
+                                    comparison: None,
+                                    border: (0),
+                                    anisotropic: Off,
+                                ),
+                            ),
+                        )),
+                        sprites: [
+                            List((
+                              texture_width: 288,
+                              texture_height: 24,
+                              sprites: [
+                                  (
+                                      // 0: 00.png
+                                      x: 0,
+                                      y: 0,
+                                      width: 10,
+                                      height: 24,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 1: 01.png
+                                      x: 16,
+                                      y: 0,
+                                      width: 12,
+                                      height: 24,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 2: 02.png
+                                      x: 32,
+                                      y: 0,
+                                      width: 11,
+                                      height: 15,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 3: 03.png
+                                      x: 48,
+                                      y: 0,
+                                      width: 12,
+                                      height: 22,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 4: 04.png
+                                      x: 64,
+                                      y: 0,
+                                      width: 13,
+                                      height: 16,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 5: 05.png
+                                      x: 80,
+                                      y: 0,
+                                      width: 9,
+                                      height: 16,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 6: 06.png
+                                      x: 96,
+                                      y: 0,
+                                      width: 10,
+                                      height: 15,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 7: 07.png
+                                      x: 112,
+                                      y: 0,
+                                      width: 16,
+                                      height: 16,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 8: 08.png
+                                      x: 128,
+                                      y: 0,
+                                      width: 16,
+                                      height: 13,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 9: 09.png
+                                      x: 144,
+                                      y: 0,
+                                      width: 15,
+                                      height: 15,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 10: 10.png
+                                      x: 160,
+                                      y: 0,
+                                      width: 16,
+                                      height: 16,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 11: 11.png
+                                      x: 176,
+                                      y: 0,
+                                      width: 12,
+                                      height: 24,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 12: 12.png
+                                      x: 192,
+                                      y: 0,
+                                      width: 12,
+                                      height: 24,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 13: 13.png
+                                      x: 208,
+                                      y: 0,
+                                      width: 11,
+                                      height: 15,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 14: 14.png
+                                      x: 224,
+                                      y: 0,
+                                      width: 13,
+                                      height: 22,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 15: 15.png
+                                      x: 240,
+                                      y: 0,
+                                      width: 15,
+                                      height: 16,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 16: 16.png
+                                      x: 256,
+                                      y: 0,
+                                      width: 16,
+                                      height: 9,
+                                      offsets: (0, 0),
+                                  ),
+                                  (
+                                      // 17: 17.png
+                                      x: 272,
+                                      y: 0,
+                                      width: 16,
+                                      height: 9,
+                                      offsets: (0, 0),
+                                  )
+                              ]
+                          )),
+                        ],
+                        // optional
+                        name: "player",
+                    ),
+                    // SpriteRenderPrefab
+                    render: (
+                        sheet: "player",
+                        sprite_number: 0,
+                    ),
+                ),
+                // AnimationSetPrefab
+                animation_set: (
+                    animations: [
+                        (
+                            // AnimationId
+                            Die,
+                            (
+                                samplers: [
+                                    (
+                                        0,
+                                        // Only SpriteIndex channel allowed for SpriteRender in AnimationSetPrefab
+                                        SpriteIndex,
+                                        (
+                                            // Time of key frames
+                                            input: [0.0, 0.1, 0.2, 0.3],
+                                            // Sprite indexes from SpriteSheet for key frames
+                                            output: [0, 1, 2, 3],
+                                            // Sprites can only ever be animated with Step
+                                            function: Step,
+                                        ),
+                                    ),
+                                ],
+                            ),
+                        ),
+                        (
+                            // AnimationId
+                            Idle,
+                            (
+                                samplers: [
+                                    (
+                                        0,
+                                        // Only SpriteIndex channel allowed for SpriteRender in AnimationSetPrefab
+                                        SpriteIndex,
+                                        (
+                                            // Time of key frames
+                                            input: [0.0, 0.2, 0.4, 0.6],
+                                            // Sprite indexes from SpriteSheet for key frames
+                                            output: [4, 5, 6, 7],
+                                            // Sprites can only ever be animated with Step
+                                            function: Step,
+                                        ),
+                                    ),
+                                ],
+                            ),
+                        ),
+                        (
+                            // AnimationId
+                            Jump,
+                            (
+                                samplers: [
+                                    (
+                                        0,
+                                        // Only SpriteIndex channel allowed for SpriteRender in AnimationSetPrefab
+                                        SpriteIndex,
+                                        (
+                                            // Time of key frames
+                                            input: [0.0, 0.15, 0.3, 0.45, 0.6, 0.75],
+                                            // Sprite indexes from SpriteSheet for key frames
+                                            output: [8, 9, 10, 11, 12, 13],
+                                            // Sprites can only ever be animated with Step
+                                            function: Step,
+                                        ),
+                                    ),
+                                ],
+                            ),
+                        ),
+                        (
+                            // AnimationId
+                            Move,
+                            (
+                                samplers: [
+                                    (
+                                        0,
+                                        // Only SpriteIndex channel allowed for SpriteRender in AnimationSetPrefab
+                                        SpriteIndex,
+                                        (
+                                            // Time of key frames
+                                            input: [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45],
+                                            // Sprite indexes from SpriteSheet for key frames
+                                            output: [15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+                                            // Sprites can only ever be animated with Step
+                                            function: Step,
+                                        ),
+                                    ),
+                                ],
+                            ),
+                        ),
+                        (
+                            // AnimationId
+                            Shoot,
+                            (
+                                samplers: [
+                                    (
+                                        0,
+                                        // Only SpriteIndex channel allowed for SpriteRender in AnimationSetPrefab
+                                        SpriteIndex,
+                                        (
+                                            // Time of key frames
+                                            input: [0.0, 0.1],
+                                            // Sprite indexes from SpriteSheet for key frames
+                                            output: [25, 26],
+                                            // Sprites can only ever be animated with Step
+                                            function: Step,
+                                        ),
+                                    ),
+                                ],
+                            ),
+                        ),
+                    ],
+                ),
+            ),
+        ),
+    ],
+)

@@ -1,11 +1,9 @@
-use amethyst::core::{Transform, SystemDesc};
+use amethyst::core::{SystemDesc, Transform};
 use amethyst::derive::SystemDesc;
 use amethyst::ecs::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage};
 use amethyst::input::{InputHandler, StringBindings};
 
-use crate::{
-    components::Player,
-};
+use crate::components::Player;
 
 #[derive(SystemDesc)]
 pub struct ControlsSystem;

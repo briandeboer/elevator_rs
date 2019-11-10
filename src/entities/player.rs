@@ -1,5 +1,5 @@
 use amethyst::{
-    assets::{Handle},
+    assets::Handle,
     core::transform::Transform,
     prelude::*,
     renderer::{SpriteRender, SpriteSheet},
@@ -30,5 +30,4 @@ pub fn load_player(world: &mut World, sprite_sheet: Handle<SpriteSheet>) {
         .with(Player::new())
         .with(left_transform)
         .build();
-
 }
