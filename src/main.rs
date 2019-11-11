@@ -20,6 +20,7 @@ use amethyst::{
     Application, GameDataBuilder,
 };
 use components::{AnimationId, AnimationPrefabData};
+use systems::{AnimationControlSystem, DirectionSystem, PlayerAnimationSystem};
 
 fn main() -> amethyst::Result<()> {
     // start logging in amethyst
@@ -52,6 +53,23 @@ fn main() -> amethyst::Result<()> {
             &["input_system"],
         )
         .with(systems::MovePersonSystem, "move_person_system", &[])
+        .with(
+            PlayerAnimationSystem,
+            "player_animation_system",
+            &[], // &["transformation_system"],
+        )
+        .with(
+            AnimationControlSystem,
+            "animation_control_system",
+            &[
+                "player_animation_system",
+            ],
+        )
+        .with(
+            DirectionSystem,
+            "direction_system",
+            &[], // &["transformation_system"],
+        )
         .with_bundle(
             RenderingBundle::<DefaultBackend>::new()
                 .with_plugin(

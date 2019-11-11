@@ -12,6 +12,7 @@ use amethyst::{
 
 use crate::components::AnimationPrefabData;
 
+#[allow(dead_code)] // remove when asset types are all completed
 #[derive(Copy, Clone, Eq, Hash, PartialEq)]
 pub enum AssetType {
     Player,

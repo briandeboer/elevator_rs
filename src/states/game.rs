@@ -2,7 +2,7 @@ use amethyst::{assets::ProgressCounter, prelude::*};
 
 use crate::components::*;
 use crate::entities::{init_camera, load_player};
-use crate::resources::{load_assets, AssetType, Context};
+use crate::resources::{load_assets, AssetType, Context, PrefabList};
 
 // TODO: move these to a resource
 pub const GAME_WIDTH: f32 = 200.0;
@@ -22,17 +22,24 @@ impl SimpleState for GameState {
         world.insert(Context::new());
         // needed until systems are done
         world.register::<Player>();
+        world.register::<Animation>();
 
         self.progress_counter = Some(load_assets(world, vec![AssetType::Player]));
         init_camera(world);
-        // load_player(world);
     }
 
-    fn update(&mut self, _data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
+    fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
         if let Some(ref progress_counter) = self.progress_counter {
             // Check if all data has been loaded
             if progress_counter.is_complete() {
                 println!("### GameState progress complete ###");
+                let player_prefab_handle = {
+                    let prefab_list = data.world.read_resource::<PrefabList>();
+                    prefab_list.get(AssetType::Player).unwrap().clone()
+                };
+                println!("### Loading player ###");
+                load_player(data.world, player_prefab_handle);
+
                 self.progress_counter = None;
             } else {
                 println!("Loading: {}, Failed: {}, Finished: {}, Errors: {:?}",
@@ -46,28 +53,3 @@ impl SimpleState for GameState {
         Trans::None
     }
 }
-
-// fn load_sprite_sheet(world: &mut World) -> Handle<SpriteSheet> {
-//     // Load the sprite sheet necessary to render the graphics.
-//     // The texture is the pixel data
-//     // `texture_handle` is a cloneable reference to the texture
-//     let texture_handle = {
-//         let loader = world.read_resource::<Loader>();
-//         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
-//         loader.load(
-//             "texture/game_spritesheet.png",
-//             ImageFormat::default(),
-//             (),
-//             &texture_storage,
-//         )
-//     };
-
-//     let loader = world.read_resource::<Loader>();
-//     let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
-//     loader.load(
-//         "texture/game_spritesheet.ron",
-//         SpriteSheetFormat(texture_handle),
-//         (),
-//         &sprite_sheet_store,
-//     )
-// }

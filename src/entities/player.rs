@@ -1,33 +1,49 @@
 use amethyst::{
-    assets::Handle,
+    assets::{Handle, Prefab},
     core::transform::Transform,
-    prelude::*,
-    renderer::{SpriteRender, SpriteSheet},
+    ecs::prelude::*,
+    prelude::Builder,
 };
 
-use crate::components::{Player, PLAYER_WIDTH};
+use crate::components::{
+    Animation,
+    AnimationId,
+    AnimationPrefabData,
+    Direction,
+    Directions,
+    Player,
+    PLAYER_WIDTH,
+};
 use crate::states::{GAME_HEIGHT, GAME_WIDTH};
 
 /// Initialises one player in the middle-ish space
-pub fn load_player(world: &mut World, sprite_sheet: Handle<SpriteSheet>) {
-    let mut left_transform = Transform::default();
-    let mut right_transform = Transform::default();
+pub fn load_player(world: &mut World, prefab: Handle<Prefab<AnimationPrefabData>>) {
+    let mut transform = Transform::default();
 
     // Correctly position the player in the middle for now.
     let y = GAME_HEIGHT / 2.0;
-    left_transform.set_translation_xyz(PLAYER_WIDTH * 0.5, y, 0.0);
-    right_transform.set_translation_xyz(GAME_WIDTH - PLAYER_WIDTH * 0.5, y, 0.0);
-
-    let sprite_render = SpriteRender {
-        sprite_sheet: sprite_sheet.clone(),
-        sprite_number: 0, // player is the first sprite in the sprite_sheet
-    };
+    transform.set_translation_xyz((GAME_WIDTH / 2.0) - PLAYER_WIDTH * 0.5, y, 0.0);
 
     // Create a player entity.
     world
         .create_entity()
-        .with(sprite_render.clone())
         .with(Player::new())
-        .with(left_transform)
+        .with(transform)
+        .with(Animation::new(
+            AnimationId::Idle,
+            vec![
+                AnimationId::Die,
+                AnimationId::Jump,
+                AnimationId::Idle,
+                AnimationId::Walk,
+            ],
+        ))
+        .with(prefab)
+        .with(Direction::new(
+            Directions::Right,
+            Directions::Neutral,
+            Directions::Right,
+            Directions::Neutral,
+        ))
         .build();
 }
