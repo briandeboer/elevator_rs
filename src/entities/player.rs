@@ -36,6 +36,7 @@ pub fn load_player(world: &mut World, prefab: Handle<Prefab<AnimationPrefabData>
                 AnimationId::Jump,
                 AnimationId::Idle,
                 AnimationId::Walk,
+                AnimationId::Duck,
             ],
         ))
         .with(prefab)

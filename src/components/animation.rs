@@ -16,6 +16,7 @@ use serde::{Deserialize, Serialize};
 pub enum AnimationId {
     BulletImpact,
     Die,
+    Duck,
     Explode,
     Jump,
     Move,

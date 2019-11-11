@@ -86,6 +86,7 @@ impl<'s> System<'s> for PlayerAnimationSystem {
                 PlayerState::Walking => AnimationId::Walk,
                 PlayerState::Shooting => AnimationId::Shoot,
                 PlayerState::Dying => AnimationId::Die,
+                PlayerState::Ducking => AnimationId::Duck,
                 _ => AnimationId::Idle,
             };
 

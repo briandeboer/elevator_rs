@@ -25,6 +25,8 @@ impl Default for PlayerState {
 pub struct Player {
     pub state: PlayerState,
     pub is_shooting: bool,
+    pub is_ducking: bool,
+    pub jump_time: Option<f32>,
     pub width: f32,
     pub height: f32,
     pub velocity: [f32; 2],
@@ -35,6 +37,8 @@ impl Player {
         Player {
             state: PlayerState::Idling,
             is_shooting: false,
+            is_ducking: false,
+            jump_time: None,
             width: PLAYER_WIDTH,
             height: PLAYER_HEIGHT,
             velocity: [0.0, 0.0],

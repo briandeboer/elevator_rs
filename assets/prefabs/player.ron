@@ -244,9 +244,9 @@ Prefab(
                                         SpriteIndex,
                                         (
                                             // Time of key frames
-                                            input: [0.0, 0.15, 0.3, 0.45, 0.6, 0.75],
+                                            input: [0.0, 0.2, 5.0],
                                             // Sprite indexes from SpriteSheet for key frames
-                                            output: [8, 9, 10, 11, 12, 13],
+                                            output: [3, 4],
                                             // Sprites can only ever be animated with Step
                                             function: Step,
                                         ),
@@ -289,6 +289,27 @@ Prefab(
                                             input: [0.0, 0.1],
                                             // Sprite indexes from SpriteSheet for key frames
                                             output: [25, 26],
+                                            // Sprites can only ever be animated with Step
+                                            function: Step,
+                                        ),
+                                    ),
+                                ],
+                            ),
+                        ),
+                        (
+                            // AnimationId
+                            Duck,
+                            (
+                                samplers: [
+                                    (
+                                        0,
+                                        // Only SpriteIndex channel allowed for SpriteRender in AnimationSetPrefab
+                                        SpriteIndex,
+                                        (
+                                            // Time of key frames
+                                            input: [0.0, 0.15, 0.3],
+                                            // Sprite indexes from SpriteSheet for key frames
+                                            output: [2, 2],
                                             // Sprites can only ever be animated with Step
                                             function: Step,
                                         ),

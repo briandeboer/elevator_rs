@@ -1,7 +1,16 @@
 (
   axes: {
-    "horizontal": Emulated(pos: Key(Right), neg: Key(Left)),
-    "vertical": Emulated(pos: Key(Up), neg: Key(Down)),
+    "move": Emulated(pos: Key(Right), neg: Key(Left)),
   },
-  actions: {},
+  actions: {
+        "duck": [
+            [Key(Down)]
+        ],
+        "jump": [
+            [Key(Up)]
+        ],
+        "shoot": [
+            [Key(Space)]
+        ]
+    },
 )
