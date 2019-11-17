@@ -6,7 +6,7 @@ mod systems;
 
 use amethyst::{
     animation::AnimationBundle,
-    assets::{PrefabLoaderSystemDesc},
+    assets::{PrefabLoaderSystemDesc, Processor},
     core::transform::TransformBundle,
     input::{InputBundle, StringBindings},
     renderer::{
@@ -20,7 +20,8 @@ use amethyst::{
     Application, GameDataBuilder,
 };
 use components::{AnimationId, AnimationPrefabData};
-use systems::{AnimationControlSystem, DirectionSystem, PlayerAnimationSystem};
+use systems::{AnimationControlSystem, DirectionSystem, PlayerKinematicsSystem, PlayerAnimationSystem};
+use resources::{Map, Tileset};
 
 fn main() -> amethyst::Result<()> {
     // start logging in amethyst
@@ -47,10 +48,17 @@ fn main() -> amethyst::Result<()> {
         )?
         .with_bundle(input_bundle)?
         .with_bundle(UiBundle::<StringBindings>::new())?
+        .with(Processor::<Tileset>::new(), "tileset_processor", &[])
+        .with(Processor::<Map>::new(), "map_processor", &[])
         .with(
             systems::ControlsSystem,
             "controls_system",
             &["input_system"],
+        )
+        .with(
+            PlayerKinematicsSystem,
+            "player_kinematics_system", 
+            &["controls_system"],
         )
         .with(systems::MovePersonSystem, "move_person_system", &[])
         .with(

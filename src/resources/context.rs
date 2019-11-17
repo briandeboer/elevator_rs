@@ -9,6 +9,8 @@ pub struct Context {
     pub truss_z_translation: f32,
     pub platform_z_translation: f32,
     pub scale: f32,
+    pub friction_amount: f32,
+    pub walk_acceleration: f32,
 }
 
 impl Context {
@@ -23,6 +25,8 @@ impl Context {
             truss_z_translation: -40.,
             platform_z_translation: -10.,
             scale: 2.,
+            friction_amount: -8.0,
+            walk_acceleration: 10.0,
         }
     }
 }

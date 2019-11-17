@@ -30,6 +30,8 @@ pub struct Player {
     pub width: f32,
     pub height: f32,
     pub velocity: [f32; 2],
+    pub max_ground_speed: f32,
+    pub max_jump_velocity: f32,
 }
 
 impl Player {
@@ -42,6 +44,8 @@ impl Player {
             width: PLAYER_WIDTH,
             height: PLAYER_HEIGHT,
             velocity: [0.0, 0.0],
+            max_ground_speed: 40.,
+            max_jump_velocity: 14.,
         }
     }
 }

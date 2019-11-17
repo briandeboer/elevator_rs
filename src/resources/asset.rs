@@ -15,8 +15,8 @@ use crate::components::AnimationPrefabData;
 #[allow(dead_code)] // remove when asset types are all completed
 #[derive(Copy, Clone, Eq, Hash, PartialEq)]
 pub enum AssetType {
+    Building,
     Player,
-    Unknown,
 }
 
 #[derive(Default)]
@@ -29,9 +29,9 @@ impl SpriteSheetList {
         self.sprite_sheets.insert(asset_type, sprite_sheet_handle);
     }
 
-    pub fn get(&self, asset_type: AssetType) -> Option<&SpriteSheetHandle> {
-        self.sprite_sheets.get(&asset_type)
-    }
+    // pub fn get(&self, asset_type: AssetType) -> Option<&SpriteSheetHandle> {
+    //     self.sprite_sheets.get(&asset_type)
+    // }
 }
 
 #[derive(Default)]
@@ -67,12 +67,12 @@ pub fn load_assets(world: &mut World, asset_type_list: Vec<AssetType>) -> Progre
         let (texture_path, ron_path) = match asset_type {
             // seems like this should live somewhere else
             AssetType::Player => ("texture/player.png", "prefabs/player.ron"),
-            AssetType::Unknown => ("texture/unknown.png", "prefabs/unknown.ron"),
+            AssetType::Building => ("texture/building.png", "prefabs/building.ron"),
         };
 
         match asset_type {
             // without animation
-            AssetType::Unknown => {
+            AssetType::Building => {
                 let sprite_sheet_handle =
                     get_sprite_sheet_handle(world, texture_path, ron_path, &mut progress_counter);
                 sprite_sheet_list.insert(asset_type, sprite_sheet_handle);

@@ -1,8 +1,11 @@
-use amethyst::{assets::ProgressCounter, prelude::*};
+use amethyst::{
+    assets::{AssetStorage, Handle, JsonFormat, Loader, ProgressCounter},
+    prelude::*,
+};
 
 use crate::components::*;
 use crate::entities::{init_camera, load_player};
-use crate::resources::{load_assets, AssetType, Context, PrefabList};
+use crate::resources::{load_assets, AssetType, Context, Map, PrefabList, Tileset};
 
 // TODO: move these to a resource
 pub const GAME_WIDTH: f32 = 200.0;
@@ -12,6 +15,8 @@ pub const GAME_HEIGHT: f32 = 200.0;
 #[derive(Default)]
 pub struct GameState {
     progress_counter: Option<ProgressCounter>,
+    map_handle: Option<Handle<Map>>,
+    tileset_handle: Option<Handle<Tileset>>,
 }
 
 impl SimpleState for GameState {
@@ -25,6 +30,26 @@ impl SimpleState for GameState {
         world.register::<Animation>();
 
         self.progress_counter = Some(load_assets(world, vec![AssetType::Player]));
+        self.map_handle = {
+            let loader = world.read_resource::<Loader>();
+            Some(loader.load(
+                "tilesets/elevator.json",
+                JsonFormat,
+                self.progress_counter.as_mut().expect("map"),
+                &world.read_resource::<AssetStorage<Map>>(),
+            ))
+        };
+
+        self.tileset_handle = {
+            let loader = world.read_resource::<Loader>();
+            Some(loader.load(
+                "tilesets/tileset.json",
+                JsonFormat,
+                self.progress_counter.as_mut().expect("tileset"),
+                &world.read_resource::<AssetStorage<Tileset>>(),
+            ))
+        };
+
         init_camera(world);
     }
 
@@ -33,6 +58,22 @@ impl SimpleState for GameState {
             // Check if all data has been loaded
             if progress_counter.is_complete() {
                 println!("### GameState progress complete ###");
+                // Get the map, which is loaded in the on_start function of load state.
+
+                let tileset = {
+                    let tileset_storage = &data.world.read_resource::<AssetStorage<Tileset>>();
+                    let tileset_handle = &self.tileset_handle.take().unwrap();
+                    tileset_storage.get(tileset_handle).unwrap().clone()
+                };
+                let sprite_sheet = tileset.load_spritesheet(data.world);
+
+                let map = {
+                    let map_storage = &data.world.read_resource::<AssetStorage<Map>>();
+                    let map_handle = &self.map_handle.take().unwrap();
+                    map_storage.get(map_handle).unwrap().clone()
+                };
+                map.load_layers(data.world, sprite_sheet);
+
                 let player_prefab_handle = {
                     let prefab_list = data.world.read_resource::<PrefabList>();
                     prefab_list.get(AssetType::Player).unwrap().clone()
@@ -40,6 +81,7 @@ impl SimpleState for GameState {
                 println!("### Loading player ###");
                 load_player(data.world, player_prefab_handle);
 
+                println!("### Loading building ###");
                 self.progress_counter = None;
             } else {
                 println!("Loading: {}, Failed: {}, Finished: {}, Errors: {:?}",
