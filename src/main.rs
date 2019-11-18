@@ -20,7 +20,7 @@ use amethyst::{
     Application, GameDataBuilder,
 };
 use components::{AnimationId, AnimationPrefabData};
-use systems::{AnimationControlSystem, DirectionSystem, PlayerKinematicsSystem, PlayerAnimationSystem};
+use systems::{AnimationControlSystem, CollisionSystem, DirectionSystem, KinematicsSystem, PlayerKinematicsSystem, PlayerAnimationSystem};
 use resources::{Map, Tileset};
 
 fn main() -> amethyst::Result<()> {
@@ -60,7 +60,13 @@ fn main() -> amethyst::Result<()> {
             "player_kinematics_system", 
             &["controls_system"],
         )
-        .with(systems::MovePersonSystem, "move_person_system", &[])
+        .with(CollisionSystem, "collision_system", &["player_kinematics_system"])
+        .with(
+            KinematicsSystem,
+            "kinematics_system",
+            &["player_kinematics_system"],
+        )
+        .with(systems::MovePersonSystem, "move_person_system", &["kinematics_system"])
         .with(
             PlayerAnimationSystem,
             "player_animation_system",

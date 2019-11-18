@@ -1,17 +1,44 @@
 use amethyst::{
     core::math::Vector2,
+    core::timing::Time,
     ecs::{Join, Read, ReadStorage, System, WriteStorage},
 };
 
-use crate::components::{Direction, Player, PlayerState, Motion};
+use crate::components::{Collider, Direction, Player, PlayerState, Motion};
 use crate::resources::Context;
 
-const GRAVITY_AMOUNT: f32 = -1.0;
+const GRAVITY_AMOUNT: f32 = -8.0;
+
+pub struct KinematicsSystem;
+
+impl<'s> System<'s> for KinematicsSystem {
+    type SystemData = (
+        WriteStorage<'s, Collider>,
+        ReadStorage<'s, Motion>,
+        Read<'s, Time>,
+    );
+
+    fn run(&mut self, data: Self::SystemData) {
+        let (mut colliders, motions, time) = data;
+
+        for (collider, motion) in (&mut colliders, &motions).join() {
+            let bbox = &mut collider.bounding_box;
+            bbox.old_position = bbox.position;
+            bbox.position.x += motion.velocity.x * time.delta_seconds();
+            bbox.position.y += motion.velocity.y * time.delta_seconds();
+
+            let hbox = &mut collider.hit_box;
+            hbox.old_position = hbox.position;
+            collider.set_hit_box_position(motion.velocity);
+        }
+    }
+}
 
 pub struct PlayerKinematicsSystem;
 
 impl<'s> System<'s> for PlayerKinematicsSystem {
     type SystemData = (
+        ReadStorage<'s, Collider>,
         ReadStorage<'s, Direction>,
         ReadStorage<'s, Player>,
         WriteStorage<'s, Motion>,
@@ -19,10 +46,10 @@ impl<'s> System<'s> for PlayerKinematicsSystem {
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (dirs, players, mut motions, context) = data;
+        let (colliders, dirs, players, mut motions, context) = data;
 
-        for (dir, player, motion) in
-            (&dirs, &players, &mut motions).join()
+        for (_collider, dir, player, motion) in
+            (&colliders, &dirs, &players, &mut motions).join()
         {
             let mut acceleration = Vector2::new(0., 0.);
             match player.state {

@@ -17,8 +17,13 @@ impl<'s> System<'s> for MovePersonSystem {
     fn run(&mut self, (motions, mut locals, time): Self::SystemData) {
         // Move every ball according to its speed, and the time passed.
         for (motion, local) in (&motions, &mut locals).join() {
-            local.prepend_translation_x(motion.velocity[0] * time.delta_seconds());
-            local.prepend_translation_y(motion.velocity[1] * time.delta_seconds());
+            if motion.velocity.x != 0. || motion.velocity.y != 0. {
+                println!("Move person, x, {} y {}",
+                    motion.velocity.x * time.delta_seconds(),
+                    motion.velocity.y * time.delta_seconds());
+            }
+            local.prepend_translation_x(motion.velocity.x * time.delta_seconds());
+            local.prepend_translation_y(motion.velocity.y * time.delta_seconds());
         }
     }
 }

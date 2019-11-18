@@ -80,7 +80,6 @@ impl Tileset {
                     tex_coords
                 };
 
-                println!("### Pushing sprite {} ###", count);
                 sprites.push(sprite);
                 count += 1;
             }
