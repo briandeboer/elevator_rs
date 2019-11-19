@@ -8,7 +8,7 @@ use crate::entities::{init_camera, load_player};
 use crate::resources::{load_assets, AssetType, Context, Map, PrefabList, Tileset};
 
 // TODO: move these to a resource
-pub const GAME_WIDTH: f32 = 200.0;
+pub const GAME_WIDTH: f32 = 208.0;
 pub const GAME_HEIGHT: f32 = 200.0;
 
 /// state struct for the game state

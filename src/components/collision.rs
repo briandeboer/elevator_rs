@@ -3,26 +3,6 @@ use amethyst::{
     ecs::{Component, DenseVecStorage},
 };
 
-#[derive(Component)]
-#[storage(DenseVecStorage)]
-pub struct Boundary {
-    pub left: f32,
-    pub right: f32,
-    pub top: f32,
-    pub bottom: f32,
-}
-
-impl Boundary {
-    pub fn new(left: f32, right: f32, top: f32, bottom: f32) -> Self {
-        Self {
-            left,
-            right,
-            top,
-            bottom,
-        }
-    }
-}
-
 #[derive(Clone)]
 pub struct GenericBox {
     pub half_size: Vector2<f32>,
@@ -45,6 +25,115 @@ impl GenericBox {
         GenericBox {
             half_size: Vector2::new(width / 2., height / 2.),
             ..GenericBox::default()
+        }
+    }
+}
+
+pub struct CollideeDetails {
+    pub name: String,
+    pub position: Vector2<f32>,
+    pub half_size: Vector2<f32>,
+    pub correction: f32,
+}
+
+#[derive(Component)]
+#[storage(DenseVecStorage)]
+pub struct Collidee {
+    pub horizontal: Option<CollideeDetails>,
+    pub vertical: Option<CollideeDetails>,
+}
+
+impl Default for Collidee {
+    fn default() -> Self {
+        Self {
+            horizontal: None,
+            vertical: None,
+        }
+    }
+}
+
+impl Collidee {
+    pub fn set_collidee_details(
+        &mut self,
+        name: String,
+        collider_a: &Collider,
+        collider_b: &Collider,
+        velocity_a: Vector2<f32>,
+        velocity_b: Vector2<f32>,
+        use_hit_box: bool,
+    ) {
+        let (box_a, box_b) = if use_hit_box {
+            (&collider_a.hit_box, &collider_b.hit_box)
+        } else {
+            (&collider_a.bounding_box, &collider_b.bounding_box)
+        };
+
+        let mut correction = Vector2::new(0., 0.);
+
+        let speed_sum = Vector2::new(
+            (velocity_a.x - velocity_b.x).abs(),
+            (velocity_a.y - velocity_b.y).abs(),
+        );
+        let speed_ratio_a = Vector2::new(
+            velocity_a.x / speed_sum.x,
+            velocity_a.y / speed_sum.y,
+        );
+        let speed_ratio_b = Vector2::new(
+            velocity_b.x / speed_sum.x,
+            velocity_b.y / speed_sum.y,
+        );
+
+        let min_safe_distance = Vector2::new(
+            box_a.half_size.x + box_b.half_size.x,
+            box_a.half_size.y + box_b.half_size.y,
+        );
+        let overlap = Vector2::new(
+            min_safe_distance.x - (box_a.position.x - box_b.position.x).abs(),
+            min_safe_distance.y - (box_a.position.y - box_b.position.y).abs(),
+        );
+        let x_overlapped = (box_a.old_position.x - box_b.old_position.x).abs()
+            < box_a.half_size.x + box_b.half_size.x;
+        let y_overlapped = (box_a.old_position.y - box_b.old_position.y).abs()
+            < box_a.half_size.y + box_b.half_size.y;
+
+        let same_direction = velocity_a.x * velocity_b.x > 0.;
+        let faster = speed_ratio_a.x.abs() > speed_ratio_b.x.abs();
+        if (y_overlapped || overlap.x.abs() <= overlap.y.abs()) && !x_overlapped {
+            correction.x = if (faster || !same_direction) && !speed_ratio_a.x.is_nan() {
+                overlap.x * speed_ratio_a.x
+            } else {
+                0.
+            };
+            // No correction (correction = 0.) is required if collider is slower
+            // and both bodies are moving in the same direction
+            self.horizontal = Some(CollideeDetails {
+                name,
+                position: box_b.position,
+                half_size: box_b.half_size,
+                correction: correction.x,
+            });
+        } else if x_overlapped && y_overlapped {
+            // Might happen when an entity is added at run time.
+            // As per the current game design, no correction (correction = 0.) is required for this scenario
+            // This might have to be changed in future
+            self.horizontal = Some(CollideeDetails {
+                name,
+                position: box_b.position,
+                half_size: box_b.half_size,
+                correction: correction.x,
+            });
+        } else {
+            correction.y = if !speed_ratio_a.y.is_nan() {
+                overlap.y * speed_ratio_a.y
+            } else {
+                0.
+            };
+            self.vertical = Some(CollideeDetails {
+                name,
+                position: box_b.position,
+                half_size: box_b.half_size,
+                correction: correction.y,
+            });
         }
     }
 }

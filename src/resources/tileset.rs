@@ -51,7 +51,6 @@ impl Tileset {
 
         // TODO: should probably clear the vector first
         let rows = (self.tilecount / self.columns) as i32;
-        let mut count = 0;
 
         println!("### columns: {}, rows: {}, tilecount: {} ###", self.columns, rows, self.tilecount);
         for y in 0..rows {
@@ -81,7 +80,6 @@ impl Tileset {
                 };
 
                 sprites.push(sprite);
-                count += 1;
             }
         }
 

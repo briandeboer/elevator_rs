@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::components::{Collider, Direction, Motion};
 
-const OFFSET: f32 = 150.0;
+const Y_OFFSET: f32 = 150.0;
 const TILE_SIZE: f32 = 8.0;
 const NUM_COLUMNS: usize = 26;
 
@@ -75,28 +75,29 @@ impl Map {
     }
 
     fn load_collision_layer(&self, world: &mut World, layer: &Layer) {
-        let scale: f32 = 1.0;
-        let _bg_width: f32 = 200.0;
-        let bg_height: f32 = 200.0;
+        let scale_x: f32 = 1.0;
+        let scale_y: f32 = 1.0;
+        let offset_x: f32 = 0.0;
+        let offset_y: f32 = 150.;
         
         if let Some(objects) = &layer.objects {
             for (_index, obj) in objects.iter().enumerate() {
                 let mut transform = Transform::default();
-                transform.set_translation_z(-10.0);
-                let mut collider = Collider::new(obj.width * scale, obj.height * scale);
+                let mut collider = Collider::new(obj.width * scale_x, obj.height * scale_y);
                 let bbox = &mut collider.bounding_box;
-                let x = obj.x;
-                let y = 200. - obj.y;
+                let x = offset_x + obj.x;
+                let y = offset_y - obj.y;
+                transform.set_translation_z(0.0);
                 println!("### Adding collision object {}, x: {}, y: {}, width: {}, height: {} ###", obj.name, x, y, obj.width, obj.height);
-                bbox.position = Vector2::new(x, y);
-                    // scale.mul_add(obj.x, bbox.half_size.x),
-                    // bg_height * 2. - (obj.y * scale) - bbox.half_size.y,
-                // );
+                bbox.position = Vector2::new(
+                    offset_x + (obj.x * scale_x) + bbox.half_size.x,
+                    offset_y - (obj.y * scale_y) - bbox.half_size.y,
+                );
                 bbox.old_position = bbox.position;
-    
+                let name = String::from(&obj.name);
                 world
                     .create_entity()
-                    .named("collider")
+                    .named(name)
                     .with(Motion::new())
                     .with(transform)
                     .with(collider)
@@ -120,8 +121,8 @@ impl Map {
                 };
                 let mut tile_transform = Transform::default();
                 // TODO: make these not hardcoded
-                let x = TILE_SIZE * (index % NUM_COLUMNS) as f32;
-                let y = OFFSET - (TILE_SIZE * (index / NUM_COLUMNS) as f32);
+                let x = 4.0 + TILE_SIZE * (index % NUM_COLUMNS) as f32;
+                let y = Y_OFFSET - (TILE_SIZE * (index / NUM_COLUMNS) as f32);
                 tile_transform.set_translation_xyz(x, y, 0.0);
                 world.create_entity()
                     .named("map_tile")

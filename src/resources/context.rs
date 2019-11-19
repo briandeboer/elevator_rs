@@ -25,8 +25,8 @@ impl Context {
             truss_z_translation: -40.,
             platform_z_translation: -10.,
             scale: 2.,
-            friction_amount: -10.0,
-            walk_acceleration: 10.0,
+            friction_amount: -12.0,
+            walk_acceleration: 16.0,
         }
     }
 }

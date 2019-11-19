@@ -12,6 +12,7 @@ use crate::components::{
     AnimationId,
     AnimationPrefabData,
     Collider,
+    Collidee,
     Direction,
     Directions,
     Motion,
@@ -26,15 +27,15 @@ pub fn load_player(world: &mut World, prefab: Handle<Prefab<AnimationPrefabData>
     let mut transform = Transform::default();
 
     // Correctly position the player in the middle for now.
-    let x = (GAME_WIDTH / 2.0) - PLAYER_WIDTH * 0.5;
-    let y = GAME_HEIGHT / 2.0 + 20.0;
-    transform.set_translation_xyz(x, y, 0.5);
+    let x = 40.0;
+    let y = 200.0;
+    transform.set_translation_z(0.5);
 
     let motion = Motion::new();
 
-    let mut collider = Collider::new(24., 24.);
+    let mut collider = Collider::new(12., 24.);
     let bbox = &mut collider.bounding_box;
-    bbox.position = Vector2::new(x, y);
+    bbox.position = Vector2::new(x + bbox.half_size.x, y - bbox.half_size.y);
     bbox.old_position = bbox.position;
 
     // Create a player entity.
@@ -43,6 +44,7 @@ pub fn load_player(world: &mut World, prefab: Handle<Prefab<AnimationPrefabData>
         .named("Player")
         .with(Player::new())
         .with(collider)
+        .with(Collidee::default())
         .with(transform)
         .with(Animation::new(
             AnimationId::Idle,

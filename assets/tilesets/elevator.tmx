@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.0" orientation="orthogonal" renderorder="left-down" compressionlevel="0" width="26" height="14" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="26">
+<map version="1.2" tiledversion="1.3.0" orientation="orthogonal" renderorder="left-down" compressionlevel="0" width="26" height="14" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="35">
  <editorsettings>
   <export target="elevator.json" format="json"/>
  </editorsettings>
@@ -23,6 +23,12 @@
 </data>
  </layer>
  <objectgroup id="4" name="collision">
-  <object id="21" name="bottom" x="-0.055694" y="104.972" width="207.333" height="6"/>
+  <object id="14" name="floor2" x="36" y="53" width="68" height="7"/>
+  <object id="15" name="floor2" x="128" y="53" width="44" height="7"/>
+  <object id="16" name="floor1" x="36" y="6" width="68" height="6"/>
+  <object id="17" name="floor1" x="128" y="6" width="44" height="6"/>
+  <object id="21" name="bottom1" x="36" y="102" width="135.875" height="6"/>
+  <object id="22" name="walls_left" x="0.938491" y="0" width="35.0615" height="111"/>
+  <object id="23" name="walls_right" x="172" y="-0.125" width="8" height="112"/>
  </objectgroup>
 </map>

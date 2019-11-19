@@ -44,8 +44,8 @@ impl Player {
             width: PLAYER_WIDTH,
             height: PLAYER_HEIGHT,
             velocity: [0.0, 0.0],
-            max_ground_speed: 40.,
-            max_jump_velocity: 14.,
+            max_ground_speed: 36.,
+            max_jump_velocity: 60.,
         }
     }
 }

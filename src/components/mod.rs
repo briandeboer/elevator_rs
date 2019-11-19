@@ -8,6 +8,7 @@ pub use self::animation::Animation;
 pub use self::animation::AnimationId;
 pub use self::animation::AnimationPrefabData;
 
+pub use self::collision::Collidee;
 pub use self::collision::Collider;
 
 pub use self::direction::Direction;
