@@ -26,11 +26,12 @@ impl SimpleState for GameState {
 
         world.insert(Context::new());
         // TODO: remove these - needed until systems are done
-        world.register::<Collider>();
-        world.register::<Player>();
-        world.register::<Animation>();
+        // world.register::<Collider>();
+        // world.register::<Player>();
+        // world.register::<Animation>();
+        world.register::<Gun>();
 
-        self.progress_counter = Some(load_assets(world, vec![AssetType::Player]));
+        self.progress_counter = Some(load_assets(world, vec![AssetType::Player, AssetType::Guns]));
         self.map_handle = {
             let loader = world.read_resource::<Loader>();
             Some(loader.load(
@@ -79,19 +80,24 @@ impl SimpleState for GameState {
                     let prefab_list = data.world.read_resource::<PrefabList>();
                     prefab_list.get(AssetType::Player).unwrap().clone()
                 };
+                let guns_prefab_handle = {
+                    let prefab_list = data.world.read_resource::<PrefabList>();
+                    prefab_list.get(AssetType::Guns).unwrap().clone()
+                };
                 println!("### Loading player ###");
-                load_player(data.world, player_prefab_handle);
+                load_player(data.world, player_prefab_handle, guns_prefab_handle);
 
                 println!("### Loading building ###");
                 self.progress_counter = None;
             } else {
-                println!("Loading: {}, Failed: {}, Finished: {}, Errors: {:?}",
+                println!(
+                    "Loading: {}, Failed: {}, Finished: {}, Errors: {:?}",
                     progress_counter.num_loading(),
                     progress_counter.num_failed(),
                     progress_counter.num_finished(),
-                    progress_counter.errors());
+                    progress_counter.errors()
+                );
             }
-
         }
         Trans::None
     }

@@ -79,7 +79,7 @@ impl Map {
         let scale_y: f32 = 1.0;
         let offset_x: f32 = 0.0;
         let offset_y: f32 = 150.;
-        
+
         if let Some(objects) = &layer.objects {
             for (_index, obj) in objects.iter().enumerate() {
                 let mut transform = Transform::default();
@@ -88,7 +88,10 @@ impl Map {
                 let x = offset_x + obj.x;
                 let y = offset_y - obj.y;
                 transform.set_translation_z(0.0);
-                println!("### Adding collision object {}, x: {}, y: {}, width: {}, height: {} ###", obj.name, x, y, obj.width, obj.height);
+                println!(
+                    "### Adding collision object {}, x: {}, y: {}, width: {}, height: {} ###",
+                    obj.name, x, y, obj.width, obj.height
+                );
                 bbox.position = Vector2::new(
                     offset_x + (obj.x * scale_x) + bbox.half_size.x,
                     offset_y - (obj.y * scale_y) - bbox.half_size.y,
@@ -107,7 +110,12 @@ impl Map {
         }
     }
 
-    fn load_tile_layer(&self, world: &mut World, layer: &Layer, sprite_sheet_handle: &Handle<SpriteSheet>) {
+    fn load_tile_layer(
+        &self,
+        world: &mut World,
+        layer: &Layer,
+        sprite_sheet_handle: &Handle<SpriteSheet>,
+    ) {
         println!("### Load tile layer: {} ###", layer.name);
 
         // TODO: support drawing in different directions
@@ -124,7 +132,8 @@ impl Map {
                 let x = 4.0 + TILE_SIZE * (index % NUM_COLUMNS) as f32;
                 let y = Y_OFFSET - (TILE_SIZE * (index / NUM_COLUMNS) as f32);
                 tile_transform.set_translation_xyz(x, y, 0.0);
-                world.create_entity()
+                world
+                    .create_entity()
                     .named("map_tile")
                     .with(tile_transform)
                     .with(tile_sprite)

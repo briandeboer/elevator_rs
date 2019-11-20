@@ -4,7 +4,7 @@ use amethyst::{
     ecs::{Join, Read, ReadStorage, System, WriteStorage},
 };
 
-use crate::components::{Collider, Direction, Player, PlayerState, Motion};
+use crate::components::{Collider, Direction, Motion, Player, PlayerState};
 use crate::resources::Context;
 
 const GRAVITY_AMOUNT: f32 = -1.8;
@@ -55,7 +55,11 @@ impl<'s> System<'s> for PlayerKinematicsSystem {
             match player.state {
                 PlayerState::Idling | PlayerState::Ducking => {
                     // how much skidding happens
-                    let acceleration_x = if motion.velocity.x != 0. { context.friction_amount } else { 0. };
+                    let acceleration_x = if motion.velocity.x != 0. {
+                        context.friction_amount
+                    } else {
+                        0.
+                    };
                     acceleration = Vector2::new(acceleration_x, GRAVITY_AMOUNT);
                 }
                 PlayerState::Walking => {
@@ -67,7 +71,11 @@ impl<'s> System<'s> for PlayerKinematicsSystem {
                         collider.on_ground = false;
                     }
                     // how much he slows down when he's in the air and not running
-                    let acceleration_x = if motion.velocity.x != 0. { (-context.walk_acceleration/50.) } else { 0. };
+                    let acceleration_x = if motion.velocity.x != 0. {
+                        (-context.walk_acceleration / 50.)
+                    } else {
+                        0.
+                    };
                     acceleration = Vector2::new(acceleration_x, GRAVITY_AMOUNT);
                 }
                 // PlayerState::Dying => {

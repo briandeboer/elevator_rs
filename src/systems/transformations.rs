@@ -1,11 +1,9 @@
 use amethyst::{
     core::Transform,
-    ecs::{Join, System, WriteStorage},
+    ecs::{Entities, Join, ReadStorage, System, WriteStorage},
 };
 
-use crate::{
-    components::{Collidee, Collider, Motion},
-};
+use crate::components::{Collidee, Collider, Direction, Gun, Motion, Player, PlayerState};
 
 pub struct TransformationSystem;
 
@@ -13,16 +11,18 @@ impl<'s> System<'s> for TransformationSystem {
     type SystemData = (
         WriteStorage<'s, Collider>,
         WriteStorage<'s, Collidee>,
+        WriteStorage<'s, Player>,
         WriteStorage<'s, Motion>,
         WriteStorage<'s, Transform>,
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (mut colliders, mut collidees, mut motions, mut transforms) = data;
+        let (mut colliders, mut collidees, mut players, mut motions, mut transforms) = data;
 
-        for (collider, collidee, motion, transform) in (
+        for (collider, collidee, player, motion, transform) in (
             &mut colliders,
             &mut collidees,
+            &mut players,
             &mut motions,
             &mut transforms,
         )
@@ -47,9 +47,47 @@ impl<'s> System<'s> for TransformationSystem {
             if velocity.y != 0. {
                 collider.on_ground = false;
             }
-            transform.set_translation_x(bbox.position.x);
-            transform.set_translation_y(bbox.position.y);
+            let x = bbox.position.x;
+            let mut y = bbox.position.y;
+            if player.state == PlayerState::Ducking {
+                y -= 4.0;
+            }
             collider.set_hit_box_position(*velocity);
+            transform.set_translation_x(x);
+            transform.set_translation_y(y);
+            player.update_position(x, y);
+        }
+    }
+}
+
+pub struct GunTransformationSystem;
+
+impl<'s> System<'s> for GunTransformationSystem {
+    type SystemData = (
+        Entities<'s>,
+        ReadStorage<'s, Gun>,
+        ReadStorage<'s, Direction>,
+        ReadStorage<'s, Player>,
+        WriteStorage<'s, Transform>,
+    );
+
+    fn run(&mut self, data: Self::SystemData) {
+        let (entities, guns, directions, players, mut transforms) = data;
+
+        // loop through all guns and get the parent entity
+        for (gun, direction, transform) in (&guns, &directions, &mut transforms).join() {
+            if let Some(parent) = gun.parent {
+                for (entity, player) in (&entities, &players).join() {
+                    if entity == parent {
+                        if direction.x != direction.default_x {
+                            transform.set_translation_x(player.pos_x - gun.position_offset.x);
+                        } else {
+                            transform.set_translation_x(player.pos_x + gun.position_offset.x);
+                        }
+                        transform.set_translation_y(player.pos_y + gun.position_offset.y);
+                    }
+                }
+            }
         }
     }
 }

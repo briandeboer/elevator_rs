@@ -14,6 +14,7 @@ use serde::{Deserialize, Serialize};
 /// animation to play.
 #[derive(Clone, Copy, Debug, Deserialize, Eq, Hash, PartialEq, PartialOrd, Serialize)]
 pub enum AnimationId {
+    // player
     BulletImpact,
     Die,
     Duck,
@@ -23,6 +24,10 @@ pub enum AnimationId {
     Idle,
     Shoot,
     Walk,
+    // gun
+    PlayerShoot,
+    PlayerDuckShoot,
+    Holster, // hidden
 }
 
 /// `AnimationPrefabData` type used for loading of `SpriteScene`s and their

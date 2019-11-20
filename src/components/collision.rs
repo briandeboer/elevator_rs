@@ -74,14 +74,8 @@ impl Collidee {
             (velocity_a.x - velocity_b.x).abs(),
             (velocity_a.y - velocity_b.y).abs(),
         );
-        let speed_ratio_a = Vector2::new(
-            velocity_a.x / speed_sum.x,
-            velocity_a.y / speed_sum.y,
-        );
-        let speed_ratio_b = Vector2::new(
-            velocity_b.x / speed_sum.x,
-            velocity_b.y / speed_sum.y,
-        );
+        let speed_ratio_a = Vector2::new(velocity_a.x / speed_sum.x, velocity_a.y / speed_sum.y);
+        let speed_ratio_b = Vector2::new(velocity_b.x / speed_sum.x, velocity_b.y / speed_sum.y);
 
         let min_safe_distance = Vector2::new(
             box_a.half_size.x + box_b.half_size.x,
@@ -194,7 +188,9 @@ impl Collider {
         } else {
             (&self.bounding_box, &other.bounding_box)
         };
-        ((self_box.position.x - other_box.position.x).abs() <= (self_box.half_size.x + other_box.half_size.x).abs() &&
-            (self_box.position.y - other_box.position.y).abs() <= (self_box.half_size.y + other_box.half_size.y).abs())
+        ((self_box.position.x - other_box.position.x).abs()
+            <= (self_box.half_size.x + other_box.half_size.x).abs()
+            && (self_box.position.y - other_box.position.y).abs()
+                <= (self_box.half_size.y + other_box.half_size.y).abs())
     }
 }

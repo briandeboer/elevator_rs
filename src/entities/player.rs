@@ -1,45 +1,43 @@
 use amethyst::{
     assets::{Handle, Prefab},
-    core::math::{Vector2},
-    core::{WithNamed},
+    core::math::Vector2,
     core::transform::Transform,
+    core::WithNamed,
     ecs::prelude::*,
     prelude::Builder,
 };
 
 use crate::components::{
-    Animation,
-    AnimationId,
-    AnimationPrefabData,
-    Collider,
-    Collidee,
-    Direction,
-    Directions,
-    Motion,
-    Player,
-    PLAYER_WIDTH,
+    Animation, AnimationId, AnimationPrefabData, Collidee, Collider, Direction, Directions, Gun,
+    Motion, Player,
 };
 
-use crate::states::{GAME_HEIGHT, GAME_WIDTH};
-
 /// Initialises one player in the middle-ish space
-pub fn load_player(world: &mut World, prefab: Handle<Prefab<AnimationPrefabData>>) {
+pub fn load_player(world: &mut World,
+    player_prefab_handle: Handle<Prefab<AnimationPrefabData>>,
+    guns_prefab_handle: Handle<Prefab<AnimationPrefabData>>,
+) {
     let mut transform = Transform::default();
 
+    // FIXME: Set these to not be hardcoded
     // Correctly position the player in the middle for now.
     let x = 40.0;
     let y = 200.0;
-    transform.set_translation_z(0.5);
-
-    let motion = Motion::new();
+    let z = 0.5;
+    transform.set_translation_z(z);
 
     let mut collider = Collider::new(12., 24.);
     let bbox = &mut collider.bounding_box;
     bbox.position = Vector2::new(x + bbox.half_size.x, y - bbox.half_size.y);
     bbox.old_position = bbox.position;
 
+
+    // THOUGHTS: gun should just have position offsets
+    // move gun after the person moves and just adjust based on offset
+    // to hide the gun just make it a sprite that you can't see because it's all transparent!
+    // create the gun first
     // Create a player entity.
-    world
+    let player = world
         .create_entity()
         .named("Player")
         .with(Player::new())
@@ -56,8 +54,8 @@ pub fn load_player(world: &mut World, prefab: Handle<Prefab<AnimationPrefabData>
                 AnimationId::Duck,
             ],
         ))
-        .with(prefab)
-        .with(motion)
+        .with(player_prefab_handle)
+        .with(Motion::new())
         .with(Direction::new(
             Directions::Right,
             Directions::Neutral,
@@ -65,4 +63,29 @@ pub fn load_player(world: &mut World, prefab: Handle<Prefab<AnimationPrefabData>
             Directions::Neutral,
         ))
         .build();
+
+    let mut gun_transform = Transform::default();
+    gun_transform.set_translation_xyz(x, y, 0.7);
+    world
+        .create_entity()
+        .named("Gun")
+        .with(Gun::new(Some(player), 8., 2.))
+        .with(gun_transform)
+        .with(Animation::new(
+            AnimationId::PlayerShoot,
+            vec![
+                AnimationId::PlayerShoot,
+                AnimationId::PlayerDuckShoot,
+                AnimationId::Holster,
+            ],
+        ))
+        .with(guns_prefab_handle)
+        .with(Direction::new(
+            Directions::Right,
+            Directions::Neutral,
+            Directions::Right,
+            Directions::Neutral,
+        ))
+        .build();
+    
 }

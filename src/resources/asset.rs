@@ -17,6 +17,7 @@ use crate::components::AnimationPrefabData;
 pub enum AssetType {
     Building,
     Player,
+    Guns,
 }
 
 #[derive(Default)]
@@ -68,6 +69,7 @@ pub fn load_assets(world: &mut World, asset_type_list: Vec<AssetType>) -> Progre
             // seems like this should live somewhere else
             AssetType::Player => ("texture/player.png", "prefabs/player.ron"),
             AssetType::Building => ("texture/building.png", "prefabs/building.ron"),
+            AssetType::Guns => ("texture/guns.png", "prefabs/guns.ron"),
         };
 
         match asset_type {
@@ -78,7 +80,7 @@ pub fn load_assets(world: &mut World, asset_type_list: Vec<AssetType>) -> Progre
                 sprite_sheet_list.insert(asset_type, sprite_sheet_handle);
             }
             // with animation
-            AssetType::Player => {
+            AssetType::Player | AssetType::Guns => {
                 let prefab_handle =
                     get_animation_prefab_handle(world, ron_path, &mut progress_counter);
                 prefab_list.insert(asset_type, prefab_handle);

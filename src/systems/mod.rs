@@ -12,5 +12,6 @@ pub use self::controls::ControlsSystem;
 pub use self::direction::DirectionSystem;
 pub use self::kinematics::KinematicsSystem;
 pub use self::kinematics::PlayerKinematicsSystem;
+pub use self::transformations::GunTransformationSystem;
 pub use self::transformations::TransformationSystem;
 

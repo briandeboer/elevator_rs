@@ -6,9 +6,7 @@ use amethyst::{
     renderer::SpriteRender,
 };
 
-use crate::components::{
-    Animation, AnimationId, Player, PlayerState,
-};
+use crate::components::{Animation, AnimationId, Player, PlayerState};
 
 #[derive(Default)]
 pub struct AnimationControlSystem;
@@ -36,10 +34,8 @@ impl<'s> System<'s> for AnimationControlSystem {
                     // This ensures they are re-added after a call to abort().
                     if !animation_control_set.has_animation(animation_id) {
                         let end = match animation_id {
-                            // AnimationId::Shoot
-                            // | AnimationId::Explode
-                            // | AnimationId::Die
-                            // | AnimationId::BulletImpact => EndControl::Stay,
+                            AnimationId::PlayerShoot
+                            | AnimationId::Idle => EndControl::Stay,
                             _ => EndControl::Loop(None),
                         };
                         animation_control_set.add_animation(
@@ -95,9 +91,7 @@ impl<'s> System<'s> for PlayerAnimationSystem {
             if animation.current != new_animation_id {
                 println!(
                     "Updating animation for entity: {:?} from={:?}, to={:?}",
-                    entity,
-                    animation.current,
-                    new_animation_id
+                    entity, animation.current, new_animation_id
                 );
 
                 animation_control_set.abort(animation.current);

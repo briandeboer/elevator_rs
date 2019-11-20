@@ -16,12 +16,15 @@ use amethyst::{
         RenderingBundle,
     },
     ui::{RenderUi, UiBundle},
-    utils::{application_root_dir},
+    utils::application_root_dir,
     Application, GameDataBuilder,
 };
 use components::{AnimationId, AnimationPrefabData};
-use systems::{AnimationControlSystem, CollisionSystem, ControlsSystem, DirectionSystem, KinematicsSystem, PlayerKinematicsSystem, PlayerAnimationSystem};
 use resources::{Map, Tileset};
+use systems::{
+    AnimationControlSystem, CollisionSystem, ControlsSystem, DirectionSystem, KinematicsSystem,
+    PlayerAnimationSystem, PlayerKinematicsSystem,
+};
 
 fn main() -> amethyst::Result<()> {
     // start logging in amethyst
@@ -37,7 +40,11 @@ fn main() -> amethyst::Result<()> {
         InputBundle::<StringBindings>::new().with_bindings_from_file(binding_path)?;
 
     let game_data = GameDataBuilder::default()
-        .with_system_desc(PrefabLoaderSystemDesc::<AnimationPrefabData>::default(), "scene_loader", &[])
+        .with_system_desc(
+            PrefabLoaderSystemDesc::<AnimationPrefabData>::default(),
+            "scene_loader",
+            &[],
+        )
         .with_bundle(AnimationBundle::<AnimationId, SpriteRender>::new(
             "sprite_animation_control",
             "sprite_sampler_interpolation",
@@ -53,7 +60,7 @@ fn main() -> amethyst::Result<()> {
         .with(ControlsSystem, "controls_system", &[])
         .with(
             PlayerKinematicsSystem,
-            "player_kinematics_system", 
+            "player_kinematics_system",
             &["controls_system"],
         )
         .with(
@@ -63,11 +70,16 @@ fn main() -> amethyst::Result<()> {
         )
         // Attach
         // PincerAi
-        .with(CollisionSystem, "collision_system", &["player_kinematics_system"])
+        .with(
+            CollisionSystem,
+            "collision_system",
+            &["player_kinematics_system"],
+        )
         // BulletCollision
         // PincerCollision
         // MarineCollision
         .with(systems::TransformationSystem, "transformations_system", &[])
+        .with(systems::GunTransformationSystem, "gun_transformations_system", &[])
         // BulletTransformation
         // BulletImpact
         .with(
@@ -78,14 +90,12 @@ fn main() -> amethyst::Result<()> {
         .with(
             AnimationControlSystem,
             "animation_control_system",
-            &[
-                "player_animation_system",
-            ],
+            &["player_animation_system"],
         )
         .with(
             DirectionSystem,
             "direction_system",
-            &[], // &["transformation_system"],
+            &["transformations_system", "gun_transformations_system"],
         )
         .with_bundle(
             RenderingBundle::<DefaultBackend>::new()
@@ -97,7 +107,8 @@ fn main() -> amethyst::Result<()> {
                 .with_plugin(RenderUi::default()),
         )?;
 
-    let mut game = Application::build(assets_dir, states::GameState::default())?.build(game_data)?;
+    let mut game =
+        Application::build(assets_dir, states::GameState::default())?.build(game_data)?;
     game.run();
 
     Ok(())

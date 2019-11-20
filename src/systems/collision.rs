@@ -3,11 +3,7 @@ use amethyst::{
     ecs::{Entities, Join, ReadStorage, System, WriteStorage},
 };
 
-use crate::{
-    components::{
-        Collider, Collidee, Motion
-    },
-};
+use crate::components::{Collidee, Collider, Motion};
 
 pub struct CollisionSystem;
 
@@ -25,7 +21,8 @@ impl<'s> System<'s> for CollisionSystem {
 
         // this doesn't seem the most efficient way to do this
         for (entity_a, collider_a, collidee, motion_a, _name_a) in
-            (&entities, &colliders, &mut collidees, &motions, &names).join() {
+            (&entities, &colliders, &mut collidees, &motions, &names).join()
+        {
             let velocity_a = motion_a.velocity;
             let bbox_a = &collider_a.bounding_box;
             let _position_a_x = bbox_a.position.x;
@@ -37,9 +34,9 @@ impl<'s> System<'s> for CollisionSystem {
                 {
                     if entity_a != entity_b {
                         let velocity_b = motion_b.velocity;
-                        let use_hit_box =
-                            (velocity_a.x * velocity_b.x != 0.) || (velocity_a.y * velocity_b.y != 0.);
-                        if collider_a.is_overlapping_with(collider_b, use_hit_box) {                            
+                        let use_hit_box = (velocity_a.x * velocity_b.x != 0.)
+                            || (velocity_a.y * velocity_b.y != 0.);
+                        if collider_a.is_overlapping_with(collider_b, use_hit_box) {
                             collidee.set_collidee_details(
                                 name_b.name.to_string(),
                                 collider_a,
@@ -48,7 +45,7 @@ impl<'s> System<'s> for CollisionSystem {
                                 velocity_b,
                                 use_hit_box,
                             );
-                        } 
+                        }
                     }
                 }
             }

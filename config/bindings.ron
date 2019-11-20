@@ -3,11 +3,14 @@
     "move": Emulated(pos: Key(Right), neg: Key(Left)),
   },
   actions: {
-        "duck": [
+        "up": [
+            [Key(Up)]
+        ],
+        "down": [
             [Key(Down)]
         ],
         "jump": [
-            [Key(Up)]
+            [Key(Z)]
         ],
         "shoot": [
             [Key(Space)]
