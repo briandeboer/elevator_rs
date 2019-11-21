@@ -23,7 +23,7 @@ use components::{AnimationId, AnimationPrefabData};
 use resources::{Map, Tileset};
 use systems::{
     AnimationControlSystem, CollisionSystem, ControlsSystem, DirectionSystem, GunAnimationSystem,
-    KinematicsSystem, PlayerAnimationSystem, PlayerKinematicsSystem,
+    KinematicsSystem, PlayerAnimationSystem, PlayerKinematicsSystem, ShootSystem,
 };
 
 fn main() -> amethyst::Result<()> {
@@ -68,7 +68,11 @@ fn main() -> amethyst::Result<()> {
             "kinematics_system",
             &["player_kinematics_system"],
         )
-        // Attach
+        .with(
+            ShootSystem,
+            "shoot_system",
+            &["kinematics_system"],
+        )
         // PincerAi
         .with(
             CollisionSystem,
@@ -79,10 +83,11 @@ fn main() -> amethyst::Result<()> {
         // PincerCollision
         // MarineCollision
         .with(systems::TransformationSystem, "transformations_system", &[])
+        .with(systems::PlayerTransformationSystem, "player_transformations_system", &["transformations_system"])
         .with(
             systems::GunTransformationSystem,
             "gun_transformations_system",
-            &[],
+            &["player_transformations_system"],
         )
         // BulletTransformation
         // BulletImpact

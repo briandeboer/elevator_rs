@@ -1,5 +1,5 @@
 use amethyst::{
-    core::Transform,
+    core::{Transform},
     ecs::{Entities, Join, ReadStorage, System, WriteStorage},
 };
 
@@ -11,18 +11,16 @@ impl<'s> System<'s> for TransformationSystem {
     type SystemData = (
         WriteStorage<'s, Collider>,
         WriteStorage<'s, Collidee>,
-        WriteStorage<'s, Player>,
         WriteStorage<'s, Motion>,
         WriteStorage<'s, Transform>,
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (mut colliders, mut collidees, mut players, mut motions, mut transforms) = data;
+        let (mut colliders, mut collidees, mut motions, mut transforms) = data;
 
-        for (collider, collidee, player, motion, transform) in (
+        for (collider, collidee, motion, transform) in (
             &mut colliders,
             &mut collidees,
-            &mut players,
             &mut motions,
             &mut transforms,
         )
@@ -48,17 +46,39 @@ impl<'s> System<'s> for TransformationSystem {
                 collider.on_ground = false;
             }
             let x = bbox.position.x;
-            let mut y = bbox.position.y;
-            if player.state == PlayerState::Ducking {
-                y -= 4.0;
-            }
+            let y = bbox.position.y;
             collider.set_hit_box_position(*velocity);
             transform.set_translation_x(x);
             transform.set_translation_y(y);
-            player.update_position(x, y);
         }
     }
 }
+
+pub struct PlayerTransformationSystem;
+
+impl<'s> System<'s> for PlayerTransformationSystem {
+    type SystemData = (
+        WriteStorage<'s, Player>,
+        WriteStorage<'s, Transform>,
+    );
+
+    fn run(&mut self, data: Self::SystemData) {
+        let (mut players, mut transforms) = data;
+
+        for (player, transform) in (&mut players, &mut transforms).join() {
+            let positions = transform.translation().clone();
+            let mut y = positions.y;
+            if player.state == PlayerState::Ducking {
+                y -= 4.0;
+                transform.set_translation_y(y);
+            }
+            player.update_position(positions.x, y);
+        }
+    }
+
+}
+
+
 
 pub struct GunTransformationSystem;
 

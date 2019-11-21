@@ -31,8 +31,10 @@ impl SimpleState for GameState {
         // world.register::<Player>();
         // world.register::<Animation>();
         world.register::<Gun>();
+        world.register::<Bullet>();
 
-        self.progress_counter = Some(load_assets(world, vec![AssetType::Player, AssetType::Guns]));
+        self.progress_counter = Some(load_assets(world, vec![
+            AssetType::Player, AssetType::Guns, AssetType::Bullet]));
         self.map_handle = {
             let loader = world.read_resource::<Loader>();
             Some(loader.load(

@@ -51,6 +51,7 @@ impl<'s> System<'s> for ControlsSystem {
                     if (time.absolute_time_seconds() - gun.last_shot_seconds) < 0.1 {
                         GunState::Shooting
                     } else {
+                        gun.spawned_bullet = false;
                         GunState::Holstered
                     }
                 };

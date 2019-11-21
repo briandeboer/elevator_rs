@@ -16,6 +16,7 @@ use crate::components::AnimationPrefabData;
 #[derive(Copy, Clone, Eq, Hash, PartialEq)]
 pub enum AssetType {
     Building,
+    Bullet,
     Player,
     Guns,
 }
@@ -30,9 +31,9 @@ impl SpriteSheetList {
         self.sprite_sheets.insert(asset_type, sprite_sheet_handle);
     }
 
-    // pub fn get(&self, asset_type: AssetType) -> Option<&SpriteSheetHandle> {
-    //     self.sprite_sheets.get(&asset_type)
-    // }
+    pub fn get(&self, asset_type: AssetType) -> Option<&SpriteSheetHandle> {
+        self.sprite_sheets.get(&asset_type)
+    }
 }
 
 #[derive(Default)]
@@ -69,12 +70,13 @@ pub fn load_assets(world: &mut World, asset_type_list: Vec<AssetType>) -> Progre
             // seems like this should live somewhere else
             AssetType::Player => ("texture/player.png", "prefabs/player.ron"),
             AssetType::Building => ("texture/building.png", "prefabs/building.ron"),
+            AssetType::Bullet => ("texture/bullet.png", "prefabs/bullet.ron"),
             AssetType::Guns => ("texture/guns.png", "prefabs/guns.ron"),
         };
 
         match asset_type {
             // without animation
-            AssetType::Building => {
+            AssetType::Building | AssetType::Bullet => {
                 let sprite_sheet_handle =
                     get_sprite_sheet_handle(world, texture_path, ron_path, &mut progress_counter);
                 sprite_sheet_list.insert(asset_type, sprite_sheet_handle);
