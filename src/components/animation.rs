@@ -26,7 +26,7 @@ pub enum AnimationId {
     Walk,
     // gun
     PlayerShoot,
-    PlayerDuckShoot,
+    PlayerJumpShoot,
     Holster, // hidden
 }
 

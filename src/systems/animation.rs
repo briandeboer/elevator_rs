@@ -6,7 +6,7 @@ use amethyst::{
     renderer::SpriteRender,
 };
 
-use crate::components::{Animation, AnimationId, Player, PlayerState};
+use crate::components::{Animation, AnimationId, Gun, GunState, Player, PlayerState};
 
 #[derive(Default)]
 pub struct AnimationControlSystem;
@@ -34,8 +34,7 @@ impl<'s> System<'s> for AnimationControlSystem {
                     // This ensures they are re-added after a call to abort().
                     if !animation_control_set.has_animation(animation_id) {
                         let end = match animation_id {
-                            AnimationId::PlayerShoot
-                            | AnimationId::Idle => EndControl::Stay,
+                            AnimationId::PlayerShoot | AnimationId::Idle => EndControl::Stay,
                             _ => EndControl::Loop(None),
                         };
                         animation_control_set.add_animation(
@@ -84,6 +83,53 @@ impl<'s> System<'s> for PlayerAnimationSystem {
                 PlayerState::Dying => AnimationId::Die,
                 PlayerState::Ducking => AnimationId::Duck,
                 _ => AnimationId::Idle,
+            };
+
+            // If the new AnimationId is different to the current one, abort the
+            // current animation and start the new one
+            if animation.current != new_animation_id {
+                println!(
+                    "Updating animation for entity: {:?} from={:?}, to={:?}",
+                    entity, animation.current, new_animation_id
+                );
+
+                animation_control_set.abort(animation.current);
+                animation_control_set.start(new_animation_id);
+
+                animation.current = new_animation_id;
+            } else if new_animation_id == AnimationId::Die {
+                animation.show = false;
+            }
+        }
+    }
+}
+
+#[derive(Default)]
+pub struct GunAnimationSystem;
+
+impl<'s> System<'s> for GunAnimationSystem {
+    type SystemData = (
+        Entities<'s>,
+        ReadStorage<'s, Gun>,
+        WriteStorage<'s, Animation>,
+        WriteStorage<'s, AnimationControlSet<AnimationId, SpriteRender>>,
+    );
+
+    fn run(&mut self, data: Self::SystemData) {
+        let (entities, guns, mut animations, mut animation_control_sets) = data;
+
+        for (entity, gun, mut animation, animation_control_set) in (
+            &entities,
+            &guns,
+            &mut animations,
+            &mut animation_control_sets,
+        )
+            .join()
+        {
+            let new_animation_id = match gun.state {
+                GunState::Shooting => AnimationId::PlayerShoot,
+                GunState::JumpShooting => AnimationId::PlayerJumpShoot,
+                _ => AnimationId::Holster,
             };
 
             // If the new AnimationId is different to the current one, abort the

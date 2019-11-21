@@ -25,6 +25,7 @@ impl SimpleState for GameState {
         let world = data.world;
 
         world.insert(Context::new());
+        
         // TODO: remove these - needed until systems are done
         // world.register::<Collider>();
         // world.register::<Player>();

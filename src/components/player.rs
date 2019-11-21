@@ -25,8 +25,8 @@ impl Default for PlayerState {
 #[storage(DenseVecStorage)]
 pub struct Player {
     pub state: PlayerState,
-    pub is_shooting: bool,
     pub is_ducking: bool,
+    pub last_jump_state: bool,
     pub jump_time: Option<f32>,
     pub width: f32,
     pub height: f32,
@@ -41,8 +41,8 @@ impl Player {
     pub fn new() -> Player {
         Player {
             state: PlayerState::Idling,
-            is_shooting: false,
             is_ducking: false,
+            last_jump_state: false,
             jump_time: None,
             width: PLAYER_WIDTH,
             height: PLAYER_HEIGHT,

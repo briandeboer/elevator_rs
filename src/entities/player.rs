@@ -13,7 +13,8 @@ use crate::components::{
 };
 
 /// Initialises one player in the middle-ish space
-pub fn load_player(world: &mut World,
+pub fn load_player(
+    world: &mut World,
     player_prefab_handle: Handle<Prefab<AnimationPrefabData>>,
     guns_prefab_handle: Handle<Prefab<AnimationPrefabData>>,
 ) {
@@ -30,7 +31,6 @@ pub fn load_player(world: &mut World,
     let bbox = &mut collider.bounding_box;
     bbox.position = Vector2::new(x + bbox.half_size.x, y - bbox.half_size.y);
     bbox.old_position = bbox.position;
-
 
     // THOUGHTS: gun should just have position offsets
     // move gun after the person moves and just adjust based on offset
@@ -69,13 +69,13 @@ pub fn load_player(world: &mut World,
     world
         .create_entity()
         .named("Gun")
-        .with(Gun::new(Some(player), 8., 2.))
+        .with(Gun::new(Some(player), 8., 2., true))
         .with(gun_transform)
         .with(Animation::new(
-            AnimationId::PlayerShoot,
+            AnimationId::Holster,
             vec![
                 AnimationId::PlayerShoot,
-                AnimationId::PlayerDuckShoot,
+                AnimationId::PlayerJumpShoot,
                 AnimationId::Holster,
             ],
         ))
@@ -87,5 +87,4 @@ pub fn load_player(world: &mut World,
             Directions::Neutral,
         ))
         .build();
-    
 }

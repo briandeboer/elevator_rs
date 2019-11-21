@@ -1,9 +1,10 @@
-use amethyst::core::{SystemDesc};
+use amethyst::core::SystemDesc;
+use amethyst::core::timing::Time;
 use amethyst::derive::SystemDesc;
 use amethyst::ecs::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage};
 use amethyst::input::{InputHandler, StringBindings};
 
-use crate::components::{Collider, Direction, Directions, Gun, Player, PlayerState};
+use crate::components::{Collider, Direction, Directions, Gun, GunState, Player, PlayerState};
 
 #[derive(SystemDesc)]
 pub struct ControlsSystem;
@@ -15,25 +16,45 @@ impl<'s> System<'s> for ControlsSystem {
         ReadStorage<'s, Collider>,
         WriteStorage<'s, Direction>,
         WriteStorage<'s, Player>,
-        ReadStorage<'s, Gun>,
+        WriteStorage<'s, Gun>,
         Read<'s, InputHandler<StringBindings>>,
+        Read<'s, Time>,
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (colliders, mut directions, mut players, guns, input) = data;
+        let (colliders, mut directions, mut players, mut guns, input, time) = data;
 
-        for (maybe_collider, direction, maybe_player, _maybe_gun) in
-            (colliders.maybe(), &mut directions, (&mut players).maybe(), guns.maybe()).join()
+        for (maybe_collider, direction, maybe_player, maybe_gun) in (
+            colliders.maybe(),
+            &mut directions,
+            (&mut players).maybe(),
+            (&mut guns).maybe(),
+        )
+            .join()
         {
             let move_input = input.axis_value("move").expect("Move action exists");
             let jump_input = input.action_is_down("jump").expect("Jump action exists");
-            let _shoot_input = input.action_is_down("shoot").expect("Shoot action exists");
+            let shoot_input = input.action_is_down("shoot").expect("Shoot action exists");
             let down_input = input.action_is_down("down").expect("Down action exists");
 
             if move_input > 0. {
                 direction.x = Directions::Right;
             } else if move_input < 0. {
                 direction.x = Directions::Left;
+            }
+
+            if let Some(gun) = maybe_gun {
+                gun.state = if shoot_input && !gun.last_shoot_state {
+                    gun.last_shot_seconds = time.absolute_time_seconds();
+                    GunState::Shooting
+                } else {
+                    if (time.absolute_time_seconds() - gun.last_shot_seconds) < 0.1 {
+                        GunState::Shooting
+                    } else {
+                        GunState::Holstered
+                    }
+                };
+                gun.last_shoot_state = shoot_input;
             }
 
             if let Some(player) = maybe_player {
@@ -44,7 +65,7 @@ impl<'s> System<'s> for ControlsSystem {
                         }
                     }
 
-                    player.state = if jump_input {
+                    player.state = if jump_input && !player.last_jump_state {
                         PlayerState::Jumping
                     } else if collider.on_ground {
                         if down_input {
@@ -64,6 +85,7 @@ impl<'s> System<'s> for ControlsSystem {
                         PlayerState::Idling
                     }
                 }
+                player.last_jump_state = jump_input;
             }
         }
     }
