@@ -1,0 +1,101 @@
+#![enable(implicit_some)]
+Prefab(
+    entities: [
+        // Player
+        PrefabEntity(
+            data: AnimationPrefabData(
+                // SpriteScenePrefab
+                sprite_scene: (
+                    // SpriteSheetPrefab with index 0
+                    sheet: Sheet(
+                        // TexturePrefab
+                        texture: File("texture/bullet_impact.png", (
+                            "IMAGE", (
+                                sampler_info: (
+                                    min_filter: Nearest,
+                                    mag_filter: Nearest,
+                                    mip_filter: Nearest,
+                                    wrap_mode: (Tile, Tile, Tile),
+                                    lod_bias: (0),
+                                    lod_range: (
+                                        start: ( 0 ),
+                                        end: ( 8000 ),
+                                    ),
+                                    comparison: None,
+                                    border: (0),
+                                    anisotropic: Off,
+                                ),
+                            ),
+                        )),
+                        // sprites
+                        sprites: [
+                            List((
+                                texture_width: 33,
+                                texture_height: 13,
+                                sprites: [
+                                    (
+                                        // 0: bullet_0.png
+                                        x: 0,
+                                        y: 0,
+                                        width: 6,
+                                        height: 3,
+                                        offsets: (0, 0),
+                                    ),
+                                    (
+                                        // 1: impact_00.png
+                                        x: 11,
+                                        y: 0,
+                                        width: 11,
+                                        height: 13,
+                                        offsets: (0, 0),
+                                    ),
+                                    (
+                                        // 2: impact_01.png
+                                        x: 22,
+                                        y: 0,
+                                        width: 11,
+                                        height: 13,
+                                        offsets: (0, 0),
+                                    )
+                                ]
+                            ))
+                        ],
+                        // optional
+                        name: "bullet_impact",
+                    ),
+                    // SpriteRenderPrefab
+                    render: (
+                        sheet: "bullet_impact",
+                        sprite_number: 1,
+                    ),
+                ),
+                // AnimationSetPrefab
+                animation_set: (
+                    animations: [
+                        (
+                            // AnimationId
+                            BulletImpact,
+                            (
+                                samplers: [
+                                    (
+                                        0,
+                                        // Only SpriteIndex channel allowed for SpriteRender in AnimationSetPrefab
+                                        SpriteIndex,
+                                        (
+                                            // Time of key frames
+                                            input: [0.0, 0.05, 0.1],
+                                            // Sprite indexes from SpriteSheet for key frames
+                                            output: [1, 2],
+                                            // Sprites can only ever be animated with Step
+                                            function: Step,
+                                        ),
+                                    ),
+                                ],
+                            ),
+                        ),
+                    ],
+                ),
+            ),
+        ),
+    ],
+)

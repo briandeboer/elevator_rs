@@ -25,7 +25,7 @@ impl SimpleState for GameState {
         let world = data.world;
 
         world.insert(Context::new());
-        
+
         // TODO: remove these - needed until systems are done
         // world.register::<Collider>();
         // world.register::<Player>();
@@ -33,8 +33,15 @@ impl SimpleState for GameState {
         world.register::<Gun>();
         world.register::<Bullet>();
 
-        self.progress_counter = Some(load_assets(world, vec![
-            AssetType::Player, AssetType::Guns, AssetType::Bullet]));
+        self.progress_counter = Some(load_assets(
+            world,
+            vec![
+                AssetType::Player,
+                AssetType::Guns,
+                AssetType::Bullet,
+                AssetType::BulletImpact,
+            ],
+        ));
         self.map_handle = {
             let loader = world.read_resource::<Loader>();
             Some(loader.load(

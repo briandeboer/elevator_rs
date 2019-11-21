@@ -1,5 +1,5 @@
 use amethyst::{
-    core::{Transform},
+    core::Transform,
     ecs::{Entities, Join, ReadStorage, System, WriteStorage},
 };
 
@@ -9,6 +9,7 @@ pub struct TransformationSystem;
 
 impl<'s> System<'s> for TransformationSystem {
     type SystemData = (
+        WriteStorage<'s, Player>,
         WriteStorage<'s, Collider>,
         WriteStorage<'s, Collidee>,
         WriteStorage<'s, Motion>,
@@ -16,9 +17,10 @@ impl<'s> System<'s> for TransformationSystem {
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (mut colliders, mut collidees, mut motions, mut transforms) = data;
+        let (mut players, mut colliders, mut collidees, mut motions, mut transforms) = data;
 
-        for (collider, collidee, motion, transform) in (
+        for (maybe_player, collider, collidee, motion, transform) in (
+            (&mut players).maybe(),
             &mut colliders,
             &mut collidees,
             &mut motions,
@@ -46,39 +48,20 @@ impl<'s> System<'s> for TransformationSystem {
                 collider.on_ground = false;
             }
             let x = bbox.position.x;
-            let y = bbox.position.y;
+            let mut y = bbox.position.y;
             collider.set_hit_box_position(*velocity);
+            if let Some(player) = maybe_player {
+                if player.state == PlayerState::Ducking {
+                    y -= 4.0;
+                }
+                player.update_position(x, y);
+            }
+
             transform.set_translation_x(x);
             transform.set_translation_y(y);
         }
     }
 }
-
-pub struct PlayerTransformationSystem;
-
-impl<'s> System<'s> for PlayerTransformationSystem {
-    type SystemData = (
-        WriteStorage<'s, Player>,
-        WriteStorage<'s, Transform>,
-    );
-
-    fn run(&mut self, data: Self::SystemData) {
-        let (mut players, mut transforms) = data;
-
-        for (player, transform) in (&mut players, &mut transforms).join() {
-            let positions = transform.translation().clone();
-            let mut y = positions.y;
-            if player.state == PlayerState::Ducking {
-                y -= 4.0;
-                transform.set_translation_y(y);
-            }
-            player.update_position(positions.x, y);
-        }
-    }
-
-}
-
-
 
 pub struct GunTransformationSystem;
 

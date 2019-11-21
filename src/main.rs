@@ -22,8 +22,9 @@ use amethyst::{
 use components::{AnimationId, AnimationPrefabData};
 use resources::{Map, Tileset};
 use systems::{
-    AnimationControlSystem, CollisionSystem, ControlsSystem, DirectionSystem, GunAnimationSystem,
-    KinematicsSystem, PlayerAnimationSystem, PlayerKinematicsSystem, ShootSystem,
+    AnimationControlSystem, BulletCollisionSystem, BulletImpactAnimationSystem, CollisionSystem,
+    ControlsSystem, DirectionSystem, GunAnimationSystem, KinematicsSystem, PlayerAnimationSystem,
+    PlayerKinematicsSystem, ShootSystem,
 };
 
 fn main() -> amethyst::Result<()> {
@@ -68,29 +69,29 @@ fn main() -> amethyst::Result<()> {
             "kinematics_system",
             &["player_kinematics_system"],
         )
-        .with(
-            ShootSystem,
-            "shoot_system",
-            &["kinematics_system"],
-        )
+        .with(ShootSystem, "shoot_system", &["kinematics_system"])
         // PincerAi
+        .with(CollisionSystem, "collision_system", &["shoot_system"])
         .with(
-            CollisionSystem,
-            "collision_system",
-            &["player_kinematics_system"],
+            BulletCollisionSystem,
+            "bullet_collision_system",
+            &["collision_system"],
         )
-        // BulletCollision
         // PincerCollision
         // MarineCollision
         .with(systems::TransformationSystem, "transformations_system", &[])
-        .with(systems::PlayerTransformationSystem, "player_transformations_system", &["transformations_system"])
         .with(
             systems::GunTransformationSystem,
             "gun_transformations_system",
-            &["player_transformations_system"],
+            &["transformations_system"],
         )
         // BulletTransformation
         // BulletImpact
+        .with(
+            BulletImpactAnimationSystem,
+            "bullet_impact_animation_system",
+            &[],
+        )
         .with(
             PlayerAnimationSystem,
             "player_animation_system",

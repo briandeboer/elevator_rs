@@ -6,7 +6,7 @@ use amethyst::{
     renderer::SpriteRender,
 };
 
-use crate::components::{Animation, AnimationId, Gun, GunState, Player, PlayerState};
+use crate::components::{Animation, AnimationId, BulletImpact, Gun, GunState, Player, PlayerState};
 
 #[derive(Default)]
 pub struct AnimationControlSystem;
@@ -34,7 +34,9 @@ impl<'s> System<'s> for AnimationControlSystem {
                     // This ensures they are re-added after a call to abort().
                     if !animation_control_set.has_animation(animation_id) {
                         let end = match animation_id {
-                            AnimationId::PlayerShoot | AnimationId::Idle => EndControl::Stay,
+                            AnimationId::PlayerShoot
+                            | AnimationId::Idle
+                            | AnimationId::BulletImpact => EndControl::Stay,
                             _ => EndControl::Loop(None),
                         };
                         animation_control_set.add_animation(
@@ -68,7 +70,7 @@ impl<'s> System<'s> for PlayerAnimationSystem {
     fn run(&mut self, data: Self::SystemData) {
         let (entities, players, mut animations, mut animation_control_sets) = data;
 
-        for (entity, player, mut animation, animation_control_set) in (
+        for (_, player, mut animation, animation_control_set) in (
             &entities,
             &players,
             &mut animations,
@@ -88,11 +90,6 @@ impl<'s> System<'s> for PlayerAnimationSystem {
             // If the new AnimationId is different to the current one, abort the
             // current animation and start the new one
             if animation.current != new_animation_id {
-                println!(
-                    "Updating animation for entity: {:?} from={:?}, to={:?}",
-                    entity, animation.current, new_animation_id
-                );
-
                 animation_control_set.abort(animation.current);
                 animation_control_set.start(new_animation_id);
 
@@ -118,7 +115,7 @@ impl<'s> System<'s> for GunAnimationSystem {
     fn run(&mut self, data: Self::SystemData) {
         let (entities, guns, mut animations, mut animation_control_sets) = data;
 
-        for (entity, gun, mut animation, animation_control_set) in (
+        for (_, gun, mut animation, animation_control_set) in (
             &entities,
             &guns,
             &mut animations,
@@ -135,17 +132,48 @@ impl<'s> System<'s> for GunAnimationSystem {
             // If the new AnimationId is different to the current one, abort the
             // current animation and start the new one
             if animation.current != new_animation_id {
-                println!(
-                    "Updating animation for entity: {:?} from={:?}, to={:?}",
-                    entity, animation.current, new_animation_id
-                );
-
                 animation_control_set.abort(animation.current);
                 animation_control_set.start(new_animation_id);
 
                 animation.current = new_animation_id;
-            } else if new_animation_id == AnimationId::Die {
+            }
+        }
+    }
+}
+
+pub struct BulletImpactAnimationSystem;
+
+impl<'s> System<'s> for BulletImpactAnimationSystem {
+    type SystemData = (
+        Entities<'s>,
+        ReadStorage<'s, BulletImpact>,
+        WriteStorage<'s, Animation>,
+        WriteStorage<'s, AnimationControlSet<AnimationId, SpriteRender>>,
+    );
+
+    fn run(&mut self, data: Self::SystemData) {
+        let (entities, bullet_impacts, mut animations, mut animation_control_sets) = data;
+
+        for (entity, _, mut animation, animation_control_set) in (
+            &entities,
+            &bullet_impacts,
+            &mut animations,
+            &mut animation_control_sets,
+        )
+            .join()
+        {
+            if animation.show {
+                animation_control_set.start(animation.current);
                 animation.show = false;
+            } else {
+                let bullet_impact_animation = animation_control_set
+                    .animations
+                    .iter()
+                    .find(|(id, _)| *id == AnimationId::BulletImpact);
+
+                if bullet_impact_animation.is_none() {
+                    let _ = entities.delete(entity);
+                }
             }
         }
     }

@@ -63,6 +63,7 @@ impl Collidee {
         use_hit_box: bool,
     ) {
         let (box_a, box_b) = if use_hit_box {
+            println!("DEBUG: use hit box");
             (&collider_a.hit_box, &collider_b.hit_box)
         } else {
             (&collider_a.bounding_box, &collider_b.bounding_box)

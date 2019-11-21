@@ -87,7 +87,7 @@ impl Map {
                 let bbox = &mut collider.bounding_box;
                 let x = offset_x + obj.x;
                 let y = offset_y - obj.y;
-                transform.set_translation_z(0.0);
+                transform.set_translation_z(-10.0);
                 println!(
                     "### Adding collision object {}, x: {}, y: {}, width: {}, height: {} ###",
                     obj.name, x, y, obj.width, obj.height
