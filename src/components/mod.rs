@@ -2,6 +2,7 @@ mod animation;
 mod bullet;
 mod collision;
 mod direction;
+mod elevator;
 mod gun;
 mod motion;
 mod player;
@@ -18,6 +19,10 @@ pub use self::collision::Collider;
 
 pub use self::direction::Direction;
 pub use self::direction::Directions;
+
+pub use self::elevator::Elevator;
+pub use self::elevator::ElevatorBottom;
+pub use self::elevator::ElevatorTop;
 
 pub use self::motion::Motion;
 

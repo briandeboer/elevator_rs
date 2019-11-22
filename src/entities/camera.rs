@@ -6,7 +6,7 @@ use crate::states::{GAME_HEIGHT, GAME_WIDTH};
 pub fn init_camera(world: &mut World) {
     // Setup camera in a way that our screen covers whole arena and (0, 0) is in the bottom left.
     let mut transform = Transform::default();
-    transform.set_translation_xyz(GAME_WIDTH * 0.5, GAME_HEIGHT * 0.5, 1.0);
+    transform.set_translation_xyz(GAME_WIDTH * 0.5, GAME_HEIGHT * 0.5, 10.0);
 
     world
         .create_entity()

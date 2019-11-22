@@ -110,7 +110,7 @@ pub fn show_bullet_impact(
     transform.set_scale(Vector3::new(scale, scale, scale));
     transform.set_translation_x(impact_position_x);
     transform.set_translation_y(impact_position_y);
-    transform.set_translation_z(0.5);
+    transform.set_translation_z(1.0);
 
     lazy_update.insert(bullet_impact_entity, BulletImpact::default());
     lazy_update.insert(bullet_impact_entity, Named::new("BulletImpact"));

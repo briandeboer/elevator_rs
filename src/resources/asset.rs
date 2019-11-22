@@ -18,6 +18,7 @@ pub enum AssetType {
     Building,
     Bullet,
     BulletImpact,
+    Elevator,
     Player,
     Guns,
 }
@@ -73,12 +74,13 @@ pub fn load_assets(world: &mut World, asset_type_list: Vec<AssetType>) -> Progre
             AssetType::Building => ("texture/building.png", "prefabs/building.ron"),
             AssetType::Bullet => ("texture/bullet.png", "prefabs/bullet.ron"),
             AssetType::BulletImpact => ("texture/bullet_impact.png", "prefabs/bullet_impact.ron"),
+            AssetType::Elevator => ("texture/elevator.png", "prefabs/elevator.ron"),
             AssetType::Guns => ("texture/guns.png", "prefabs/guns.ron"),
         };
 
         match asset_type {
             // without animation
-            AssetType::Building | AssetType::Bullet => {
+            AssetType::Building | AssetType::Bullet | AssetType::Elevator => {
                 let sprite_sheet_handle =
                     get_sprite_sheet_handle(world, texture_path, ron_path, &mut progress_counter);
                 sprite_sheet_list.insert(asset_type, sprite_sheet_handle);

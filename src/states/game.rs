@@ -4,8 +4,8 @@ use amethyst::{
 };
 
 use crate::components::*;
-use crate::entities::{init_camera, load_player};
-use crate::resources::{load_assets, AssetType, Context, Map, PrefabList, Tileset};
+use crate::entities::{init_camera, load_player, load_elevator};
+use crate::resources::{load_assets, AssetType, Context, Map, PrefabList, SpriteSheetList, Tileset};
 
 // TODO: move these to a resource
 pub const GAME_WIDTH: f32 = 208.0;
@@ -27,11 +27,9 @@ impl SimpleState for GameState {
         world.insert(Context::new());
 
         // TODO: remove these - needed until systems are done
-        // world.register::<Collider>();
-        // world.register::<Player>();
-        // world.register::<Animation>();
-        world.register::<Gun>();
-        world.register::<Bullet>();
+        world.register::<Elevator>();
+        world.register::<ElevatorBottom>();
+        world.register::<ElevatorTop>();
 
         self.progress_counter = Some(load_assets(
             world,
@@ -40,6 +38,7 @@ impl SimpleState for GameState {
                 AssetType::Guns,
                 AssetType::Bullet,
                 AssetType::BulletImpact,
+                AssetType::Elevator,
             ],
         ));
         self.map_handle = {
@@ -97,7 +96,12 @@ impl SimpleState for GameState {
                 println!("### Loading player ###");
                 load_player(data.world, player_prefab_handle, guns_prefab_handle);
 
-                println!("### Loading building ###");
+                println!("### Loading elevator ###");
+                let elevator_sprite_sheet_handle = {
+                    let sprite_sheet_list = data.world.read_resource::<SpriteSheetList>();
+                    sprite_sheet_list.get(AssetType::Elevator).unwrap().clone()
+                };
+                load_elevator(data.world, elevator_sprite_sheet_handle);
                 self.progress_counter = None;
             } else {
                 println!(

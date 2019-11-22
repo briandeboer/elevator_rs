@@ -131,7 +131,7 @@ impl Map {
                 // TODO: make these not hardcoded
                 let x = 4.0 + TILE_SIZE * (index % NUM_COLUMNS) as f32;
                 let y = Y_OFFSET - (TILE_SIZE * (index / NUM_COLUMNS) as f32);
-                tile_transform.set_translation_xyz(x, y, 0.0);
+                tile_transform.set_translation_xyz(x, y, -10.0);
                 world
                     .create_entity()
                     .named("map_tile")
