@@ -1,5 +1,6 @@
 mod animation;
 mod bullet;
+mod child;
 mod collision;
 mod direction;
 mod elevator;
@@ -14,6 +15,8 @@ pub use self::animation::AnimationPrefabData;
 pub use self::bullet::Bullet;
 pub use self::bullet::BulletImpact;
 
+pub use self::child::Child;
+
 pub use self::collision::Collidee;
 pub use self::collision::Collider;
 
@@ -21,8 +24,7 @@ pub use self::direction::Direction;
 pub use self::direction::Directions;
 
 pub use self::elevator::Elevator;
-pub use self::elevator::ElevatorBottom;
-pub use self::elevator::ElevatorTop;
+pub use self::elevator::ElevatorComponent;
 
 pub use self::motion::Motion;
 

@@ -85,6 +85,11 @@ fn main() -> amethyst::Result<()> {
             "gun_transformations_system",
             &["transformations_system"],
         )
+        .with(
+            systems::ElevatorTransformationSystem,
+            "elevator_transformations_system",
+            &["transformations_system"],
+        )
         // BulletTransformation
         // BulletImpact
         .with(

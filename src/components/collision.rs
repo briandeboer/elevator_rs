@@ -63,7 +63,6 @@ impl Collidee {
         use_hit_box: bool,
     ) {
         let (box_a, box_b) = if use_hit_box {
-            println!("DEBUG: use hit box");
             (&collider_a.hit_box, &collider_b.hit_box)
         } else {
             (&collider_a.bounding_box, &collider_b.bounding_box)
@@ -140,6 +139,7 @@ pub struct Collider {
     pub hit_box: GenericBox,
     pub hit_box_offset: Vector2<f32>,
     pub on_ground: bool,
+    pub on_elevator: bool,
     pub hit_box_offset_front: f32,
     pub hit_box_offset_back: f32,
     pub is_collidable: bool,
@@ -152,6 +152,7 @@ impl Default for Collider {
             hit_box: GenericBox::default(),
             hit_box_offset: Vector2::new(0., 0.),
             on_ground: false,
+            on_elevator: false,
             hit_box_offset_front: 0.,
             hit_box_offset_back: 0.,
             is_collidable: true,

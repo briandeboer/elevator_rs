@@ -1,29 +1,35 @@
-use amethyst::ecs::{Component, DenseVecStorage, Entity};
+use amethyst::{
+    core::math::Vector3,
+    ecs::{Component, DenseVecStorage},
+};
 
 #[derive(Component)]
 #[storage(DenseVecStorage)]
-pub struct ElevatorTop {
-    pub parent: Entity,
+pub struct ElevatorComponent {
+    pub name: &'static str,
+    pub sprite_number: usize,
+    pub width: f32,
+    pub height: f32,
+    pub offsets: Vector3<f32>,
+    pub is_collidable: bool,
 }
 
-impl ElevatorTop {
-    pub fn new(parent: Entity) -> Self {
-        ElevatorTop {
-            parent,
-        }
-    }
-}
-
-#[derive(Component)]
-#[storage(DenseVecStorage)]
-pub struct ElevatorBottom {
-    pub parent: Entity,
-}
-
-impl ElevatorBottom {
-    pub fn new(parent: Entity) -> Self {
-        ElevatorBottom {
-            parent,
+impl ElevatorComponent {
+    pub fn new(
+        name: &'static str,
+        sprite_number: usize,
+        width: f32,
+        height: f32,
+        offsets: Vector3<f32>,
+        is_collidable: bool,
+    ) -> Self {
+        ElevatorComponent {
+            name,
+            sprite_number,
+            width,
+            height,
+            offsets,
+            is_collidable,
         }
     }
 }
@@ -31,15 +37,11 @@ impl ElevatorBottom {
 #[derive(Component, Default)]
 #[storage(DenseVecStorage)]
 pub struct Elevator {
-    pub pos_x: f32,
-    pub pos_y: f32,
+    pub velocity: f32,
 }
 
 impl Elevator {
-    pub fn new() -> Self {
-        Elevator {
-            pos_x: 0.,
-            pos_y: 0.,
-        }
+    pub fn new(velocity: f32) -> Self {
+        Elevator { velocity }
     }
 }

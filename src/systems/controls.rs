@@ -38,8 +38,7 @@ impl<'s> System<'s> for ControlsSystem {
                 let jump_input = input.action_is_down("jump").expect("Jump action exists");
                 let shoot_input = input.action_is_down("shoot").expect("Shoot action exists");
                 let down_input = input.action_is_down("down").expect("Down action exists");
-            
-            
+
                 if move_input > 0. {
                     direction.x = Directions::Right;
                 } else if move_input < 0. {
@@ -72,7 +71,7 @@ impl<'s> System<'s> for ControlsSystem {
                         player.state = if jump_input && !player.last_jump_state {
                             PlayerState::Jumping
                         } else if collider.on_ground {
-                            if down_input {
+                            if down_input && !collider.on_elevator {
                                 if !player.is_ducking {
                                     player.is_ducking = true;
                                 }

@@ -12,8 +12,6 @@ pub struct Bullet {
 
 impl Bullet {
     pub fn new(parent: Option<Entity>) -> Self {
-        Bullet {
-            parent,
-        }
+        Bullet { parent }
     }
 }

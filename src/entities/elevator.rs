@@ -1,81 +1,103 @@
 use amethyst::{
     core::{
-        math::Vector2,
-        WithNamed, Transform,
+        math::{Vector2, Vector3},
+        Transform, WithNamed,
     },
-    ecs::{Builder, World, WorldExt},
+    ecs::{Builder, Entity, World, WorldExt},
     renderer::{sprite::SpriteSheetHandle, SpriteRender},
 };
 
-use crate::components::{
-    Collidee, Collider, Elevator, ElevatorBottom, ElevatorTop, Motion,
-};
+use crate::components::{Child, Collidee, Collider, Elevator, ElevatorComponent, Motion};
 
 const ELEVATOR_START_X: f32 = 116.0;
-const ELEVATOR_START_Y: f32 = 80.0;
+const ELEVATOR_START_Y: f32 = 40.0;
+const ELEVATOR_START_Z: f32 = 0.;
 const ELEVATOR_OFFSET: f32 = 24.;
+const VELOCITY: f32 = 10.0;
 
-pub fn load_elevator(
+fn create_elevator_component(
     world: &mut World,
+    elevator_entity: Entity,
+    component: ElevatorComponent,
     sprite_sheet_handle: SpriteSheetHandle,
 ) {
-    // body of the elevator
-    let mut transform = Transform::default();
-    transform.set_translation_xyz(ELEVATOR_START_X, ELEVATOR_START_Y, 0.);
-    let sprite_render = SpriteRender {
-        sprite_sheet: sprite_sheet_handle.clone(),
-        sprite_number: 2, // inside color
+    let render = SpriteRender {
+        sprite_sheet: sprite_sheet_handle,
+        sprite_number: component.sprite_number,
     };
-    let elevator = world
+    let mut transform = Transform::default();
+    let mut collider = Collider::new(component.width, component.height);
+    collider.is_collidable = component.is_collidable;
+    let bbox = &mut collider.bounding_box;
+    bbox.position = Vector2::new(
+        ELEVATOR_START_X + component.offsets.x,
+        ELEVATOR_START_Y + component.offsets.y,
+    );
+    bbox.old_position = bbox.position;
+    transform.set_translation_z(ELEVATOR_START_Z + component.offsets.z);
+    let mut motion = Motion::new();
+    motion.velocity.y = VELOCITY;
+    let collidable = component.is_collidable;
+    let offsets = component.offsets;
+    let entity = world
+        .create_entity()
+        .named(component.name)
+        .with(component)
+        .with(Child::new(
+            elevator_entity,
+            ELEVATOR_START_X + offsets.x,
+            ELEVATOR_START_Y + offsets.y,
+            offsets.z,
+        ))
+        // .with(collider)
+        // .with(Collidee::default())
+        .with(motion)
+        .with(render)
+        .with(transform)
+        .build();
+}
+
+pub fn load_elevator(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) {
+    // parent component
+    let mut transform = Transform::default();
+    transform.set_translation_xyz(ELEVATOR_START_X, ELEVATOR_START_Y, ELEVATOR_START_Z);
+    let mut elevator = Elevator::default();
+    elevator.velocity = VELOCITY;
+    let elevator_entity = world
         .create_entity()
         .named("Elevator")
-        .with(sprite_render)
-        .with(Elevator::new())
+        .with(elevator)
+        .with(Collidee::default())
         .with(transform)
         .build();
 
-    // top
-    let top_render = SpriteRender {
-        sprite_sheet: sprite_sheet_handle.clone(),
-        sprite_number: 3,
-    };
-    let mut top_transform = Transform::default();
-    let mut top_collider = Collider::new(16., 8.);
-    let top_bbox = &mut top_collider.bounding_box;
-    top_bbox.position = Vector2::new(ELEVATOR_START_X, ELEVATOR_START_Y + ELEVATOR_OFFSET);
-    top_bbox.old_position = top_bbox.position;
-    top_transform.set_translation_z(0.5);
-    let _top = world
-        .create_entity()
-        .named("ElevatorTop")
-        .with(ElevatorTop::new(elevator))
-        .with(top_collider)
-        .with(Collidee::default())
-        .with(top_render)
-        .with(top_transform)
-        .with(Motion::new())
-        .build();
+    let bottom = ElevatorComponent::new(
+        "ElevatorBottom",
+        0,
+        16.,
+        8.,
+        Vector3::new(0., -ELEVATOR_OFFSET, 0.),
+        true,
+    );
+    create_elevator_component(world, elevator_entity, bottom, sprite_sheet_handle.clone());
 
-    // bottom
-    let bottom_render = SpriteRender {
-        sprite_sheet: sprite_sheet_handle.clone(),
-        sprite_number: 0,
-    };
-    let mut bottom_transform = Transform::default();
-    let mut bottom_collider = Collider::new(16., 8.);
-    let bottom_bbox = &mut bottom_collider.bounding_box;
-    bottom_bbox.position = Vector2::new(ELEVATOR_START_X, ELEVATOR_START_Y - ELEVATOR_OFFSET);
-    bottom_bbox.old_position = bottom_bbox.position;
-    bottom_transform.set_translation_z(0.5);
-    let _top = world
-        .create_entity()
-        .named("ElevatorBottom")
-        .with(ElevatorBottom::new(elevator))
-        .with(bottom_collider)
-        .with(Collidee::default())
-        .with(Motion::new())
-        .with(bottom_render)
-        .with(bottom_transform)
-        .build();
+    let inside = ElevatorComponent::new(
+        "ElevatorInside",
+        2,
+        24.,
+        40.,
+        Vector3::new(0., 0., 0.),
+        false,
+    );
+    create_elevator_component(world, elevator_entity, inside, sprite_sheet_handle.clone());
 
+    // let top = ElevatorComponent::new(
+    //     "ElevatorTop",
+    //     3,
+    //     16.,
+    //     8.,
+    //     Vector3::new(0., ELEVATOR_OFFSET, 0.),
+    //     true,
+    // );
+    // create_elevator_component(world, elevator_entity, top, sprite_sheet_handle);
 }

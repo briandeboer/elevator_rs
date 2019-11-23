@@ -3,13 +3,16 @@ use amethyst::{
     ecs::{Entities, Join, ReadStorage, System, WriteStorage},
 };
 
-use crate::components::{Collidee, Collider, Direction, Gun, Motion, Player, PlayerState};
+use crate::components::{
+    Collidee, Collider, Direction, Elevator, ElevatorComponent, Gun, Motion, Player, PlayerState,
+};
 
 pub struct TransformationSystem;
 
 impl<'s> System<'s> for TransformationSystem {
     type SystemData = (
         WriteStorage<'s, Player>,
+        WriteStorage<'s, Elevator>,
         WriteStorage<'s, Collider>,
         WriteStorage<'s, Collidee>,
         WriteStorage<'s, Motion>,
@@ -17,10 +20,12 @@ impl<'s> System<'s> for TransformationSystem {
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (mut players, mut colliders, mut collidees, mut motions, mut transforms) = data;
+        let (mut players, mut elevators, mut colliders, mut collidees, mut motions, mut transforms) =
+            data;
 
-        for (maybe_player, collider, collidee, motion, transform) in (
+        for (maybe_player, maybe_elevator, collider, collidee, motion, transform) in (
             (&mut players).maybe(),
+            (&mut elevators).maybe(),
             &mut colliders,
             &mut collidees,
             &mut motions,
@@ -31,6 +36,9 @@ impl<'s> System<'s> for TransformationSystem {
             let bbox = &mut collider.bounding_box;
             let velocity = &mut motion.velocity;
 
+            let x = bbox.position.x;
+            let mut y = bbox.position.y;
+
             if let Some(collidee_horizontal) = collidee.horizontal.take() {
                 bbox.position.x -= collidee_horizontal.correction;
                 velocity.x = 0.;
@@ -40,6 +48,11 @@ impl<'s> System<'s> for TransformationSystem {
                 velocity.y = 0.;
                 if collidee_vertical.correction < 0. {
                     collider.on_ground = true;
+                    collider.on_elevator = if collidee_vertical.name == "ElevatorBottom" {
+                        true
+                    } else {
+                        false
+                    };
                 }
             }
             // FIXME: Due to the take() operation above, collidee.vertical will always be NONE.
@@ -47,8 +60,7 @@ impl<'s> System<'s> for TransformationSystem {
             if velocity.y != 0. {
                 collider.on_ground = false;
             }
-            let x = bbox.position.x;
-            let mut y = bbox.position.y;
+            
             collider.set_hit_box_position(*velocity);
             if let Some(player) = maybe_player {
                 if player.state == PlayerState::Ducking {
@@ -56,6 +68,11 @@ impl<'s> System<'s> for TransformationSystem {
                 }
                 player.update_position(x, y);
             }
+
+            // FIXME: move this
+            // if let Some(elevator) = maybe_elevator {
+            //     elevator.update_position(x, y);
+            // }
 
             transform.set_translation_x(x);
             transform.set_translation_y(y);
@@ -92,5 +109,47 @@ impl<'s> System<'s> for GunTransformationSystem {
                 }
             }
         }
+    }
+}
+
+pub struct ElevatorTransformationSystem;
+
+impl<'s> System<'s> for ElevatorTransformationSystem {
+    type SystemData = (
+        Entities<'s>,
+        WriteStorage<'s, Collider>,
+        ReadStorage<'s, Elevator>,
+        ReadStorage<'s, ElevatorComponent>,
+        WriteStorage<'s, Transform>,
+    );
+
+    fn run(&mut self, data: Self::SystemData) {
+        // let (entities, mut colliders, elevators, components, mut transforms) = data;
+        // // loop through all guns and get the parent entity
+        // for (_, transform) in
+        //     (&components, &mut transforms).join()
+        // {
+        //     // TODO: clean up duplication of code
+        //     // if let Some(top) = maybe_top {
+        //     //     for (entity, collider, elevator) in (&entities, &mut colliders, &elevators).join() {
+        //     //         if entity == top.parent {
+        //     //             // transform.set_translation_y(elevator.pos_y + 24.);
+        //     //             let bbox = &mut collider.bounding_box;
+        //     //             bbox.position.y = elevator.pos_y;
+        //     //             bbox.old_position = bbox.position;
+        //     //         }
+        //     //     }
+        //     // }
+        //     // if let Some(bottom) = maybe_bottom {
+        //     //     for (entity, collider, elevator) in (&entities, &mut colliders, &elevators).join() {
+        //     //         if entity == bottom.parent {
+        //     //             // transform.set_translation_y(elevator.pos_y - 24.);
+        //     //             let bbox = &mut collider.bounding_box;
+        //     //             bbox.position.y = elevator.pos_y;
+        //     //             bbox.old_position = bbox.position;
+        //     //         }
+        //     //     }
+        //     // }
+        // }
     }
 }

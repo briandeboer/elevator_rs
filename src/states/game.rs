@@ -4,8 +4,10 @@ use amethyst::{
 };
 
 use crate::components::*;
-use crate::entities::{init_camera, load_player, load_elevator};
-use crate::resources::{load_assets, AssetType, Context, Map, PrefabList, SpriteSheetList, Tileset};
+use crate::entities::{init_camera, load_elevator, load_player};
+use crate::resources::{
+    load_assets, AssetType, Context, Map, PrefabList, SpriteSheetList, Tileset,
+};
 
 // TODO: move these to a resource
 pub const GAME_WIDTH: f32 = 208.0;
@@ -27,9 +29,9 @@ impl SimpleState for GameState {
         world.insert(Context::new());
 
         // TODO: remove these - needed until systems are done
+        world.register::<Child>();
         world.register::<Elevator>();
-        world.register::<ElevatorBottom>();
-        world.register::<ElevatorTop>();
+        world.register::<ElevatorComponent>();
 
         self.progress_counter = Some(load_assets(
             world,
