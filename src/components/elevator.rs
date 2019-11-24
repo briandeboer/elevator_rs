@@ -41,11 +41,23 @@ impl ElevatorComponent {
 #[derive(Component, Default)]
 #[storage(DenseVecStorage)]
 pub struct Elevator {
+    pub boundary_top: f32,
+    pub boundary_bottom: f32,
+    pub num_floors: i32,
     pub velocity: f32,
+    pub current_floor: i32,
+    pub next_floor: i32,
 }
 
 impl Elevator {
-    pub fn new(velocity: f32) -> Self {
-        Elevator { velocity }
+    pub fn new(velocity: f32, boundary_top: f32, boundary_bottom: f32, num_floors: i32) -> Self {
+        Elevator {
+            boundary_top,
+            boundary_bottom,
+            num_floors,
+            velocity,
+            current_floor: 0,
+            next_floor: 0,
+         }
     }
 }

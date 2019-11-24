@@ -23,7 +23,7 @@ pub fn load_player(
     // FIXME: Set these to not be hardcoded
     // Correctly position the player in the middle for now.
     let x = 40.0;
-    let y = 100.0;
+    let y = 150.0;
     let z = 0.5;
     transform.set_translation_z(z);
 

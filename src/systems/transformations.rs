@@ -1,11 +1,10 @@
 use amethyst::{
     core::Transform,
-    core::timing::Time,
-    ecs::{Entities, Join, Read, ReadStorage, System, WriteStorage},
+    ecs::{Entities, Join, ReadStorage, System, WriteStorage},
 };
 
 use crate::components::{
-    Collidee, Collider, Direction, Elevator, ElevatorComponent, Gun, Motion, Player, PlayerState,
+    Child, Collidee, Collider, Direction, Elevator, ElevatorComponent, Gun, Motion, Player, PlayerState,
 };
 
 const SAFE_PADDING: f32 = 0.0001;
@@ -19,11 +18,10 @@ impl<'s> System<'s> for PlayerTransformationSystem {
         WriteStorage<'s, Collidee>,
         WriteStorage<'s, Motion>,
         WriteStorage<'s, Transform>,
-        Read<'s, Time>,
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (mut players, mut colliders, mut collidees, mut motions, mut transforms, time) =
+        let (mut players, mut colliders, mut collidees, mut motions, mut transforms) =
             data;
 
         for (player, collider, collidee, motion, transform) in (
@@ -112,7 +110,7 @@ impl<'s> System<'s> for TransformationSystem {
         WriteStorage<'s, Transform>,
     );
 
-    fn run(&mut self, data: Self::SystemData) {
+    fn run(&mut self, _data: Self::SystemData) {
         // let (mut players, mut elevators, mut colliders, mut collidees, mut motions, mut transforms) =
         //     data;
 
@@ -211,7 +209,10 @@ pub struct ElevatorTransformationSystem;
 
 impl<'s> System<'s> for ElevatorTransformationSystem {
     type SystemData = (
+        Entities<'s>,
+        WriteStorage<'s, Elevator>,
         WriteStorage<'s, ElevatorComponent>,
+        ReadStorage<'s, Child>,
         WriteStorage<'s, Collider>,
         WriteStorage<'s, Collidee>,
         WriteStorage<'s, Motion>,
@@ -219,11 +220,12 @@ impl<'s> System<'s> for ElevatorTransformationSystem {
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (mut components, mut colliders, mut collidees, mut motions, mut transforms) =
+        let (entities, mut elevators, mut components, children, mut colliders, mut collidees, mut motions, mut transforms) =
             data;
 
-        for (_, collider, collidee, motion, transform) in (
+        for (_, child, collider, _collidee, motion, transform) in (
             &mut components,
+            &children,
             &mut colliders,
             &mut collidees,
             &mut motions,
@@ -235,28 +237,28 @@ impl<'s> System<'s> for ElevatorTransformationSystem {
             let bbox = &mut collider.bounding_box;
             let velocity = &mut motion.velocity;
 
-            // elevator components do NOT stop moving
-            // TODO: if the thing is rideable it should push the player
-            // if let Some(collidee_horizontal) = collidee.horizontal.take() {
-            //     // FIXME: This shouldn't be pushed backwards by any collision
-            //     // bbox.position.x -= collidee_horizontal.correction;
-            // }
+            let parent = child.parent;
+            for (entity, elevator) in (&entities, &mut elevators).join() {
+                if parent == entity {
+                    if bbox.position.y > elevator.boundary_top {
+                        bbox.position.y = elevator.boundary_top;
+                        elevator.velocity = 0.;
+                    }
+                    if bbox.position.y < elevator.boundary_bottom {
+                        bbox.position.y = elevator.boundary_bottom;
+                        elevator.velocity = 0.;
+                    }
+                    let x = bbox.position.x;
+                    let y = bbox.position.y;
 
-            // if let Some(collidee_vertical) = collidee.vertical.take() {
-            //     // FIXME: This shouldn't be pushed up/down by any collision
-            //     bbox.position.y -= collidee_vertical.correction;
-            //     if collidee_vertical.correction < 0. {
-            //         collider.on_ground = true;
-            //     }
-            // }
+                    velocity.y = elevator.velocity;
 
-            let x = bbox.position.x;
-            let y = bbox.position.y;
-            
-            collider.set_hit_box_position(*velocity);
-
-            transform.set_translation_x(x);
-            transform.set_translation_y(y);
+                    transform.set_translation_x(x);
+                    transform.set_translation_y(y);
+                    collider.set_hit_box_position(*velocity);
+                    break;
+                }
+            }
         }
     }
 }

@@ -23,8 +23,8 @@
 </data>
  </layer>
  <objectgroup id="4" name="collision">
-  <object id="14" name="floor2" x="36" y="53" width="68" height="7"/>
-  <object id="15" name="floor2" x="128" y="53" width="44" height="7"/>
+  <object id="14" name="floor2" x="36" y="54" width="68" height="7"/>
+  <object id="15" name="floor2" x="128" y="54" width="44" height="7"/>
   <object id="16" name="floor1" x="36" y="6" width="68" height="6"/>
   <object id="17" name="floor1" x="128" y="6" width="44" height="6"/>
   <object id="21" name="bottom1" x="36" y="102" width="135.875" height="6"/>
