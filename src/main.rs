@@ -79,16 +79,16 @@ fn main() -> amethyst::Result<()> {
         )
         // PincerCollision
         // MarineCollision
-        .with(systems::TransformationSystem, "transformations_system", &[])
-        .with(
-            systems::GunTransformationSystem,
-            "gun_transformations_system",
-            &["transformations_system"],
-        )
+        .with(systems::PlayerTransformationSystem, "player_transformation_system", &[])
+        // .with(
+        //     systems::GunTransformationSystem,
+        //     "gun_transformation_system",
+        //     &["transformation_system"],
+        // )
         .with(
             systems::ElevatorTransformationSystem,
-            "elevator_transformations_system",
-            &["transformations_system"],
+            "elevator_transformation_system",
+            &["player_transformation_system"],
         )
         // BulletTransformation
         // BulletImpact
@@ -115,7 +115,7 @@ fn main() -> amethyst::Result<()> {
         .with(
             DirectionSystem,
             "direction_system",
-            &["transformations_system", "gun_transformations_system"],
+            &["player_transformation_system"], //"gun_transformations_system"],
         )
         .with_bundle(
             RenderingBundle::<DefaultBackend>::new()

@@ -24,7 +24,7 @@ impl<'s> System<'s> for CollisionSystem {
         let (entities, colliders, mut collidees, motions, names) = data;
 
         // this doesn't seem the most efficient way to do this
-        for (entity_a, collider_a, collidee, motion_a, _name_a) in
+        for (entity_a, collider_a, collidee, motion_a, name_a) in
             (&entities, &colliders, &mut collidees, &motions, &names).join()
         {
             let velocity_a = motion_a.velocity;
@@ -36,13 +36,14 @@ impl<'s> System<'s> for CollisionSystem {
                 for (entity_b, collider_b, motion_b, name_b) in
                     (&entities, &colliders, &motions, &names).join()
                 {
-                    if entity_a != entity_b {
+                    if entity_a != entity_b && collider_b.is_collidable {
                         let velocity_b = motion_b.velocity;
                         let use_hit_box = (velocity_a.x * velocity_b.x != 0.)
                             || (velocity_a.y * velocity_b.y != 0.);
                         if collider_a.is_overlapping_with(collider_b, use_hit_box) {
                             collidee.set_collidee_details(
                                 name_b.name.to_string(),
+                                name_a.name.to_string(),
                                 collider_a,
                                 collider_b,
                                 velocity_a,

@@ -1,7 +1,11 @@
 use amethyst::{
     core::math::Vector3,
-    ecs::{Component, DenseVecStorage},
+    ecs::{Component, DenseVecStorage, NullStorage},
 };
+
+#[derive(Component, Default)]
+#[storage(NullStorage)]
+pub struct Rideable;
 
 #[derive(Component)]
 #[storage(DenseVecStorage)]

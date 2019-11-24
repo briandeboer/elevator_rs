@@ -29,11 +29,16 @@ impl GenericBox {
     }
 }
 
+#[derive(Debug)]
 pub struct CollideeDetails {
     pub name: String,
     pub position: Vector2<f32>,
     pub half_size: Vector2<f32>,
     pub correction: f32,
+    pub velocity: f32,
+    pub collided_with_name: String,
+    pub collided_with_velocity: f32,
+    pub is_rideable: bool,
 }
 
 #[derive(Component)]
@@ -56,6 +61,7 @@ impl Collidee {
     pub fn set_collidee_details(
         &mut self,
         name: String,
+        collided_with_name: String,
         collider_a: &Collider,
         collider_b: &Collider,
         velocity_a: Vector2<f32>,
@@ -105,6 +111,10 @@ impl Collidee {
                 position: box_b.position,
                 half_size: box_b.half_size,
                 correction: correction.x,
+                velocity: velocity_a.x,
+                collided_with_name,
+                collided_with_velocity: velocity_b.x,
+                is_rideable: collider_b.is_rideable,
             });
         } else if x_overlapped && y_overlapped {
             // Might happen when an entity is added at run time.
@@ -115,6 +125,10 @@ impl Collidee {
                 position: box_b.position,
                 half_size: box_b.half_size,
                 correction: correction.x,
+                velocity: velocity_a.x,
+                collided_with_name,
+                collided_with_velocity: velocity_b.x,
+                is_rideable: collider_b.is_rideable,
             });
         } else {
             correction.y = if !speed_ratio_a.y.is_nan() {
@@ -127,6 +141,10 @@ impl Collidee {
                 position: box_b.position,
                 half_size: box_b.half_size,
                 correction: correction.y,
+                velocity: velocity_a.y,
+                collided_with_name,
+                collided_with_velocity: velocity_b.y,
+                is_rideable: collider_b.is_rideable,
             });
         }
     }
@@ -136,6 +154,7 @@ impl Collidee {
 #[storage(DenseVecStorage)]
 pub struct Collider {
     pub bounding_box: GenericBox,
+    pub bounding_box_offset: Vector2<f32>,
     pub hit_box: GenericBox,
     pub hit_box_offset: Vector2<f32>,
     pub on_ground: bool,
@@ -143,12 +162,15 @@ pub struct Collider {
     pub hit_box_offset_front: f32,
     pub hit_box_offset_back: f32,
     pub is_collidable: bool,
+    pub is_collidable_with_structures: bool,
+    pub is_rideable: bool,
 }
 
 impl Default for Collider {
     fn default() -> Self {
         Self {
             bounding_box: GenericBox::default(),
+            bounding_box_offset: Vector2::new(0., 0.),
             hit_box: GenericBox::default(),
             hit_box_offset: Vector2::new(0., 0.),
             on_ground: false,
@@ -156,6 +178,8 @@ impl Default for Collider {
             hit_box_offset_front: 0.,
             hit_box_offset_back: 0.,
             is_collidable: true,
+            is_collidable_with_structures: true,
+            is_rideable: false,
         }
     }
 }

@@ -100,7 +100,7 @@ impl Map {
                 let name = String::from(&obj.name);
                 world
                     .create_entity()
-                    .named(name)
+                    .named("Structure")
                     .with(Motion::new())
                     .with(transform)
                     .with(collider)

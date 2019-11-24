@@ -9,12 +9,14 @@ use crate::components::{Direction, Directions};
 #[storage(DenseVecStorage)]
 pub struct Motion {
     pub velocity: Vector2<f32>,
+    pub ride_velocity: Vector2<f32>,
 }
 
 impl Motion {
     pub fn new() -> Self {
         Motion {
             velocity: Vector2::new(0., 0.),
+            ride_velocity: Vector2::new(0., 0.),
         }
     }
 
@@ -27,7 +29,7 @@ impl Motion {
     ) {
         match dir.x {
             Directions::Right => {
-                self.velocity.x += acceleration.x;
+                self.velocity.x += acceleration.x + self.ride_velocity.x;
                 if acceleration.x <= 0. {
                     self.velocity.x = self.velocity.x.max(min_limit);
                 } else {
@@ -35,7 +37,7 @@ impl Motion {
                 }
             }
             Directions::Left => {
-                self.velocity.x -= acceleration.x;
+                self.velocity.x -= acceleration.x - self.ride_velocity.x;
                 if acceleration.x <= 0. {
                     self.velocity.x = self.velocity.x.min(-min_limit);
                 } else {
