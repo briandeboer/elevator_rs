@@ -2,6 +2,7 @@ mod animation;
 mod collision;
 mod controls;
 mod direction;
+mod elevator;
 mod kinematics;
 mod shoot;
 mod transformations;
@@ -17,6 +18,8 @@ pub use self::collision::CollisionSystem;
 pub use self::controls::ControlsSystem;
 
 pub use self::direction::DirectionSystem;
+
+pub use self::elevator::ElevatorControlSystem;
 
 pub use self::kinematics::KinematicsSystem;
 pub use self::kinematics::PlayerKinematicsSystem;

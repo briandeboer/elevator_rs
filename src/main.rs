@@ -60,6 +60,11 @@ fn main() -> amethyst::Result<()> {
         .with(Processor::<Map>::new(), "map_processor", &[])
         .with(ControlsSystem, "controls_system", &[])
         .with(
+            systems::ElevatorControlSystem,
+            "elevator_control_system",
+            &[],
+        )
+        .with(
             PlayerKinematicsSystem,
             "player_kinematics_system",
             &["controls_system"],
@@ -79,7 +84,11 @@ fn main() -> amethyst::Result<()> {
         )
         // PincerCollision
         // MarineCollision
-        .with(systems::PlayerTransformationSystem, "player_transformation_system", &[])
+        .with(
+            systems::PlayerTransformationSystem,
+            "player_transformation_system",
+            &[],
+        )
         // .with(
         //     systems::GunTransformationSystem,
         //     "gun_transformation_system",

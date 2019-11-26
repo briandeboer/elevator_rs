@@ -1,10 +1,11 @@
 use amethyst::{
-    core::Transform,
-    ecs::{Entities, Join, ReadStorage, System, WriteStorage},
+    core::{timing::Time, Named, Transform},
+    ecs::{Entities, Join, Read, ReadStorage, System, WriteStorage},
 };
 
 use crate::components::{
-    Child, Collidee, Collider, Direction, Elevator, ElevatorComponent, Gun, Motion, Player, PlayerState,
+    Child, Collidee, Collider, Direction, Elevator, ElevatorComponent, ElevatorState, Gun, Motion,
+    Player, PlayerState,
 };
 
 const SAFE_PADDING: f32 = 0.0001;
@@ -21,8 +22,7 @@ impl<'s> System<'s> for PlayerTransformationSystem {
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (mut players, mut colliders, mut collidees, mut motions, mut transforms) =
-            data;
+        let (mut players, mut colliders, mut collidees, mut motions, mut transforms) = data;
 
         for (player, collider, collidee, motion, transform) in (
             &mut players,
@@ -45,9 +45,15 @@ impl<'s> System<'s> for PlayerTransformationSystem {
                 if collidee_horizontal.is_rideable {
                     // use the correction to determine which end of the rideable and which way we are getting pushed
                     if collidee_horizontal.correction < 0. {
-                        bbox.position.x = collidee_horizontal.position.x + collidee_horizontal.half_size.x + bbox.half_size.x + SAFE_PADDING;
+                        bbox.position.x = collidee_horizontal.position.x
+                            + collidee_horizontal.half_size.x
+                            + bbox.half_size.x
+                            + SAFE_PADDING;
                     } else {
-                        bbox.position.x = collidee_horizontal.position.x - collidee_horizontal.half_size.x - bbox.half_size.x - SAFE_PADDING;
+                        bbox.position.x = collidee_horizontal.position.x
+                            - collidee_horizontal.half_size.x
+                            - bbox.half_size.x
+                            - SAFE_PADDING;
                     }
                 } else {
                     bbox.position.x -= collidee_horizontal.correction;
@@ -60,14 +66,20 @@ impl<'s> System<'s> for PlayerTransformationSystem {
                 if collidee_vertical.is_rideable {
                     // use the correction to determine which end of the rideable and which way we are getting pushed
                     if collidee_vertical.correction < 0. {
-                        bbox.position.y = collidee_vertical.position.y + collidee_vertical.half_size.y + bbox.half_size.y + SAFE_PADDING;
+                        bbox.position.y = collidee_vertical.position.y
+                            + collidee_vertical.half_size.y
+                            + bbox.half_size.y
+                            + SAFE_PADDING;
                     } else {
-                        bbox.position.y = collidee_vertical.position.y - collidee_vertical.half_size.y - bbox.half_size.y - SAFE_PADDING;
+                        bbox.position.y = collidee_vertical.position.y
+                            - collidee_vertical.half_size.y
+                            - bbox.half_size.y
+                            - SAFE_PADDING;
                     }
                 } else {
                     bbox.position.y -= collidee_vertical.correction;
                 }
-                
+
                 if collidee_vertical.correction < 0. {
                     collider.on_ground = true;
                 }
@@ -77,14 +89,14 @@ impl<'s> System<'s> for PlayerTransformationSystem {
                     collider.on_elevator = false;
                 }
             }
-    
+
             if velocity.y != 0. {
                 collider.on_ground = false;
             }
 
             let x = bbox.position.x;
             let mut y = bbox.position.y;
-            
+
             collider.set_hit_box_position(*velocity);
             if player.state == PlayerState::Ducking {
                 y -= 4.0;
@@ -152,7 +164,7 @@ impl<'s> System<'s> for TransformationSystem {
         //     if velocity.y != 0. {
         //         collider.on_ground = false;
         //     }
-            
+
         //     collider.set_hit_box_position(*velocity);
         //     if let Some(player) = maybe_player {
         //         if player.state == PlayerState::Ducking {
@@ -204,58 +216,102 @@ impl<'s> System<'s> for GunTransformationSystem {
     }
 }
 
-
 pub struct ElevatorTransformationSystem;
 
 impl<'s> System<'s> for ElevatorTransformationSystem {
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, Elevator>,
-        WriteStorage<'s, ElevatorComponent>,
+        ReadStorage<'s, ElevatorComponent>,
         ReadStorage<'s, Child>,
         WriteStorage<'s, Collider>,
         WriteStorage<'s, Collidee>,
         WriteStorage<'s, Motion>,
         WriteStorage<'s, Transform>,
+        ReadStorage<'s, Named>,
+        Read<'s, Time>,
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (entities, mut elevators, mut components, children, mut colliders, mut collidees, mut motions, mut transforms) =
-            data;
+        let (
+            entities,
+            mut elevators,
+            components,
+            children,
+            mut colliders,
+            mut collidees,
+            mut motions,
+            mut transforms,
+            names,
+            time,
+        ) = data;
 
-        for (_, child, collider, _collidee, motion, transform) in (
-            &mut components,
+        for (component, child, collider, _collidee, motion, transform, named) in (
+            &components,
             &children,
             &mut colliders,
             &mut collidees,
             &mut motions,
             &mut transforms,
+            &names,
         )
             .join()
         {
-            // find anything that the player is colliding with
+            let name = &named.name;
             let bbox = &mut collider.bounding_box;
             let velocity = &mut motion.velocity;
 
             let parent = child.parent;
+
             for (entity, elevator) in (&entities, &mut elevators).join() {
                 if parent == entity {
-                    if bbox.position.y > elevator.boundary_top {
-                        bbox.position.y = elevator.boundary_top;
-                        elevator.velocity = 0.;
+                    let mut x = bbox.position.x;
+                    let mut y = bbox.position.y;
+
+                    if name.to_string() == "ElevatorInside" {
+                        elevator.position.x = x;
+                        elevator.position.y = y;
+                        if elevator.state != ElevatorState::Waiting {
+                            let boundaries = &elevator.boundaries;
+                            for i in 1..=elevator.num_floors {
+                                let diff = (bbox.position.y - boundaries[i - 1]).abs();
+                                let time_diff =
+                                    time.absolute_time_seconds() - elevator.wait_seconds - 2.;
+                                if (elevator.state == ElevatorState::Up
+                                    || elevator.state == ElevatorState::Down)
+                                    && diff < 0.5
+                                    && time_diff > 1.0
+                                {
+                                    elevator.current_floor = i - 1;
+                                    elevator.velocity = 0.;
+                                    elevator.previous_state = elevator.state;
+                                    elevator.state = ElevatorState::Waiting;
+                                    elevator.wait_seconds = time.absolute_time_seconds();
+                                    elevator.position.y = boundaries[i - 1];
+                                    println!(
+                                        "diff: {}, time_diff: {}, state: {:?}, previous {:?}, current_floor: {}",
+                                        diff, time_diff, elevator.state, elevator.previous_state, elevator.current_floor
+                                    );
+                                }
+                            }
+                        }
                     }
-                    if bbox.position.y < elevator.boundary_bottom {
-                        bbox.position.y = elevator.boundary_bottom;
-                        elevator.velocity = 0.;
-                    }
-                    let x = bbox.position.x;
-                    let y = bbox.position.y;
 
                     velocity.y = elevator.velocity;
 
+                    // if we are at a boundary, line everything up
+                    if elevator.velocity == 0. {
+                        x = elevator.position.x + component.offsets.x;
+                        y = elevator.position.y + component.offsets.y;
+                        bbox.position.x = x;
+                        bbox.position.y = y;
+                        collider.hit_box.position.x = x;
+                        collider.hit_box.position.y = y;
+                    } else {
+                        collider.set_hit_box_position(*velocity);
+                    }
                     transform.set_translation_x(x);
                     transform.set_translation_y(y);
-                    collider.set_hit_box_position(*velocity);
                     break;
                 }
             }

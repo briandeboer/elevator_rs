@@ -1,5 +1,5 @@
 use amethyst::{
-    core::math::Vector3,
+    core::math::{Vector2, Vector3},
     ecs::{Component, DenseVecStorage, NullStorage},
 };
 
@@ -38,26 +38,62 @@ impl ElevatorComponent {
     }
 }
 
-#[derive(Component, Default)]
+#[derive(Debug, Eq, Hash, PartialEq, Clone, Copy)]
+pub enum ElevatorState {
+    Up,
+    Down,
+    Waiting,
+}
+
+#[derive(Component)]
 #[storage(DenseVecStorage)]
 pub struct Elevator {
-    pub boundary_top: f32,
-    pub boundary_bottom: f32,
-    pub num_floors: i32,
+    pub position: Vector2<f32>,
+    pub boundaries: Vec<f32>,
+    pub floor_height: f32,
+    pub num_floors: usize,
+    pub current_floor: usize,
     pub velocity: f32,
-    pub current_floor: i32,
-    pub next_floor: i32,
+    pub previous_state: ElevatorState,
+    pub state: ElevatorState,
+    pub wait_seconds: f64,
+}
+
+impl Default for Elevator {
+    fn default() -> Self {
+        Elevator {
+            position: Vector2::new(0., 0.),
+            boundaries: Vec::new(),
+            floor_height: 48.,
+            num_floors: 1,
+            current_floor: 0,
+            velocity: 0.,
+            previous_state: ElevatorState::Waiting,
+            state: ElevatorState::Waiting,
+            wait_seconds: 0.,
+        }
+    }
 }
 
 impl Elevator {
-    pub fn new(velocity: f32, boundary_top: f32, boundary_bottom: f32, num_floors: i32) -> Self {
+    pub fn new(
+        position: Vector2<f32>,
+        num_floors: usize,
+        current_floor: usize,
+        velocity: f32,
+    ) -> Self {
+        let mut boundaries: Vec<f32> = Vec::new();
+        for i in 1..=num_floors {
+            boundaries.push(position.y - (current_floor as f32 * 48.) + (i - 1) as f32 * 48.);
+        }
+        println!("Set elevator boundaries -- boundaries: {:?}", boundaries);
         Elevator {
-            boundary_top,
-            boundary_bottom,
+            position,
+            boundaries,
             num_floors,
+            current_floor,
             velocity,
-            current_floor: 0,
-            next_floor: 0,
-         }
+            ..Elevator::default()
+        }
     }
 }

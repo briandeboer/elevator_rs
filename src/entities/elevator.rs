@@ -10,10 +10,9 @@ use amethyst::{
 use crate::components::{Child, Collidee, Collider, Elevator, ElevatorComponent, Motion};
 
 const ELEVATOR_START_X: f32 = 116.0;
-const ELEVATOR_START_Y: f32 = 70.0;
+const ELEVATOR_START_Y: f32 = 70.0; // 166.0; //70.0;
 const ELEVATOR_START_Z: f32 = 0.;
 const ELEVATOR_OFFSET: f32 = 24.;
-const VELOCITY: f32 = 1.0;
 
 fn create_elevator_component(
     world: &mut World,
@@ -60,7 +59,7 @@ pub fn load_elevator(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) 
     // parent component
     let mut transform = Transform::default();
     transform.set_translation_xyz(ELEVATOR_START_X, ELEVATOR_START_Y, ELEVATOR_START_Z);
-    let elevator = Elevator::new(VELOCITY, 200., 46., 2);
+    let elevator = Elevator::new(Vector2::new(ELEVATOR_START_X, ELEVATOR_START_Y), 3, 0, 0.);
     let elevator_entity = world
         .create_entity()
         .named("Elevator")

@@ -25,6 +25,7 @@ pub use self::direction::Directions;
 
 pub use self::elevator::Elevator;
 pub use self::elevator::ElevatorComponent;
+pub use self::elevator::ElevatorState;
 pub use self::elevator::Rideable;
 
 pub use self::motion::Motion;

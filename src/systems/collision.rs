@@ -87,14 +87,8 @@ impl<'s> System<'s> for BulletCollisionSystem {
             lazy_update,
         ) = data;
 
-        for (entity, bullet, collider, collidee, motion) in (
-            &*entities,
-            &bullets,
-            &colliders,
-            &collidees,
-            &mut motions,
-        )
-            .join()
+        for (entity, bullet, collider, collidee, motion) in
+            (&*entities, &bullets, &colliders, &collidees, &mut motions).join()
         {
             // Currently, bullet can be fired only horizontally
             if let Some(collidee_horizontal) = &collidee.horizontal {
