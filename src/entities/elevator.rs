@@ -68,16 +68,6 @@ pub fn load_elevator(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) 
         .with(transform)
         .build();
 
-    let bottom = ElevatorComponent::new(
-        "ElevatorBottom",
-        0,
-        16.,
-        4.,
-        Vector3::new(0., -ELEVATOR_OFFSET, 0.),
-        true,
-    );
-    create_elevator_component(world, elevator_entity, bottom, sprite_sheet_handle.clone());
-
     let inside = ElevatorComponent::new(
         "ElevatorInside",
         2,
@@ -87,6 +77,16 @@ pub fn load_elevator(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) 
         false,
     );
     create_elevator_component(world, elevator_entity, inside, sprite_sheet_handle.clone());
+
+    let bottom = ElevatorComponent::new(
+        "ElevatorBottom",
+        0,
+        16.,
+        4.,
+        Vector3::new(0., -ELEVATOR_OFFSET, 0.),
+        true,
+    );
+    create_elevator_component(world, elevator_entity, bottom, sprite_sheet_handle.clone());
 
     let top = ElevatorComponent::new(
         "ElevatorTop",

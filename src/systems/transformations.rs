@@ -218,6 +218,15 @@ impl<'s> System<'s> for GunTransformationSystem {
 
 pub struct ElevatorTransformationSystem;
 
+fn stop_elevator(elevator: &mut Elevator, current_floor: usize, position: f32, wait_time: f64) {
+    elevator.current_floor = current_floor;
+    elevator.velocity = 0.;
+    elevator.previous_state = elevator.state;
+    elevator.state = ElevatorState::Waiting;
+    elevator.wait_seconds = wait_time;
+    elevator.position.y = position;
+}
+
 impl<'s> System<'s> for ElevatorTransformationSystem {
     type SystemData = (
         Entities<'s>,
@@ -272,7 +281,7 @@ impl<'s> System<'s> for ElevatorTransformationSystem {
                         elevator.position.x = x;
                         elevator.position.y = y;
                         if elevator.state != ElevatorState::Waiting {
-                            let boundaries = &elevator.boundaries;
+                            let boundaries = elevator.boundaries.clone();
                             for i in 1..=elevator.num_floors {
                                 let diff = (bbox.position.y - boundaries[i - 1]).abs();
                                 let time_diff =
@@ -280,17 +289,33 @@ impl<'s> System<'s> for ElevatorTransformationSystem {
                                 if (elevator.state == ElevatorState::Up
                                     || elevator.state == ElevatorState::Down)
                                     && diff < 0.5
-                                    && time_diff > 1.0
+                                    && time_diff.abs() > 0.1
                                 {
-                                    elevator.current_floor = i - 1;
-                                    elevator.velocity = 0.;
-                                    elevator.previous_state = elevator.state;
-                                    elevator.state = ElevatorState::Waiting;
-                                    elevator.wait_seconds = time.absolute_time_seconds();
-                                    elevator.position.y = boundaries[i - 1];
-                                    println!(
-                                        "diff: {}, time_diff: {}, state: {:?}, previous {:?}, current_floor: {}",
-                                        diff, time_diff, elevator.state, elevator.previous_state, elevator.current_floor
+                                    stop_elevator(
+                                        elevator,
+                                        i - 1,
+                                        boundaries[i - 1],
+                                        time.absolute_time_seconds(),
+                                    );
+                                } else if i == 1
+                                    && elevator.state == ElevatorState::Down
+                                    && bbox.position.y < boundaries[0]
+                                {
+                                    stop_elevator(
+                                        elevator,
+                                        0,
+                                        boundaries[0],
+                                        time.absolute_time_seconds(),
+                                    );
+                                } else if i == elevator.num_floors
+                                    && elevator.state == ElevatorState::Up
+                                    && bbox.position.y > boundaries[i - 1]
+                                {
+                                    stop_elevator(
+                                        elevator,
+                                        i - 1,
+                                        boundaries[i - 1],
+                                        time.absolute_time_seconds(),
                                     );
                                 }
                             }
@@ -308,11 +333,11 @@ impl<'s> System<'s> for ElevatorTransformationSystem {
                         collider.hit_box.position.x = x;
                         collider.hit_box.position.y = y;
                     } else {
-                        collider.set_hit_box_position(*velocity);
+                        // collider.set_hit_box_position(*velocity);
                     }
                     transform.set_translation_x(x);
                     transform.set_translation_y(y);
-                    break;
+                    // break;
                 }
             }
         }
