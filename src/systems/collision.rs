@@ -23,7 +23,6 @@ impl<'s> System<'s> for CollisionSystem {
     fn run(&mut self, data: Self::SystemData) {
         let (entities, colliders, mut collidees, motions, names) = data;
 
-        // this doesn't seem the most efficient way to do this
         for (entity_a, collider_a, collidee, motion_a, name_a) in
             (&entities, &colliders, &mut collidees, &motions, &names).join()
         {

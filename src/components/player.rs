@@ -36,8 +36,7 @@ pub struct Player {
     pub velocity: Vector2<f32>,
     pub max_ground_speed: f32,
     pub max_jump_velocity: f32,
-    pub pos_x: f32,
-    pub pos_y: f32,
+    pub position: Vector2<f32>,
 }
 
 impl Player {
@@ -52,13 +51,12 @@ impl Player {
             velocity: Vector2::new(0., 0.),
             max_ground_speed: 36.,
             max_jump_velocity: 90.,
-            pos_x: 0.0,
-            pos_y: 0.0,
+            position: Vector2::new(0., 0.),
         }
     }
 
     pub fn update_position(&mut self, x: f32, y: f32) {
-        self.pos_x = x;
-        self.pos_y = y;
+        self.position.x = x;
+        self.position.y = y;
     }
 }

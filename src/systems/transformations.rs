@@ -204,11 +204,11 @@ impl<'s> System<'s> for GunTransformationSystem {
                 for (entity, player) in (&entities, &players).join() {
                     if entity == parent {
                         if direction.x != direction.default_x {
-                            transform.set_translation_x(player.pos_x - gun.position_offset.x);
+                            transform.set_translation_x(player.position.x - gun.position_offset.x);
                         } else {
-                            transform.set_translation_x(player.pos_x + gun.position_offset.x);
+                            transform.set_translation_x(player.position.x + gun.position_offset.x);
                         }
-                        transform.set_translation_y(player.pos_y + gun.position_offset.y);
+                        transform.set_translation_y(player.position.y + gun.position_offset.y);
                     }
                 }
             }

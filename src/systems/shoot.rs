@@ -27,8 +27,8 @@ impl<'s> System<'s> for ShootSystem {
                             && (gun.state == GunState::Shooting
                                 || gun.state == GunState::JumpShooting)
                         {
-                            let pos_x = player.pos_x;
-                            let pos_y = player.pos_y;
+                            let pos_x = player.position.x;
+                            let pos_y = player.position.y;
 
                             let bullet_sprite_sheet_handle =
                                 { sprite_sheet_list.get(AssetType::Bullet).unwrap().clone() };
