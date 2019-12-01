@@ -1,4 +1,7 @@
-use amethyst::ecs::{Component, DenseVecStorage};
+use amethyst::{
+    core::math::Vector2,
+    ecs::{Component, DenseVecStorage},
+};
 
 pub const PLAYER_HEIGHT: f32 = 16.0;
 pub const PLAYER_WIDTH: f32 = 16.0;
@@ -30,7 +33,7 @@ pub struct Player {
     pub jump_time: Option<f32>,
     pub width: f32,
     pub height: f32,
-    pub velocity: [f32; 2],
+    pub velocity: Vector2<f32>,
     pub max_ground_speed: f32,
     pub max_jump_velocity: f32,
     pub pos_x: f32,
@@ -46,9 +49,9 @@ impl Player {
             jump_time: None,
             width: PLAYER_WIDTH,
             height: PLAYER_HEIGHT,
-            velocity: [0.0, 0.0],
+            velocity: Vector2::new(0., 0.),
             max_ground_speed: 36.,
-            max_jump_velocity: 60.,
+            max_jump_velocity: 90.,
             pos_x: 0.0,
             pos_y: 0.0,
         }

@@ -83,11 +83,11 @@ impl<'s> System<'s> for PlayerTransformationSystem {
                 if collidee_vertical.correction < 0. {
                     collider.on_ground = true;
                 }
-                if collidee_vertical.name == "ElevatorBottom" {
+                if collidee_vertical.name == "ElevatorBottom" || collidee_vertical.name == "ElevatorTop" {
                     collider.on_elevator = true;
-                } else {
-                    collider.on_elevator = false;
                 }
+            } else {
+                collider.on_elevator = false;
             }
 
             if velocity.y != 0. {
@@ -225,6 +225,7 @@ fn stop_elevator(elevator: &mut Elevator, current_floor: usize, position: f32, w
     elevator.state = ElevatorState::Waiting;
     elevator.wait_seconds = wait_time;
     elevator.position.y = position;
+    elevator.can_wait = false;
 }
 
 impl<'s> System<'s> for ElevatorTransformationSystem {
@@ -284,12 +285,10 @@ impl<'s> System<'s> for ElevatorTransformationSystem {
                             let boundaries = elevator.boundaries.clone();
                             for i in 1..=elevator.num_floors {
                                 let diff = (bbox.position.y - boundaries[i - 1]).abs();
-                                let time_diff =
-                                    time.absolute_time_seconds() - elevator.wait_seconds - 2.;
                                 if (elevator.state == ElevatorState::Up
                                     || elevator.state == ElevatorState::Down)
                                     && diff < 0.5
-                                    && time_diff.abs() > 0.1
+                                    && elevator.can_wait
                                 {
                                     stop_elevator(
                                         elevator,
@@ -297,6 +296,12 @@ impl<'s> System<'s> for ElevatorTransformationSystem {
                                         boundaries[i - 1],
                                         time.absolute_time_seconds(),
                                     );
+                                } else if (elevator.state == ElevatorState::Up
+                                    || elevator.state == ElevatorState::Down)
+                                    && diff > 2.0 && diff < 5.0
+                                {
+                                    // once it gets far enough away we allow it to stop
+                                    elevator.can_wait = true;
                                 } else if i == 1
                                     && elevator.state == ElevatorState::Down
                                     && bbox.position.y < boundaries[0]

@@ -85,20 +85,21 @@ fn main() -> amethyst::Result<()> {
         // PincerCollision
         // MarineCollision
         .with(
+            systems::ElevatorTransformationSystem,
+            "elevator_transformation_system",
+            &[],
+        )
+        .with(
             systems::PlayerTransformationSystem,
             "player_transformation_system",
-            &[],
+            &["elevator_transformation_system"],
         )
         // .with(
         //     systems::GunTransformationSystem,
         //     "gun_transformation_system",
         //     &["transformation_system"],
         // )
-        .with(
-            systems::ElevatorTransformationSystem,
-            "elevator_transformation_system",
-            &["player_transformation_system"],
-        )
+        
         // BulletTransformation
         // BulletImpact
         .with(

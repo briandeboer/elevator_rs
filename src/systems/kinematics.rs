@@ -7,7 +7,7 @@ use amethyst::{
 use crate::components::{Collider, Direction, Motion, Player, PlayerState};
 use crate::resources::Context;
 
-const GRAVITY_AMOUNT: f32 = -1.8;
+const GRAVITY_AMOUNT: f32 = -5.;
 
 pub struct KinematicsSystem;
 

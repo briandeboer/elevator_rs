@@ -57,6 +57,7 @@ pub struct Elevator {
     pub previous_state: ElevatorState,
     pub state: ElevatorState,
     pub wait_seconds: f64,
+    pub can_wait: bool,
 }
 
 impl Default for Elevator {
@@ -71,6 +72,7 @@ impl Default for Elevator {
             previous_state: ElevatorState::Waiting,
             state: ElevatorState::Waiting,
             wait_seconds: 0.,
+            can_wait: true,
         }
     }
 }
