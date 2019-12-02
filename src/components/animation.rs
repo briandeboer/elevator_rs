@@ -19,6 +19,7 @@ pub enum AnimationId {
     Die,
     Duck,
     Explode,
+    Hop,
     Jump,
     Move,
     Idle,

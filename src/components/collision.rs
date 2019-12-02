@@ -41,6 +41,85 @@ pub struct CollideeDetails {
     pub is_rideable: bool,
 }
 
+#[derive(Component, Debug)]
+#[storage(DenseVecStorage)]
+pub struct ProximityDetails {
+    pub name: String,
+    pub other_name: String,
+    pub distance: Vector2<f32>,
+    pub approaching: bool,
+}
+
+#[derive(Component)]
+#[storage(DenseVecStorage)]
+pub struct Proximity {
+    pub min_distance: f32,
+    pub details: Vec<ProximityDetails>,
+}
+
+const DEFAULT_PROXIMITY_PADDING: f32 = 3.0;
+
+impl Default for Proximity {
+    fn default() -> Self {
+        Proximity {
+            min_distance: DEFAULT_PROXIMITY_PADDING,
+            details: Vec::new(),
+        }
+    }
+}
+
+impl Proximity {
+    pub fn reset_details(&mut self) {
+        self.details = Vec::new();
+    }
+
+    pub fn add_proximity_details(
+        &mut self,
+        name_a: String,
+        name_b: String,
+        collider_a: &Collider,
+        collider_b: &Collider,
+        velocity_a: Vector2<f32>,
+        use_hit_box: bool,
+    ) {
+        let min_distance = self.min_distance;
+        let (self_box, other_box) = if use_hit_box {
+            (&collider_a.hit_box, &collider_b.hit_box)
+        } else {
+            (&collider_a.bounding_box, &collider_b.bounding_box)
+        };
+
+        // if we are approaching x coords and y is close
+        let x_diff = ((self_box.half_size.x + other_box.half_size.x).abs()
+            - (self_box.position.x - other_box.position.x).abs())
+        .abs();
+        let y_diff = ((self_box.half_size.y + other_box.half_size.y).abs()
+            - (self_box.position.y - other_box.position.y).abs())
+        .abs();
+
+        // check that it's not overlapping, but that it's within the min_distance
+        if !collider_a.is_overlapping_with(collider_b, use_hit_box)
+            && x_diff <= min_distance
+            && y_diff <= min_distance
+        {
+            let self_center_x = self_box.position.x + self_box.half_size.x;
+            let other_center_x = other_box.position.x + other_box.half_size.x;
+            let self_center_y = self_box.position.y + self_box.half_size.y;
+            let other_center_y = other_box.position.y + other_box.half_size.y;
+            let approaching: bool = (self_center_x < other_center_x && velocity_a.x > 0.)
+                || (self_center_x > other_center_x && velocity_a.x < 0.)
+                || (self_center_y < other_center_y && velocity_a.y > 0.)
+                || (self_center_y > other_center_y && velocity_a.y < 0.);
+            self.details.push(ProximityDetails {
+                name: name_a,
+                other_name: name_b,
+                distance: Vector2::new(x_diff, y_diff),
+                approaching,
+            });
+        }
+    }
+}
+
 #[derive(Component)]
 #[storage(DenseVecStorage)]
 pub struct Collidee {
@@ -162,8 +241,8 @@ pub struct Collider {
     pub hit_box_offset_front: f32,
     pub hit_box_offset_back: f32,
     pub is_collidable: bool,
-    pub is_collidable_with_structures: bool,
     pub is_rideable: bool,
+    pub allow_proximity: bool,
 }
 
 impl Default for Collider {
@@ -178,8 +257,8 @@ impl Default for Collider {
             hit_box_offset_front: 0.,
             hit_box_offset_back: 0.,
             is_collidable: true,
-            is_collidable_with_structures: true,
             is_rideable: false,
+            allow_proximity: true,
         }
     }
 }

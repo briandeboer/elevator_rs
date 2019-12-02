@@ -79,6 +79,7 @@ impl<'s> System<'s> for PlayerAnimationSystem {
             .join()
         {
             let new_animation_id = match player.state {
+                PlayerState::Hopping => AnimationId::Hop,
                 PlayerState::Jumping => AnimationId::Jump,
                 PlayerState::Walking => AnimationId::Walk,
                 PlayerState::Shooting => AnimationId::Shoot,

@@ -55,8 +55,12 @@ impl<'s> System<'s> for PlayerKinematicsSystem {
             match player.state {
                 PlayerState::Idling | PlayerState::Ducking => {
                     // how much skidding happens
-                    let acceleration_x = if motion.velocity.x != 0. {
+                    let acceleration_x = if motion.velocity.x != 0. && collider.on_ground {
+                        // slow down on ground when he stops
                         context.friction_amount
+                    } else if !collider.on_ground {
+                        // keep moving a bit when falling
+                        context.friction_amount / 2.5
                     } else {
                         0.
                     };
@@ -77,6 +81,13 @@ impl<'s> System<'s> for PlayerKinematicsSystem {
                         0.
                     };
                     acceleration = Vector2::new(acceleration_x, GRAVITY_AMOUNT);
+                }
+                PlayerState::Hopping => {
+                    if collider.on_ground {
+                        motion.velocity.y = player.max_jump_velocity / 2.;
+                        collider.on_ground = false;
+                    }
+                    acceleration = Vector2::new(context.walk_acceleration, GRAVITY_AMOUNT);
                 }
                 // PlayerState::Dying => {
                 //     if collider.on_ground {

@@ -78,7 +78,7 @@ impl Map {
         let scale_x: f32 = 1.0;
         let scale_y: f32 = 1.0;
         let offset_x: f32 = 0.0;
-        let offset_y: f32 = 150.;
+        let offset_y: f32 = 153.;
 
         if let Some(objects) = &layer.objects {
             for (_index, obj) in objects.iter().enumerate() {

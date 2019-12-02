@@ -256,6 +256,27 @@ Prefab(
                         ),
                         (
                             // AnimationId
+                            Hop,
+                            (
+                                samplers: [
+                                    (
+                                        0,
+                                        // Only SpriteIndex channel allowed for SpriteRender in AnimationSetPrefab
+                                        SpriteIndex,
+                                        (
+                                            // Time of key frames
+                                            input: [0.0, 5.0],
+                                            // Sprite indexes from SpriteSheet for key frames
+                                            output: [3, 3],
+                                            // Sprites can only ever be animated with Step
+                                            function: Step,
+                                        ),
+                                    ),
+                                ],
+                            ),
+                        ),
+                        (
+                            // AnimationId
                             Walk,
                             (
                                 samplers: [

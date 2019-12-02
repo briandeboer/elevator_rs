@@ -83,7 +83,9 @@ impl<'s> System<'s> for PlayerTransformationSystem {
                 if collidee_vertical.correction < 0. {
                     collider.on_ground = true;
                 }
-                if collidee_vertical.name == "ElevatorBottom" || collidee_vertical.name == "ElevatorTop" {
+                if collidee_vertical.name == "ElevatorBottom"
+                    || collidee_vertical.name == "ElevatorTop"
+                {
                     collider.on_elevator = true;
                 }
             } else {
@@ -298,7 +300,8 @@ impl<'s> System<'s> for ElevatorTransformationSystem {
                                     );
                                 } else if (elevator.state == ElevatorState::Up
                                     || elevator.state == ElevatorState::Down)
-                                    && diff > 2.0 && diff < 5.0
+                                    && diff > 2.0
+                                    && diff < 5.0
                                 {
                                     // once it gets far enough away we allow it to stop
                                     elevator.can_wait = true;

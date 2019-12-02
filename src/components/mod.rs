@@ -19,6 +19,7 @@ pub use self::child::Child;
 
 pub use self::collision::Collidee;
 pub use self::collision::Collider;
+pub use self::collision::Proximity;
 
 pub use self::direction::Direction;
 pub use self::direction::Directions;

@@ -15,6 +15,7 @@ pub enum PlayerState {
     Jumping,
     Shooting,
     Walking,
+    Hopping,
 }
 
 impl Default for PlayerState {
@@ -50,7 +51,7 @@ impl Player {
             height: PLAYER_HEIGHT,
             velocity: Vector2::new(0., 0.),
             max_ground_speed: 36.,
-            max_jump_velocity: 90.,
+            max_jump_velocity: 110.,
             position: Vector2::new(0., 0.),
         }
     }

@@ -94,12 +94,19 @@ fn main() -> amethyst::Result<()> {
             "player_transformation_system",
             &["elevator_transformation_system"],
         )
+        .with(
+            systems::ProximitySystem,
+            "proximity_system",
+            &[
+                "elevator_transformation_system",
+                "player_transformation_system",
+            ],
+        )
         // .with(
         //     systems::GunTransformationSystem,
         //     "gun_transformation_system",
         //     &["transformation_system"],
         // )
-        
         // BulletTransformation
         // BulletImpact
         .with(

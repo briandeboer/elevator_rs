@@ -7,7 +7,9 @@ use amethyst::{
     renderer::{sprite::SpriteSheetHandle, SpriteRender},
 };
 
-use crate::components::{Child, Collidee, Collider, Elevator, ElevatorComponent, Motion};
+use crate::components::{
+    Child, Collidee, Collider, Elevator, ElevatorComponent, Motion, Proximity,
+};
 
 const ELEVATOR_START_X: f32 = 116.0;
 const ELEVATOR_START_Y: f32 = 70.0; // 166.0; //70.0;
@@ -27,8 +29,8 @@ fn create_elevator_component(
     let mut transform = Transform::default();
     let mut collider = Collider::new(component.width, component.height);
     collider.is_collidable = component.is_collidable;
-    collider.is_collidable_with_structures = false;
     collider.is_rideable = true;
+    collider.allow_proximity = collider.is_collidable;
     let bbox = &mut collider.bounding_box;
     bbox.position = Vector2::new(
         ELEVATOR_START_X + component.offsets.x,
@@ -50,6 +52,7 @@ fn create_elevator_component(
         .with(collider)
         .with(Collidee::default())
         .with(Motion::new())
+        .with(Proximity::default())
         .with(render)
         .with(transform)
         .build();
@@ -81,7 +84,7 @@ pub fn load_elevator(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) 
     let bottom = ElevatorComponent::new(
         "ElevatorBottom",
         0,
-        16.,
+        24.,
         4.,
         Vector3::new(0., -ELEVATOR_OFFSET, 0.),
         true,
@@ -91,7 +94,7 @@ pub fn load_elevator(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) 
     let top = ElevatorComponent::new(
         "ElevatorTop",
         3,
-        16.,
+        24.,
         4.,
         Vector3::new(0., ELEVATOR_OFFSET, 0.),
         true,

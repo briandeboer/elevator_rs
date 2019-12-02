@@ -9,7 +9,7 @@ use amethyst::{
 
 use crate::components::{
     Animation, AnimationId, AnimationPrefabData, Collidee, Collider, Direction, Directions, Gun,
-    Motion, Player,
+    Motion, Player, Proximity,
 };
 
 /// Initialises one player in the middle-ish space
@@ -28,6 +28,7 @@ pub fn load_player(
     transform.set_translation_z(z);
 
     let mut collider = Collider::new(12., 24.);
+    collider.allow_proximity = true;
     let bbox = &mut collider.bounding_box;
     bbox.position = Vector2::new(x + bbox.half_size.x, y - bbox.half_size.y);
     bbox.old_position = bbox.position;
@@ -48,6 +49,7 @@ pub fn load_player(
             AnimationId::Idle,
             vec![
                 AnimationId::Die,
+                AnimationId::Hop,
                 AnimationId::Jump,
                 AnimationId::Idle,
                 AnimationId::Walk,
@@ -62,6 +64,7 @@ pub fn load_player(
             Directions::Right,
             Directions::Neutral,
         ))
+        .with(Proximity::default())
         .build();
 
     let mut gun_transform = Transform::default();

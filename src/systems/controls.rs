@@ -4,7 +4,9 @@ use amethyst::derive::SystemDesc;
 use amethyst::ecs::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage};
 use amethyst::input::{InputHandler, StringBindings};
 
-use crate::components::{Collider, Direction, Directions, Gun, GunState, Player, PlayerState};
+use crate::components::{
+    Collider, Direction, Directions, Gun, GunState, Player, PlayerState, Proximity,
+};
 
 #[derive(SystemDesc)]
 pub struct ControlsSystem;
@@ -15,6 +17,7 @@ impl<'s> System<'s> for ControlsSystem {
     type SystemData = (
         ReadStorage<'s, Collider>,
         WriteStorage<'s, Direction>,
+        ReadStorage<'s, Proximity>,
         WriteStorage<'s, Player>,
         WriteStorage<'s, Gun>,
         Read<'s, InputHandler<StringBindings>>,
@@ -22,11 +25,12 @@ impl<'s> System<'s> for ControlsSystem {
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (colliders, mut directions, mut players, mut guns, input, time) = data;
+        let (colliders, mut directions, proximities, mut players, mut guns, input, time) = data;
 
-        for (maybe_collider, direction, maybe_player, maybe_gun) in (
+        for (maybe_collider, direction, maybe_proximity, maybe_player, maybe_gun) in (
             colliders.maybe(),
             &mut directions,
+            proximities.maybe(),
             (&mut players).maybe(),
             (&mut guns).maybe(),
         )
@@ -38,12 +42,6 @@ impl<'s> System<'s> for ControlsSystem {
                 let jump_input = input.action_is_down("jump").expect("Jump action exists");
                 let shoot_input = input.action_is_down("shoot").expect("Shoot action exists");
                 let down_input = input.action_is_down("down").expect("Down action exists");
-
-                if move_input > 0. {
-                    direction.x = Directions::Right;
-                } else if move_input < 0. {
-                    direction.x = Directions::Left;
-                }
 
                 if let Some(gun) = maybe_gun {
                     gun.state = if shoot_input && !gun.last_shoot_state && gun.shots_fired < 3 {
@@ -61,6 +59,15 @@ impl<'s> System<'s> for ControlsSystem {
                 }
 
                 if let Some(player) = maybe_player {
+                    // No changing directions when you hop
+                    if player.state != PlayerState::Hopping {
+                        if move_input > 0. {
+                            direction.x = Directions::Right;
+                        } else if move_input < 0. {
+                            direction.x = Directions::Left;
+                        }
+                    }
+
                     if let Some(collider) = maybe_collider {
                         if !down_input {
                             if player.is_ducking {
@@ -77,12 +84,32 @@ impl<'s> System<'s> for ControlsSystem {
                                 }
                                 PlayerState::Ducking
                             } else if move_input != 0. {
-                                PlayerState::Walking
+                                // check for close proximity of other things
+                                let mut hopping = false;
+                                if let Some(proximity) = maybe_proximity {
+                                    for details in &proximity.details {
+                                        if details.approaching
+                                            && (details.other_name == "ElevatorTop"
+                                                || details.other_name == "ElevatorBottom"
+                                                || details.other_name == "floor")
+                                        {
+                                            hopping = true;
+                                        }
+                                    }
+                                }
+                                if hopping {
+                                    PlayerState::Hopping
+                                } else {
+                                    PlayerState::Walking
+                                }
                             } else {
                                 PlayerState::Idling
                             }
-                        } else if player.state == PlayerState::Jumping {
-                            PlayerState::Jumping
+                        } else if player.state == PlayerState::Jumping
+                            || player.state == PlayerState::Hopping
+                        {
+                            // don't change anything until he hits the ground
+                            player.state
                         } else {
                             // should be falling
                             PlayerState::Idling

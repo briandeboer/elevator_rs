@@ -14,6 +14,7 @@ pub use self::animation::PlayerAnimationSystem;
 
 pub use self::collision::BulletCollisionSystem;
 pub use self::collision::CollisionSystem;
+pub use self::collision::ProximitySystem;
 
 pub use self::controls::ControlsSystem;
 

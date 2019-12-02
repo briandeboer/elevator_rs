@@ -28,59 +28,59 @@
          "name":"collision",
          "objects":[
                 {
-                 "height":7,
+                 "height":3,
                  "id":14,
-                 "name":"floor2",
+                 "name":"floor",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":68,
                  "x":36,
-                 "y":54
+                 "y":57
                 }, 
                 {
-                 "height":7,
+                 "height":3,
                  "id":15,
-                 "name":"floor2",
+                 "name":"floor",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":44,
                  "x":128,
-                 "y":54
+                 "y":57
                 }, 
                 {
-                 "height":6,
+                 "height":3,
                  "id":16,
-                 "name":"floor1",
+                 "name":"floor_top_blue",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":68,
                  "x":36,
-                 "y":6
+                 "y":9
                 }, 
                 {
-                 "height":6,
+                 "height":3,
                  "id":17,
-                 "name":"floor1",
+                 "name":"floor",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":44,
                  "x":128,
-                 "y":6
+                 "y":9
                 }, 
                 {
-                 "height":6,
+                 "height":3,
                  "id":21,
-                 "name":"bottom1",
+                 "name":"floor",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":135.875,
                  "x":36,
-                 "y":102
+                 "y":105
                 }, 
                 {
                  "height":111,
