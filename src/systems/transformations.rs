@@ -4,8 +4,8 @@ use amethyst::{
 };
 
 use crate::components::{
-    Child, Collidee, Collider, Direction, Elevator, ElevatorComponent, ElevatorState, Gun, Motion,
-    Player, PlayerState,
+    Child, Collidee, Collider, DefaultTransformation, Direction, Elevator, ElevatorComponent,
+    ElevatorState, Gun, Motion, Player, PlayerState,
 };
 
 const SAFE_PADDING: f32 = 0.0001;
@@ -112,77 +112,56 @@ impl<'s> System<'s> for PlayerTransformationSystem {
     }
 }
 
-pub struct TransformationSystem;
+pub struct DefaultTransformationSystem;
 
-impl<'s> System<'s> for TransformationSystem {
+impl<'s> System<'s> for DefaultTransformationSystem {
     type SystemData = (
-        WriteStorage<'s, Player>,
-        WriteStorage<'s, Elevator>,
+        ReadStorage<'s, DefaultTransformation>,
         WriteStorage<'s, Collider>,
         WriteStorage<'s, Collidee>,
         WriteStorage<'s, Motion>,
         WriteStorage<'s, Transform>,
     );
 
-    fn run(&mut self, _data: Self::SystemData) {
-        // let (mut players, mut elevators, mut colliders, mut collidees, mut motions, mut transforms) =
-        //     data;
+    fn run(&mut self, data: Self::SystemData) {
+        let (default_transformations, mut colliders, mut collidees, mut motions, mut transforms) =
+            data;
 
-        // for (maybe_player, maybe_elevator, collider, collidee, motion, transform) in (
-        //     (&mut players).maybe(),
-        //     (&mut elevators).maybe(),
-        //     &mut colliders,
-        //     &mut collidees,
-        //     &mut motions,
-        //     &mut transforms,
-        // )
-        //     .join()
-        // {
-        //     let bbox = &mut collider.bounding_box;
-        //     let velocity = &mut motion.velocity;
+        for (_, collider, collidee, motion, transform) in (
+            &default_transformations,
+            &mut colliders,
+            &mut collidees,
+            &mut motions,
+            &mut transforms,
+        )
+            .join()
+        {
+            let bbox = &mut collider.bounding_box;
+            let velocity = &mut motion.velocity;
 
-        //     let x = bbox.position.x;
-        //     let mut y = bbox.position.y;
+            let x = bbox.position.x;
+            let y = bbox.position.y;
 
-        //     if let Some(collidee_horizontal) = collidee.horizontal.take() {
-        //         bbox.position.x -= collidee_horizontal.correction;
-        //         velocity.x = 0.;
-        //     }
-        //     if let Some(collidee_vertical) = collidee.vertical.take() {
-        //         velocity.y = 0.;
-        //         if collidee_vertical.correction < 0. {
-        //             collider.on_ground = true;
-        //             if collidee_vertical.name == "ElevatorBottom" {
-        //                 collider.on_elevator = true;
-        //                 velocity.y = 1.0;
-        //             } else {
-        //                 collider.on_elevator = false;
-        //                 bbox.position.y -= collidee_vertical.correction;
-        //             }
-        //         }
-        //     }
-        //     // FIXME: Due to the take() operation above, collidee.vertical will always be NONE.
-        //     // Might indicate a bug.
-        //     if velocity.y != 0. {
-        //         collider.on_ground = false;
-        //     }
+            if let Some(collidee_horizontal) = collidee.horizontal.take() {
+                bbox.position.x -= collidee_horizontal.correction;
+                velocity.x = 0.;
+            }
+            if let Some(collidee_vertical) = collidee.vertical.take() {
+                velocity.y = 0.;
+                if collidee_vertical.correction < 0. {
+                    collider.on_ground = true;
+                }
+            }
 
-        //     collider.set_hit_box_position(*velocity);
-        //     if let Some(player) = maybe_player {
-        //         if player.state == PlayerState::Ducking {
-        //             y -= 4.0;
-        //         }
-        //         player.update_position(x, y);
-        //     }
+            if velocity.y != 0. {
+                collider.on_ground = false;
+            }
 
-        //     // FIXME: move this
-        //     // if let Some(elevator) = maybe_elevator {
-        //     //     elevator.update_position(x, y);
-        //     // }
+            collider.set_hit_box_position(*velocity);
 
-        //     transform.set_translation_x(x);
-        //     transform.set_translation_y(y);
-        // }
+            transform.set_translation_x(x);
+            transform.set_translation_y(y);
+        }
     }
 }
 
@@ -192,26 +171,28 @@ impl<'s> System<'s> for GunTransformationSystem {
     type SystemData = (
         Entities<'s>,
         ReadStorage<'s, Gun>,
+        ReadStorage<'s, Child>,
         ReadStorage<'s, Direction>,
         ReadStorage<'s, Player>,
         WriteStorage<'s, Transform>,
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (entities, guns, directions, players, mut transforms) = data;
+        let (entities, guns, children, directions, players, mut transforms) = data;
 
         // loop through all guns and get the parent entity
-        for (gun, direction, transform) in (&guns, &directions, &mut transforms).join() {
-            if let Some(parent) = gun.parent {
-                for (entity, player) in (&entities, &players).join() {
-                    if entity == parent {
-                        if direction.x != direction.default_x {
-                            transform.set_translation_x(player.position.x - gun.position_offset.x);
-                        } else {
-                            transform.set_translation_x(player.position.x + gun.position_offset.x);
-                        }
-                        transform.set_translation_y(player.position.y + gun.position_offset.y);
+        for (_gun, child, direction, transform) in
+            (&guns, &children, &directions, &mut transforms).join()
+        {
+            let parent = child.parent;
+            for (entity, player) in (&entities, &players).join() {
+                if entity == parent {
+                    if direction.x != direction.default_x {
+                        transform.set_translation_x(player.position.x - child.offset_x);
+                    } else {
+                        transform.set_translation_x(player.position.x + child.offset_x);
                     }
+                    transform.set_translation_y(player.position.y + child.offset_y);
                 }
             }
         }

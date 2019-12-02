@@ -10,7 +10,7 @@ use amethyst::{
 
 use crate::components::{
     Animation, AnimationId, AnimationPrefabData, Bullet, BulletImpact, Collidee, Collider,
-    Direction, Directions, Motion,
+    DefaultTransformation, Direction, Directions, Motion,
 };
 
 const SCALE: f32 = 1.0;
@@ -18,7 +18,7 @@ const OFFSET_X: f32 = 11.;
 const OFFSET_Y: f32 = 3.;
 const BULLET_WIDTH: f32 = 6.;
 const BULLET_HEIGHT: f32 = 3.;
-const BULLET_VELOCITY: f32 = 140.0;
+const BULLET_VELOCITY: f32 = 200.0;
 
 pub fn spawn_bullet(
     entities: &Entities,
@@ -75,6 +75,7 @@ pub fn spawn_bullet(
     lazy_update.insert(bullet_entity, Named::new("Bullet"));
     lazy_update.insert(bullet_entity, collider);
     lazy_update.insert(bullet_entity, Collidee::default());
+    lazy_update.insert(bullet_entity, DefaultTransformation::default());
     lazy_update.insert(bullet_entity, sprite_render);
     lazy_update.insert(bullet_entity, motion);
     lazy_update.insert(bullet_entity, transform);

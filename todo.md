@@ -9,9 +9,10 @@
 - [ ] draw elevators in proper places based on tiles
 - [ ] don't move elevators unless user is inside (ie. can't control from the top)
 - [ ] parallax
+- [ ] add bad guys and AI
 
 ## Medium priority
-- [ ] fix gun transformations so that it looks correct
+- [x] fix gun transformations so that it looks correct
 - [x] fix elevator so that it waits 
 
 ## Low priority

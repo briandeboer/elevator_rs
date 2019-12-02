@@ -48,7 +48,7 @@ impl<'s> System<'s> for ControlsSystem {
                         gun.last_shot_seconds = time.absolute_time_seconds();
                         GunState::Shooting
                     } else {
-                        if (time.absolute_time_seconds() - gun.last_shot_seconds) < 0.1 {
+                        if (time.absolute_time_seconds() - gun.last_shot_seconds) < 0.05 {
                             GunState::Shooting
                         } else {
                             gun.spawned_bullet = false;
@@ -56,6 +56,11 @@ impl<'s> System<'s> for ControlsSystem {
                         }
                     };
                     gun.last_shoot_state = shoot_input;
+                    if move_input > 0. {
+                        direction.x = Directions::Right;
+                    } else if move_input < 0. {
+                        direction.x = Directions::Left;
+                    }
                 }
 
                 if let Some(player) = maybe_player {

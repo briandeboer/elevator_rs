@@ -7,6 +7,7 @@ mod elevator;
 mod gun;
 mod motion;
 mod player;
+mod transformation;
 
 pub use self::animation::Animation;
 pub use self::animation::AnimationId;
@@ -38,3 +39,5 @@ pub use self::player::Player;
 pub use self::player::PlayerState;
 pub use self::player::PLAYER_HEIGHT;
 pub use self::player::PLAYER_WIDTH;
+
+pub use self::transformation::DefaultTransformation;

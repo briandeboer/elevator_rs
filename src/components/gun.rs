@@ -1,7 +1,4 @@
-use amethyst::{
-    core::math::Vector2,
-    ecs::{Component, DenseVecStorage, Entity},
-};
+use amethyst::ecs::{Component, DenseVecStorage};
 
 #[allow(dead_code)] // remove when all variants are finished
 #[derive(Debug, Eq, Hash, PartialEq, Clone, Copy)]
@@ -14,8 +11,6 @@ pub enum GunState {
 #[derive(Component)]
 #[storage(DenseVecStorage)]
 pub struct Gun {
-    pub parent: Option<Entity>,
-    pub position_offset: Vector2<f32>,
     pub shots_fired: i32,
     pub state: GunState,
     pub is_player: bool,
@@ -25,10 +20,8 @@ pub struct Gun {
 }
 
 impl Gun {
-    pub fn new(parent: Option<Entity>, offset_x: f32, offset_y: f32, is_player: bool) -> Gun {
+    pub fn new(is_player: bool) -> Gun {
         Gun {
-            parent: parent,
-            position_offset: Vector2::new(offset_x, offset_y),
             shots_fired: 0,
             state: GunState::Holstered,
             is_player,

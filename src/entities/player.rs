@@ -8,8 +8,8 @@ use amethyst::{
 };
 
 use crate::components::{
-    Animation, AnimationId, AnimationPrefabData, Collidee, Collider, Direction, Directions, Gun,
-    Motion, Player, Proximity,
+    Animation, AnimationId, AnimationPrefabData, Child, Collidee, Collider, Direction, Directions,
+    Gun, Motion, Player, Proximity,
 };
 
 /// Initialises one player in the middle-ish space
@@ -72,7 +72,8 @@ pub fn load_player(
     world
         .create_entity()
         .named("Gun")
-        .with(Gun::new(Some(player), 8., 2., true))
+        .with(Child::new(player, 8., 2., 0.))
+        .with(Gun::new(true))
         .with(gun_transform)
         .with(Animation::new(
             AnimationId::Holster,

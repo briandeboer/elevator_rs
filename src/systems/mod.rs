@@ -27,7 +27,7 @@ pub use self::kinematics::PlayerKinematicsSystem;
 
 pub use self::shoot::ShootSystem;
 
+pub use self::transformations::DefaultTransformationSystem;
 pub use self::transformations::ElevatorTransformationSystem;
 pub use self::transformations::GunTransformationSystem;
 pub use self::transformations::PlayerTransformationSystem;
-pub use self::transformations::TransformationSystem;

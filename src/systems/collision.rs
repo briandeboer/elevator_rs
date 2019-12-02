@@ -96,8 +96,7 @@ impl<'s> System<'s> for ProximitySystem {
     }
 }
 
-const IMPACT_OFFSET_X: f32 = -11.;
-const IMPACT_OFFSET_Y: f32 = 25.;
+const IMPACT_OFFSET_X: f32 = -14.;
 
 pub struct BulletCollisionSystem;
 
@@ -138,7 +137,7 @@ impl<'s> System<'s> for BulletCollisionSystem {
                         let impact_position_x = if motion.velocity.x > 0. {
                             collidee_horizontal.position.x + IMPACT_OFFSET_X
                         } else {
-                            collidee_horizontal.position.x + IMPACT_OFFSET_Y
+                            collidee_horizontal.position.x - IMPACT_OFFSET_X
                         };
                         show_bullet_impact(
                             &entities,
