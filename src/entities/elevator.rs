@@ -62,7 +62,15 @@ pub fn load_elevator(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) 
     // parent component
     let mut transform = Transform::default();
     transform.set_translation_xyz(ELEVATOR_START_X, ELEVATOR_START_Y, ELEVATOR_START_Z);
-    let elevator = Elevator::new(Vector2::new(ELEVATOR_START_X, ELEVATOR_START_Y), 3, 0, 0.);
+    let num_floors: usize = 3;
+    let start_floor: usize = 15;
+    let elevator = Elevator::new(
+        Vector2::new(ELEVATOR_START_X, ELEVATOR_START_Y),
+        num_floors,
+        start_floor,
+        start_floor as f32,
+        0.,
+    );
     let elevator_entity = world
         .create_entity()
         .named("Elevator")

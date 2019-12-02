@@ -91,7 +91,8 @@ impl<'s> System<'s> for ControlsSystem {
                                         if details.approaching
                                             && (details.other_name == "ElevatorTop"
                                                 || details.other_name == "ElevatorBottom"
-                                                || details.other_name == "floor")
+                                                || (details.other_name == "floor"
+                                                    && collider.on_elevator))
                                         {
                                             hopping = true;
                                         }

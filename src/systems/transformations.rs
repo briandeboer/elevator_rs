@@ -220,7 +220,7 @@ impl<'s> System<'s> for GunTransformationSystem {
 
 pub struct ElevatorTransformationSystem;
 
-fn stop_elevator(elevator: &mut Elevator, current_floor: usize, position: f32, wait_time: f64) {
+fn stop_elevator(elevator: &mut Elevator, current_floor: f32, position: f32, wait_time: f64) {
     elevator.current_floor = current_floor;
     elevator.velocity = 0.;
     elevator.previous_state = elevator.state;
@@ -283,6 +283,7 @@ impl<'s> System<'s> for ElevatorTransformationSystem {
                     if name.to_string() == "ElevatorInside" {
                         elevator.position.x = x;
                         elevator.position.y = y;
+                        // stop the elevator when necessary
                         if elevator.state != ElevatorState::Waiting {
                             let boundaries = elevator.boundaries.clone();
                             for i in 1..=elevator.num_floors {
@@ -294,7 +295,7 @@ impl<'s> System<'s> for ElevatorTransformationSystem {
                                 {
                                     stop_elevator(
                                         elevator,
-                                        i - 1,
+                                        (i - 1 + elevator.start_floor) as f32,
                                         boundaries[i - 1],
                                         time.absolute_time_seconds(),
                                     );
@@ -311,7 +312,7 @@ impl<'s> System<'s> for ElevatorTransformationSystem {
                                 {
                                     stop_elevator(
                                         elevator,
-                                        0,
+                                        elevator.start_floor as f32,
                                         boundaries[0],
                                         time.absolute_time_seconds(),
                                     );
@@ -321,10 +322,18 @@ impl<'s> System<'s> for ElevatorTransformationSystem {
                                 {
                                     stop_elevator(
                                         elevator,
-                                        i - 1,
+                                        (i - 1 + elevator.start_floor) as f32,
                                         boundaries[i - 1],
                                         time.absolute_time_seconds(),
                                     );
+                                } else if i
+                                    == (elevator.current_floor.floor()
+                                        - elevator.start_floor as f32
+                                        + 1.0) as usize
+                                {
+                                    let signed_diff: f32 = bbox.position.y - boundaries[i - 1];
+                                    elevator.current_floor =
+                                        elevator.current_floor.floor() + signed_diff / 48.;
                                 }
                             }
                         }

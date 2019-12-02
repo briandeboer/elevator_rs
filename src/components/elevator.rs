@@ -52,7 +52,8 @@ pub struct Elevator {
     pub boundaries: Vec<f32>,
     pub floor_height: f32,
     pub num_floors: usize,
-    pub current_floor: usize,
+    pub start_floor: usize,
+    pub current_floor: f32,
     pub velocity: f32,
     pub previous_state: ElevatorState,
     pub state: ElevatorState,
@@ -67,7 +68,8 @@ impl Default for Elevator {
             boundaries: Vec::new(),
             floor_height: 48.,
             num_floors: 1,
-            current_floor: 0,
+            start_floor: 0,
+            current_floor: 0.,
             velocity: 0.,
             previous_state: ElevatorState::Waiting,
             state: ElevatorState::Waiting,
@@ -81,18 +83,24 @@ impl Elevator {
     pub fn new(
         position: Vector2<f32>,
         num_floors: usize,
-        current_floor: usize,
+        start_floor: usize,
+        current_floor: f32,
         velocity: f32,
     ) -> Self {
         let mut boundaries: Vec<f32> = Vec::new();
+        let floored_current_floor: usize = current_floor.floor() as usize;
         for i in 1..=num_floors {
-            boundaries.push(position.y - (current_floor as f32 * 48.) + (i - 1) as f32 * 48.);
+            boundaries.push(
+                position.y - ((floored_current_floor - start_floor) as f32 * 48.)
+                    + (i - 1) as f32 * 48.,
+            );
         }
         println!("Set elevator boundaries -- boundaries: {:?}", boundaries);
         Elevator {
             position,
             boundaries,
             num_floors,
+            start_floor,
             current_floor,
             velocity,
             ..Elevator::default()

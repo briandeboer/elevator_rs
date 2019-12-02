@@ -41,15 +41,22 @@ impl<'s> System<'s> for ElevatorControlSystem {
 
                 // check for boundaries
                 if elevator.state == ElevatorState::Up
-                    && elevator.current_floor == elevator.num_floors - 1
+                    && elevator.current_floor
+                        == (elevator.start_floor + elevator.num_floors - 1) as f32
                 {
                     elevator.state = ElevatorState::Down;
-                } else if elevator.state == ElevatorState::Down && elevator.current_floor == 0 {
+                } else if elevator.state == ElevatorState::Down
+                    && elevator.current_floor == elevator.start_floor as f32
+                {
                     elevator.state = ElevatorState::Up;
                 }
-            } else if down_input && (elevator.current_floor > 0 || elevator.velocity > 0.) {
+            } else if down_input
+                && (elevator.current_floor > elevator.start_floor as f32 || elevator.velocity > 0.)
+            {
                 elevator.state = ElevatorState::Down;
-            } else if up_input && elevator.current_floor < elevator.num_floors {
+            } else if up_input
+                && elevator.current_floor < (elevator.start_floor + elevator.num_floors) as f32
+            {
                 elevator.state = ElevatorState::Up;
             }
 
