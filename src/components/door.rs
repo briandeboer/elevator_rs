@@ -24,7 +24,7 @@ impl Door {
         let has_papers = can_user_enter;
         Door {
             position,
-            can_user_enter: false,
+            can_user_enter,
             state: DoorState::Closed,
             has_papers,
         }
@@ -34,4 +34,3 @@ impl Door {
 #[derive(Component, Default)]
 #[storage(NullStorage)]
 pub struct DoorEntry {}
-

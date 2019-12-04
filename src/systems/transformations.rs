@@ -4,7 +4,7 @@ use amethyst::{
 };
 
 use crate::components::{
-    Child, Collidee, Collider, DefaultTransformation, Direction, Elevator, ElevatorComponent,
+    Child, Collidee, Collider, DefaultTransformation, Direction, Door, DoorState, Elevator, ElevatorComponent,
     ElevatorState, Gun, Motion, Player, PlayerState,
 };
 
@@ -104,6 +104,12 @@ impl<'s> System<'s> for PlayerTransformationSystem {
                 y -= 4.0;
             }
 
+            if player.state == PlayerState::EnteringRoom {
+                transform.set_translation_z(0.);
+            } else {
+                transform.set_translation_z(0.5);
+            }
+
             player.update_position(x, y);
 
             transform.set_translation_x(x);
@@ -193,6 +199,12 @@ impl<'s> System<'s> for GunTransformationSystem {
                         transform.set_translation_x(player.position.x + child.offset_x);
                     }
                     transform.set_translation_y(player.position.y + child.offset_y);
+
+                    if player.state == PlayerState::EnteringRoom {
+                        transform.set_translation_z(0.);
+                    } else {
+                        transform.set_translation_z(0.7);
+                    }
                 }
             }
         }
@@ -336,6 +348,34 @@ impl<'s> System<'s> for ElevatorTransformationSystem {
                     transform.set_translation_x(x);
                     transform.set_translation_y(y);
                     // break;
+                }
+            }
+        }
+    }
+}
+
+pub struct DoorTransformationSystem;
+
+impl<'s> System<'s> for DoorTransformationSystem {
+    type SystemData = (
+        Entities<'s>,
+        WriteStorage<'s, Door>,
+        WriteStorage<'s, Collider>,
+        WriteStorage<'s, Transform>,
+    );
+
+    fn run(&mut self, data: Self::SystemData) {
+        let (entities, mut doors, mut colliders, mut transforms) = data;
+
+        for (_entity, door, collider, transform) in (&entities, &mut doors, &mut colliders, &mut transforms).join() {
+            match door.state {
+                DoorState::Open => {
+                    transform.set_translation_z(1.5);
+                    collider.is_collidable = true;
+                }
+                _ => {
+                    transform.set_translation_z(0.);
+                    collider.is_collidable = false;
                 }
             }
         }

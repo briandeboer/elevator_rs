@@ -5,7 +5,8 @@ use amethyst::{
 };
 
 use crate::components::{
-    Animation, AnimationId, AnimationPrefabData, Child, Collidee, Collider, Direction, Directions, Door, DoorEntry,
+    Animation, AnimationId, AnimationPrefabData, Child, Collidee, Collider, Direction, Directions,
+    Door, DoorEntry, Motion,
 };
 
 pub fn load_door(
@@ -14,7 +15,10 @@ pub fn load_door(
     position: Vector2<f32>,
     can_user_enter: bool,
 ) {
-    let collider = Collider::new(16., 28.);
+    let mut collider = Collider::new(4., 28.); // door is narrower for collision sake t
+    collider.is_collidable = false;
+    collider.bounding_box.position.x = position.x + 8.; // adjust it slightly to prevent people walking past
+    collider.bounding_box.position.y = position.y - 14.;
     let mut transform = Transform::default();
     // position in tilesheet is based on corner not middle, remember y is reversed (bottom to top)
     transform.set_translation_xyz(position.x + 8., position.y - 14., 0.);
@@ -41,6 +45,8 @@ pub fn load_door(
         .with(collider)
         .with(Collidee::default())
         .with(transform)
+        // add motion so that collisions will occur
+        .with(Motion::new())
         .with(Animation::new(
             animation_id,
             vec![
@@ -62,23 +68,25 @@ pub fn load_door(
         .build();
 
     if can_user_enter {
-        let entry_collider = Collider::new(16., 28.);
+        let mut entry_collider = Collider::new(1., 2.);
+        let x: f32 = position.x - 1.;
+        let y: f32 = position.y - 29.;
+        entry_collider.bounding_box.position.x = x + 4.;
+        entry_collider.bounding_box.position.y = y + 1.;
         let mut entry_transform = Transform::default();
         // position in tilesheet is based on corner not middle, remember y is reversed (bottom to top)
-        entry_transform.set_translation_xyz(position.x - 1., position.y - 29., 0.);
+        entry_transform.set_translation_xyz(x, y, 0.);
         world
             .create_entity()
             .named("DoorEntry")
-            .with(Child::new(door_entity, -1., -29., 0.))
+            .with(Child::new(door_entity, x, y, 0.))
             .with(DoorEntry::default())
             .with(entry_collider)
             .with(Collidee::default())
             .with(entry_transform)
             .with(Animation::new(
                 AnimationId::DoorEntry,
-                vec![
-                    AnimationId::DoorEntry,
-                ],
+                vec![AnimationId::DoorEntry],
             ))
             .with(prefab_handle)
             .with(Direction::new(
@@ -88,6 +96,5 @@ pub fn load_door(
                 Directions::Neutral,
             ))
             .build();
-
     }
 }
