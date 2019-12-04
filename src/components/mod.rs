@@ -3,6 +3,7 @@ mod bullet;
 mod child;
 mod collision;
 mod direction;
+mod door;
 mod elevator;
 mod gun;
 mod motion;
@@ -24,6 +25,10 @@ pub use self::collision::Proximity;
 
 pub use self::direction::Direction;
 pub use self::direction::Directions;
+
+pub use self::door::Door;
+pub use self::door::DoorEntry;
+pub use self::door::DoorState;
 
 pub use self::elevator::Elevator;
 pub use self::elevator::ElevatorComponent;

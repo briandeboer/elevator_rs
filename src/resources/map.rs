@@ -9,6 +9,8 @@ use amethyst::{
 use serde::{Deserialize, Serialize};
 
 use crate::components::{Collider, Direction, Motion};
+use crate::entities::load_door;
+use crate::resources::{AssetType, PrefabList};
 
 const Y_OFFSET: f32 = 150.0;
 const TILE_SIZE: f32 = 8.0;
@@ -67,8 +69,39 @@ impl Map {
                 "collision" => {
                     self.load_collision_layer(world, layer);
                 }
-                _ => {
+                "doors" => {
+                    self.load_sprite_layer(world, layer);
+                }
+                "map" => {
                     self.load_tile_layer(world, layer, &sprite_sheet_handle);
+                }
+                _ => {
+                    // do nothing with the other layers...yet
+                }
+            }
+        }
+    }
+
+    fn load_sprite_layer(&self, world: &mut World, layer: &Layer) {
+        // let scale_x: f32 = 1.0;
+        // let scale_y: f32 = 1.0;
+        let offset_x: f32 = 0.0;
+        let offset_y: f32 = 153.;
+        if let Some(objects) = &layer.objects {
+            for (_index, obj) in objects.iter().enumerate() {
+                let x = offset_x + obj.x;
+                let y = offset_y - obj.y;
+
+                if layer.name == "doors" {
+                    println!(
+                        "### Adding door object {}, x: {}, y: {}, width: {}, height: {} ###",
+                        obj.name, x, y, obj.width, obj.height
+                    );
+                    let prefab_handle = {
+                        let prefab_list = world.read_resource::<PrefabList>();
+                        prefab_list.get(AssetType::Door).unwrap().clone()
+                    };
+                    load_door(world, prefab_handle, Vector2::new(x, y), obj.name == "red");
                 }
             }
         }

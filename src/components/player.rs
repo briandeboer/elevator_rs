@@ -6,7 +6,7 @@ use amethyst::{
 pub const PLAYER_HEIGHT: f32 = 16.0;
 pub const PLAYER_WIDTH: f32 = 16.0;
 
-#[allow(dead_code)] // remove when all variants are finished
+#[allow(dead_code)] // TODO: remove when all variants are finished
 #[derive(Eq, Hash, PartialEq, Clone, Copy)]
 pub enum PlayerState {
     Ducking,
@@ -16,6 +16,9 @@ pub enum PlayerState {
     Shooting,
     Walking,
     Hopping,
+    EnteringRoom,
+    InsideRoom,
+    ExitingRoom,
 }
 
 impl Default for PlayerState {

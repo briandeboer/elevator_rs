@@ -1,0 +1,79 @@
+//
+//  Sprite sheet data for Amethyst Game Engine: https://www.amethyst.rs
+//  This file was created by TexturePacker: https://www.codeandweb.com/texturepacker
+//
+//  $TexturePacker:SmartUpdate:d4252c7d960bafbad970f3065390ff15:e9bf867919b5bcfe9dced820d213889d:a4cad101b715dd05b64b44d1348b0cf3$
+//
+
+#![enable(implicit_some)]
+(
+    texture_width: 108,
+    texture_height: 30,
+    sprites: [
+        (
+            // 0: blue_left.png
+            x: 0,
+            y: 0,
+            width: 16,
+            height: 29,
+            offsets: (0, -0.5),
+        ),
+        (
+            // 1: blue_open_1.png
+            x: 16,
+            y: 0,
+            width: 16,
+            height: 30,
+            offsets: (0, 0),
+        ),
+        (
+            // 2: entry.png
+            x: 32,
+            y: 0,
+            width: 8,
+            height: 2,
+            offsets: (0, 0),
+        ),
+        (
+            // 3: red_left.png
+            x: 40,
+            y: 0,
+            width: 16,
+            height: 29,
+            offsets: (0, -0.5),
+        ),
+        (
+            // 4: red_open_1.png
+            x: 56,
+            y: 0,
+            width: 16,
+            height: 30,
+            offsets: (0, 0),
+        ),
+        (
+            // 5: red_open_2.png
+            x: 72,
+            y: 0,
+            width: 15,
+            height: 30,
+            offsets: (-0.5, 0),
+        ),
+        (
+            // 6: red_open_3.png
+            x: 87,
+            y: 0,
+            width: 12,
+            height: 30,
+            offsets: (-2, 0),
+        ),
+        (
+            // 7: red_open_4.png
+            x: 99,
+            y: 0,
+            width: 9,
+            height: 30,
+            offsets: (-3.5, 0),
+        )
+    ]
+)
+

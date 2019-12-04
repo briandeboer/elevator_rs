@@ -29,9 +29,8 @@ impl SimpleState for GameState {
         world.insert(Context::new());
 
         // TODO: remove these - needed until systems are done
-        world.register::<Child>();
-        world.register::<Elevator>();
-        world.register::<ElevatorComponent>();
+        world.register::<Door>();
+        world.register::<DoorEntry>();
 
         self.progress_counter = Some(load_assets(
             world,
@@ -40,6 +39,7 @@ impl SimpleState for GameState {
                 AssetType::Guns,
                 AssetType::Bullet,
                 AssetType::BulletImpact,
+                AssetType::Door,
                 AssetType::Elevator,
             ],
         ));

@@ -29,6 +29,14 @@ pub enum AnimationId {
     PlayerShoot,
     PlayerJumpShoot,
     Holster, // hidden
+    // doors
+    DoorEntry,
+    RedDoor,
+    RedDoorClose,
+    RedDoorOpen,
+    BlueDoor,
+    BlueDoorClose,
+    BlueDoorOpen,
 }
 
 /// `AnimationPrefabData` type used for loading of `SpriteScene`s and their
