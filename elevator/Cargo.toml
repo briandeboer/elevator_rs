@@ -1,5 +1,5 @@
 [package]
-name = "elevator"
+name = "elevator_main"
 version = "0.1.0"
 authors = ["Brian DeBoer <bdeboer@noreply.com>"]
 edition = "2018"
@@ -8,7 +8,11 @@ edition = "2018"
 amethyst = { version = "0.13.2", features = ["metal", "nightly", "json"] }
 objc = "=0.2.6"
 serde = "1.0.102"
-components = { path = "../lib/components" }
-resources = { path = "../lib/resources" }
+animation = { path = "../lib/core/animation" }
+asset = { path = "../lib/core/asset" }
+door = { path = "../lib/game/door" }
+elevator = { path = "../lib/game/elevator" }
+map = { path = "../lib/game/map" }
+physics = { path = "../lib/core/physics" }
+player = { path = "../lib/game/player" }
 states = { path = "../lib/states" }
-systems = { path = "../lib/systems" }

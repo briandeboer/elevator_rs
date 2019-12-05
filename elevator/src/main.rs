@@ -13,9 +13,16 @@ use amethyst::{
     utils::application_root_dir,
     Application, GameDataBuilder,
 };
-use components::{AnimationId, AnimationPrefabData};
-use resources::{Map, Tileset};
-use systems::*;
+
+use animation::{
+    components::{AnimationId, AnimationPrefabData},
+    systems::AnimationControlSystem,
+};
+use elevator::systems::{ElevatorControlSystem, ElevatorTransformationSystem};
+use door::systems::{DoorAnimationSystem, DoorEntryCollisionSystem, DoorTransformationSystem};
+use player::systems::*;
+use map::{Map, Tileset};
+use physics::systems::*;
 
 fn main() -> amethyst::Result<()> {
     // start logging in amethyst
@@ -48,16 +55,12 @@ fn main() -> amethyst::Result<()> {
         .with_bundle(UiBundle::<StringBindings>::new())?
         .with(Processor::<Tileset>::new(), "tileset_processor", &[])
         .with(Processor::<Map>::new(), "map_processor", &[])
-        .with(ControlsSystem, "controls_system", &[])
-        .with(
-            ElevatorControlSystem,
-            "elevator_control_system",
-            &[],
-        )
+        .with(PlayerControlsSystem, "player_controls_system", &[])
+        .with(ElevatorControlSystem, "elevator_control_system", &[])
         .with(
             PlayerKinematicsSystem,
             "player_kinematics_system",
-            &["controls_system"],
+            &["player_controls_system"],
         )
         .with(
             KinematicsSystem,
@@ -72,11 +75,7 @@ fn main() -> amethyst::Result<()> {
             "bullet_collision_system",
             &["collision_system"],
         )
-        .with(
-            DoorEntryCollisionSystem,
-            "door_entry_collision_system",
-            &[],
-        )
+        .with(DoorEntryCollisionSystem, "door_entry_collision_system", &[])
         // PincerCollision
         // MarineCollision
         .with(
@@ -84,11 +83,7 @@ fn main() -> amethyst::Result<()> {
             "default_transformation_system",
             &[],
         )
-        .with(
-            DoorTransformationSystem,
-            "door_transformation_system",
-            &[],
-        )
+        .with(DoorTransformationSystem, "door_transformation_system", &[])
         .with(
             ElevatorTransformationSystem,
             "elevator_transformation_system",

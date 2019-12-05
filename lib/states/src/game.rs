@@ -3,11 +3,11 @@ use amethyst::{
     prelude::*,
 };
 
-use components::*;
-use entities::{init_camera, load_elevator, load_player};
-use resources::{
-    load_assets, AssetType, Context, Map, PrefabList, SpriteSheetList, Tileset,
-};
+use camera::init_camera;
+use elevator::load_elevator;
+use player::load_player;
+use map::{Map, Tileset};
+use asset::{load_assets, AssetType, PrefabList, SpriteSheetList};
 
 // TODO: move these to a resource
 pub const GAME_WIDTH: f32 = 208.0;
@@ -25,12 +25,6 @@ impl SimpleState for GameState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         println!("### GameState on_start ###");
         let world = data.world;
-
-        world.insert(Context::new());
-
-        // TODO: remove these - needed until systems are done
-        world.register::<Door>();
-        world.register::<DoorEntry>();
 
         self.progress_counter = Some(load_assets(
             world,

@@ -1,9 +1,14 @@
 [workspace]
 members = [
   "elevator",
-  "lib/components",
-  "lib/entities",
+  "lib/core/animation",
+  "lib/core/asset",
+  "lib/core/camera",
+  "lib/core/physics",
+  "lib/game/door",
+  "lib/game/elevator",
+  "lib/game/player",
+  "lib/game/map",
   "lib/states",
-  "lib/systems",
 ]
 

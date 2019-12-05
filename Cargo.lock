@@ -398,6 +398,15 @@ version = "0.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
+name = "animation"
+version = "0.1.0"
+dependencies = [
+ "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "approx"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -427,6 +436,16 @@ dependencies = [
 name = "arrayvec"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "asset"
+version = "0.1.0"
+dependencies = [
+ "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "animation 0.1.0",
+ "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "atom"
@@ -552,6 +571,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "camera"
+version = "0.1.0"
+dependencies = [
+ "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "cc"
 version = "1.0.48"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -674,15 +702,6 @@ dependencies = [
 name = "colorful"
 version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-
-[[package]]
-name = "components"
-version = "0.1.0"
-dependencies = [
- "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
-]
 
 [[package]]
 name = "const-random"
@@ -917,6 +936,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "door"
+version = "0.1.0"
+dependencies = [
+ "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "animation 0.1.0",
+ "hierarchy 0.1.0",
+ "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "physics 0.1.0",
+ "player 0.1.0",
+ "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "downcast-rs"
 version = "1.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -946,22 +978,27 @@ name = "elevator"
 version = "0.1.0"
 dependencies = [
  "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "components 0.1.0",
+ "hierarchy 0.1.0",
  "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "resources 0.1.0",
+ "physics 0.1.0",
  "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
- "states 0.1.0",
- "systems 0.1.0",
 ]
 
 [[package]]
-name = "entities"
+name = "elevator_main"
 version = "0.1.0"
 dependencies = [
  "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "components 0.1.0",
+ "animation 0.1.0",
+ "asset 0.1.0",
+ "door 0.1.0",
+ "elevator 0.1.0",
+ "map 0.1.0",
  "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "physics 0.1.0",
+ "player 0.1.0",
  "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
+ "states 0.1.0",
 ]
 
 [[package]]
@@ -1340,6 +1377,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "hierarchy"
+version = "0.1.0"
+dependencies = [
+ "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "hound"
 version = "3.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1592,6 +1638,18 @@ version = "0.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "libc 0.2.66 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "map"
+version = "0.1.0"
+dependencies = [
+ "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "asset 0.1.0",
+ "door 0.1.0",
+ "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "physics 0.1.0",
+ "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -2087,9 +2145,31 @@ dependencies = [
 ]
 
 [[package]]
+name = "physics"
+version = "0.1.0"
+dependencies = [
+ "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "pkg-config"
 version = "0.3.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "player"
+version = "0.1.0"
+dependencies = [
+ "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "animation 0.1.0",
+ "asset 0.1.0",
+ "hierarchy 0.1.0",
+ "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "physics 0.1.0",
+ "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "png"
@@ -2695,17 +2775,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "resources"
-version = "0.1.0"
-dependencies = [
- "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "components 0.1.0",
- "entities 0.1.0",
- "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
 name = "rodio"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3040,10 +3109,12 @@ name = "states"
 version = "0.1.0"
 dependencies = [
  "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "components 0.1.0",
- "entities 0.1.0",
+ "asset 0.1.0",
+ "camera 0.1.0",
+ "elevator 0.1.0",
+ "map 0.1.0",
  "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "resources 0.1.0",
+ "player 0.1.0",
  "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -3112,18 +3183,6 @@ dependencies = [
  "quote 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "syn 1.0.11 (registry+https://github.com/rust-lang/crates.io-index)",
  "unicode-xid 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "systems"
-version = "0.1.0"
-dependencies = [
- "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "components 0.1.0",
- "entities 0.1.0",
- "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "resources 0.1.0",
- "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]

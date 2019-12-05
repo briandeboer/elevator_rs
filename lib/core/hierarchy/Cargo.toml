@@ -1,5 +1,5 @@
 [package]
-name = "states"
+name = "hierarchy"
 version = "0.1.0"
 authors = ["Brian DeBoer <bdeboer@noreply.com>"]
 edition = "2018"
@@ -10,9 +10,3 @@ edition = "2018"
 amethyst = { version = "0.13.2", features = ["metal", "nightly", "json"] }
 objc = "=0.2.6"
 serde = "1.0.102"
-
-asset = { path = "../core/asset" }
-camera = { path = "../core/camera" }
-elevator = { path = "../game/elevator" }
-map = { path = "../game/map" }
-player = { path = "../game/player" }
