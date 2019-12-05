@@ -5,7 +5,7 @@ use amethyst::{
 
 use std::f32::consts::PI;
 
-use crate::components::{Direction, Directions};
+use components::{Direction, Directions};
 
 pub struct DirectionSystem;
 

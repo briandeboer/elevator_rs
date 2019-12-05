@@ -3,9 +3,9 @@ use amethyst::{
     prelude::*,
 };
 
-use crate::components::*;
-use crate::entities::{init_camera, load_elevator, load_player};
-use crate::resources::{
+use components::*;
+use entities::{init_camera, load_elevator, load_player};
+use resources::{
     load_assets, AssetType, Context, Map, PrefabList, SpriteSheetList, Tileset,
 };
 

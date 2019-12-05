@@ -4,7 +4,7 @@ use amethyst::{
     ecs::{Builder, World, WorldExt},
 };
 
-use crate::components::{
+use components::{
     Animation, AnimationId, AnimationPrefabData, Child, Collidee, Collider, Direction, Directions,
     Door, DoorEntry, Motion,
 };

@@ -4,7 +4,7 @@ use amethyst::derive::SystemDesc;
 use amethyst::ecs::{Entities, Join, Read, ReadStorage, System, SystemData, World, WriteStorage};
 use amethyst::input::{InputHandler, StringBindings};
 
-use crate::components::{Child, Elevator, ElevatorComponent, ElevatorState, Motion};
+use components::{Child, Elevator, ElevatorComponent, ElevatorState, Motion};
 
 const WAIT_TIME: f64 = 2.0;
 const VELOCITY: f32 = 20.0;

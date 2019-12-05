@@ -1,8 +1,8 @@
 use amethyst::ecs::{Entities, Join, LazyUpdate, ReadExpect, ReadStorage, System, WriteStorage};
 
-use crate::components::{Child, Direction, Gun, GunState, Player};
-use crate::entities::spawn_bullet;
-use crate::resources::{AssetType, SpriteSheetList};
+use components::{Child, Direction, Gun, GunState, Player};
+use entities::spawn_bullet;
+use resources::{AssetType, SpriteSheetList};
 
 pub struct ShootSystem;
 

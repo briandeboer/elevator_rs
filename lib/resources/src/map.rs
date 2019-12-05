@@ -8,9 +8,9 @@ use amethyst::{
 
 use serde::{Deserialize, Serialize};
 
-use crate::components::{Collider, Direction, Motion};
-use crate::entities::load_door;
-use crate::resources::{AssetType, PrefabList};
+use components::{Collider, Direction, Motion};
+use entities::load_door;
+use crate::asset::{AssetType, PrefabList};
 
 const Y_OFFSET: f32 = 150.0;
 const TILE_SIZE: f32 = 8.0;

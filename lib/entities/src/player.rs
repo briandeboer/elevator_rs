@@ -7,7 +7,7 @@ use amethyst::{
     prelude::Builder,
 };
 
-use crate::components::{
+use components::{
     Animation, AnimationId, AnimationPrefabData, Child, Collidee, Collider, Direction, Directions,
     Gun, Motion, Player, Proximity,
 };

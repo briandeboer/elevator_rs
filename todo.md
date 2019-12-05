@@ -12,6 +12,7 @@
 - [ ] animate user when he enters a door
 - [ ] create a system for knowing when the player is near an elevator (or on an elevator)
 - [ ] draw elevators in proper places based on tiles
+- [ ] draw out a full-er map
 - [ ] don't move elevators unless user is inside (ie. can't control from the top)
 - [ ] parallax
 - [ ] add bad guys and AI

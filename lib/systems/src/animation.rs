@@ -6,7 +6,7 @@ use amethyst::{
     renderer::SpriteRender,
 };
 
-use crate::components::{
+use components::{
     Animation, AnimationId, BulletImpact, Door, DoorState, Gun, GunState, Player, PlayerState,
 };
 

@@ -1,6 +1,8 @@
 use amethyst::{core::transform::Transform, prelude::*, renderer::Camera};
 
-use crate::states::{GAME_HEIGHT, GAME_WIDTH};
+// TODO: move these to a resource
+pub const GAME_WIDTH: f32 = 208.0;
+pub const GAME_HEIGHT: f32 = 200.0;
 
 /// sets up a camera for the purposes of seeing the 2d space
 pub fn init_camera(world: &mut World) {

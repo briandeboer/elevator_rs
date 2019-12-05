@@ -3,7 +3,7 @@ use amethyst::{
     ecs::{Entities, Join, Read, ReadStorage, System, WriteStorage},
 };
 
-use crate::components::{
+use components::{
     Child, Collidee, Collider, DefaultTransformation, Direction, Door, DoorState, Elevator, ElevatorComponent,
     ElevatorState, Gun, Motion, Player, PlayerState,
 };

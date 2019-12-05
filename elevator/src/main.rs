@@ -1,9 +1,3 @@
-mod components;
-mod entities;
-mod resources;
-mod states;
-mod systems;
-
 use amethyst::{
     animation::AnimationBundle,
     assets::{PrefabLoaderSystemDesc, Processor},
@@ -21,18 +15,14 @@ use amethyst::{
 };
 use components::{AnimationId, AnimationPrefabData};
 use resources::{Map, Tileset};
-use systems::{
-    AnimationControlSystem, BulletCollisionSystem, BulletImpactAnimationSystem, CollisionSystem,
-    ControlsSystem, DirectionSystem, DoorAnimationSystem, GunAnimationSystem, KinematicsSystem,
-    PlayerAnimationSystem, PlayerKinematicsSystem, ShootSystem,
-};
+use systems::*;
 
 fn main() -> amethyst::Result<()> {
     // start logging in amethyst
     amethyst::start_logger(Default::default());
 
-    let app_root = application_root_dir()?;
-
+    let main_root = application_root_dir()?;
+    let app_root = main_root.parent().unwrap();
     let config_dir = app_root.join("config");
     let display_config_path = config_dir.join("display.ron");
     let assets_dir = app_root.join("assets");
@@ -60,7 +50,7 @@ fn main() -> amethyst::Result<()> {
         .with(Processor::<Map>::new(), "map_processor", &[])
         .with(ControlsSystem, "controls_system", &[])
         .with(
-            systems::ElevatorControlSystem,
+            ElevatorControlSystem,
             "elevator_control_system",
             &[],
         )
@@ -83,34 +73,34 @@ fn main() -> amethyst::Result<()> {
             &["collision_system"],
         )
         .with(
-            systems::DoorEntryCollisionSystem,
+            DoorEntryCollisionSystem,
             "door_entry_collision_system",
             &[],
         )
         // PincerCollision
         // MarineCollision
         .with(
-            systems::DefaultTransformationSystem,
+            DefaultTransformationSystem,
             "default_transformation_system",
             &[],
         )
         .with(
-            systems::DoorTransformationSystem,
+            DoorTransformationSystem,
             "door_transformation_system",
             &[],
         )
         .with(
-            systems::ElevatorTransformationSystem,
+            ElevatorTransformationSystem,
             "elevator_transformation_system",
             &[],
         )
         .with(
-            systems::PlayerTransformationSystem,
+            PlayerTransformationSystem,
             "player_transformation_system",
             &["elevator_transformation_system"],
         )
         .with(
-            systems::ProximitySystem,
+            ProximitySystem,
             "proximity_system",
             &[
                 "elevator_transformation_system",
@@ -118,7 +108,7 @@ fn main() -> amethyst::Result<()> {
             ],
         )
         .with(
-            systems::GunTransformationSystem,
+            GunTransformationSystem,
             "gun_transformation_system",
             &[
                 "default_transformation_system",

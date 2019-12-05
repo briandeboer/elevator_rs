@@ -7,7 +7,7 @@ use amethyst::{
     renderer::{sprite::SpriteSheetHandle, SpriteRender},
 };
 
-use crate::components::{
+use components::{
     Child, Collidee, Collider, Elevator, ElevatorComponent, Motion, Proximity,
 };
 

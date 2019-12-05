@@ -3,7 +3,7 @@ use amethyst::{
     ecs::{Component, DenseVecStorage},
 };
 
-use crate::components::{Direction, Directions};
+use crate::direction::{Direction, Directions};
 
 #[derive(Component)]
 #[storage(DenseVecStorage)]

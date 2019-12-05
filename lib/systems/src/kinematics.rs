@@ -4,8 +4,8 @@ use amethyst::{
     ecs::{Join, Read, ReadStorage, System, WriteStorage},
 };
 
-use crate::components::{Collider, Direction, Motion, Player, PlayerState};
-use crate::resources::Context;
+use components::{Collider, Direction, Motion, Player, PlayerState};
+use resources::Context;
 
 const GRAVITY_AMOUNT: f32 = -5.;
 

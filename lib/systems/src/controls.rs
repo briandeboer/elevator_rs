@@ -4,7 +4,7 @@ use amethyst::derive::SystemDesc;
 use amethyst::ecs::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage};
 use amethyst::input::{InputHandler, StringBindings};
 
-use crate::components::{
+use components::{
     Collider, Direction, Directions, Gun, GunState, Player, PlayerState, Proximity,
 };
 

@@ -3,14 +3,13 @@ use amethyst::{
     ecs::{Entities, Join, LazyUpdate, ReadExpect, ReadStorage, System, WriteStorage},
 };
 
-use crate::{
-    components::{
-        Bullet, Child, Collidee, Collider, Direction, Door, DoorEntry, DoorState, Gun, Motion,
-        Player, PlayerState, Proximity,
-    },
-    entities::show_bullet_impact,
-    resources::{AssetType, PrefabList},
+use components::{
+    Bullet, Child, Collidee, Collider, Direction, Door, DoorEntry, DoorState, Gun, Motion,
+    Player, PlayerState, Proximity,
 };
+
+use entities::show_bullet_impact;
+use resources::{AssetType, PrefabList};
 
 pub struct CollisionSystem;
 

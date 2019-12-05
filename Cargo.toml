@@ -1,10 +1,9 @@
-[package]
-name = "elevator_rs"
-version = "0.1.0"
-authors = ["briandeboer"]
-edition = "2018"
+[workspace]
+members = [
+  "elevator",
+  "lib/components",
+  "lib/entities",
+  "lib/states",
+  "lib/systems",
+]
 
-[dependencies]
-amethyst = { version = "0.13.2", features = ["metal", "nightly", "json"] }
-objc = "=0.2.6"
-serde = "1.0.102"
