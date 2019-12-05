@@ -4,7 +4,7 @@ use amethyst::{
 };
 
 use crate::components::{Door, DoorState};
-use physics::components::{Collider};
+use physics::components::Collider;
 
 pub struct DoorTransformationSystem;
 

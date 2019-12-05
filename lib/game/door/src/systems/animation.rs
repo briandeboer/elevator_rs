@@ -4,8 +4,8 @@ use amethyst::{
     renderer::SpriteRender,
 };
 
+use crate::components::{Door, DoorState, Room};
 use animation::components::{Animation, AnimationId};
-use crate::components::{Door, DoorState};
 
 #[derive(Default)]
 pub struct DoorAnimationSystem;
@@ -14,12 +14,13 @@ impl<'s> System<'s> for DoorAnimationSystem {
     type SystemData = (
         Entities<'s>,
         ReadStorage<'s, Door>,
+        ReadStorage<'s, Room>, // add room just to force register it
         WriteStorage<'s, Animation>,
         WriteStorage<'s, AnimationControlSet<AnimationId, SpriteRender>>,
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (entities, doors, mut animations, mut animation_control_sets) = data;
+        let (entities, doors, _rooms, mut animations, mut animation_control_sets) = data;
 
         for (_, door, mut animation, animation_control_set) in (
             &entities,

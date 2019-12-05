@@ -1,12 +1,10 @@
-use amethyst::{
-    ecs::{Entities, Join, LazyUpdate, ReadExpect, ReadStorage, System, WriteStorage},
-};
+use amethyst::ecs::{Entities, Join, LazyUpdate, ReadExpect, ReadStorage, System, WriteStorage};
 
 use crate::components::{Bullet, Gun};
 use physics::components::{Collidee, Collider, Motion};
 
-use asset::{AssetType, PrefabList};
 use crate::bullet::show_bullet_impact;
+use asset::{AssetType, PrefabList};
 
 const IMPACT_OFFSET_X: f32 = -14.;
 

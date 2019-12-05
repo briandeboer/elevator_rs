@@ -18,11 +18,11 @@ use animation::{
     components::{AnimationId, AnimationPrefabData},
     systems::AnimationControlSystem,
 };
-use elevator::systems::{ElevatorControlSystem, ElevatorTransformationSystem};
 use door::systems::{DoorAnimationSystem, DoorEntryCollisionSystem, DoorTransformationSystem};
-use player::systems::*;
+use elevator::systems::{ElevatorControlSystem, ElevatorTransformationSystem};
 use map::{Map, Tileset};
 use physics::systems::*;
+use player::systems::*;
 
 fn main() -> amethyst::Result<()> {
     // start logging in amethyst

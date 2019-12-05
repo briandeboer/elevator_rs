@@ -4,8 +4,8 @@ use amethyst::{
     ecs::{Builder, World, WorldExt},
 };
 
+use crate::components::{Door, DoorEntry, Room};
 use animation::components::{Animation, AnimationId, AnimationPrefabData};
-use crate::components::{Door, DoorEntry};
 use hierarchy::components::Child;
 use physics::components::{Collidee, Collider, Direction, Directions, Motion};
 
@@ -21,7 +21,7 @@ pub fn load_door(
     collider.bounding_box.position.y = position.y - 14.;
     let mut transform = Transform::default();
     // position in tilesheet is based on corner not middle, remember y is reversed (bottom to top)
-    transform.set_translation_xyz(position.x + 8., position.y - 14., 0.);
+    transform.set_translation_xyz(position.x + 8., position.y - 14., 0.1);
     let door = Door::new(Vector2::new(position.x, position.y), can_user_enter);
     println!(
         "Loading door! {:?}, can_user_enter: {}",
@@ -65,6 +65,22 @@ pub fn load_door(
             direction,
             Directions::Neutral,
         ))
+        .build();
+
+    let mut room_transform = Transform::default();
+    // position in tilesheet is based on corner not middle, remember y is reversed (bottom to top)
+    room_transform.set_translation_xyz(position.x + 8., position.y - 14., 0.);
+    let _room = world
+        .create_entity()
+        .named("Room")
+        .with(Room::default())
+        .with(Child::new(door_entity, 0., 0., -0.1))
+        .with(room_transform)
+        .with(Animation::new(
+            AnimationId::PurpleRoom,
+            vec![AnimationId::PurpleRoom],
+        ))
+        .with(prefab_handle.clone())
         .build();
 
     if can_user_enter {

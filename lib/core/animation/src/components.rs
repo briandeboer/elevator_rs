@@ -37,6 +37,7 @@ pub enum AnimationId {
     BlueDoor,
     BlueDoorClose,
     BlueDoorOpen,
+    PurpleRoom,
 }
 
 /// `AnimationPrefabData` type used for loading of `SpriteScene`s and their

@@ -30,11 +30,11 @@ Prefab(
                         // sprites
                         sprites: [
                             List((
-                                texture_width: 108,
+                                texture_width: 124,
                                 texture_height: 30,
                                 sprites: [
                                     (
-                                        // 0: blue_left.png
+                                        // 0: background_purple.png
                                         x: 0,
                                         y: 0,
                                         width: 16,
@@ -42,56 +42,64 @@ Prefab(
                                         offsets: (0, -0.5),
                                     ),
                                     (
-                                        // 1: blue_open_1.png
+                                        // 1: blue_left.png
                                         x: 16,
-                                        y: 0,
-                                        width: 16,
-                                        height: 30,
-                                        offsets: (0, 0),
-                                    ),
-                                    (
-                                        // 2: entry.png
-                                        x: 32,
-                                        y: 0,
-                                        width: 8,
-                                        height: 2,
-                                        offsets: (0, 0),
-                                    ),
-                                    (
-                                        // 3: red_left.png
-                                        x: 40,
                                         y: 0,
                                         width: 16,
                                         height: 29,
                                         offsets: (0, -0.5),
                                     ),
                                     (
-                                        // 4: red_open_1.png
-                                        x: 56,
+                                        // 2: blue_open_1.png
+                                        x: 32,
                                         y: 0,
                                         width: 16,
                                         height: 30,
                                         offsets: (0, 0),
                                     ),
                                     (
-                                        // 5: red_open_2.png
+                                        // 3: entry.png
+                                        x: 48,
+                                        y: 0,
+                                        width: 8,
+                                        height: 2,
+                                        offsets: (0, 0),
+                                    ),
+                                    (
+                                        // 4: red_left.png
+                                        x: 56,
+                                        y: 0,
+                                        width: 16,
+                                        height: 29,
+                                        offsets: (0, -0.5),
+                                    ),
+                                    (
+                                        // 5: red_open_1.png
                                         x: 72,
+                                        y: 0,
+                                        width: 16,
+                                        height: 30,
+                                        offsets: (0, 0),
+                                    ),
+                                    (
+                                        // 6: red_open_2.png
+                                        x: 88,
                                         y: 0,
                                         width: 15,
                                         height: 30,
                                         offsets: (-0.5, 0),
                                     ),
                                     (
-                                        // 6: red_open_3.png
-                                        x: 87,
+                                        // 7: red_open_3.png
+                                        x: 103,
                                         y: 0,
                                         width: 12,
                                         height: 30,
                                         offsets: (-2, 0),
                                     ),
                                     (
-                                        // 7: red_open_4.png
-                                        x: 99,
+                                        // 8: red_open_4.png
+                                        x: 115,
                                         y: 0,
                                         width: 9,
                                         height: 30,
@@ -114,7 +122,7 @@ Prefab(
                     animations: [
                         (
                             // AnimationId
-                            BlueDoor,
+                            PurpleRoom,
                             (
                                 samplers: [
                                     (
@@ -135,6 +143,27 @@ Prefab(
                         ),
                         (
                             // AnimationId
+                            BlueDoor,
+                            (
+                                samplers: [
+                                    (
+                                        0,
+                                        // Only SpriteIndex channel allowed for SpriteRender in AnimationSetPrefab
+                                        SpriteIndex,
+                                        (
+                                            // Time of key frames
+                                            input: [0.0, 10.0],
+                                            // Sprite indexes from SpriteSheet for key frames
+                                            output: [1, 1],
+                                            // Sprites can only ever be animated with Step
+                                            function: Step,
+                                        ),
+                                    ),
+                                ],
+                            ),
+                        ),
+                        (
+                            // AnimationId
                             BlueDoorClose,
                             (
                                 samplers: [
@@ -146,7 +175,7 @@ Prefab(
                                             // Time of key frames
                                             input: [0.0, 5.0],
                                             // Sprite indexes from SpriteSheet for key frames
-                                            output: [1, 0],
+                                            output: [2, 1],
                                             // Sprites can only ever be animated with Step
                                             function: Step,
                                         ),
@@ -167,7 +196,7 @@ Prefab(
                                             // Time of key frames
                                             input: [0.0, 0.1, 3.0],
                                             // Sprite indexes from SpriteSheet for key frames
-                                            output: [0, 1],
+                                            output: [1, 2],
                                             // Sprites can only ever be animated with Step
                                             function: Step,
                                         ),
@@ -188,7 +217,7 @@ Prefab(
                                             // Time of key frames
                                             input: [0.0, 0.1],
                                             // Sprite indexes from SpriteSheet for key frames
-                                            output: [2, 2],
+                                            output: [3, 3],
                                             // Sprites can only ever be animated with Step
                                             function: Step,
                                         ),
@@ -209,7 +238,7 @@ Prefab(
                                             // Time of key frames
                                             input: [0.0, 0.2],
                                             // Sprite indexes from SpriteSheet for key frames
-                                            output: [3, 3],
+                                            output: [4, 4],
                                             // Sprites can only ever be animated with Step
                                             function: Step,
                                         ),
@@ -230,7 +259,7 @@ Prefab(
                                             // Time of key frames
                                             input: [0.0, 0.1, 0.2, 0.3, 5.0],
                                             // Sprite indexes from SpriteSheet for key frames
-                                            output: [7, 6, 5, 4, 3],
+                                            output: [8, 7, 6, 5, 4],
                                             // Sprites can only ever be animated with Step
                                             function: Step,
                                         ),
@@ -251,7 +280,7 @@ Prefab(
                                             // Time of key frames
                                             input: [0.0, 0.1, 0.2, 0.3, 5.0],
                                             // Sprite indexes from SpriteSheet for key frames
-                                            output: [3, 4, 5, 6, 7],
+                                            output: [4, 5, 6, 7, 8],
                                             // Sprites can only ever be animated with Step
                                             function: Step,
                                         ),

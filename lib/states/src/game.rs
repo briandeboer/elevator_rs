@@ -3,11 +3,11 @@ use amethyst::{
     prelude::*,
 };
 
+use asset::{load_assets, AssetType, PrefabList, SpriteSheetList};
 use camera::init_camera;
 use elevator::load_elevator;
-use player::load_player;
 use map::{Map, Tileset};
-use asset::{load_assets, AssetType, PrefabList, SpriteSheetList};
+use player::load_player;
 
 // TODO: move these to a resource
 pub const GAME_WIDTH: f32 = 208.0;

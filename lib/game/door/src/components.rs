@@ -34,3 +34,7 @@ impl Door {
 #[derive(Component, Default)]
 #[storage(NullStorage)]
 pub struct DoorEntry {}
+
+#[derive(Component, Default)]
+#[storage(NullStorage)]
+pub struct Room {}

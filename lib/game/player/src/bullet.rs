@@ -8,8 +8,8 @@ use amethyst::{
     renderer::{sprite::SpriteSheetHandle, transparent::Transparent, SpriteRender},
 };
 
-use animation::components::{Animation, AnimationId, AnimationPrefabData};
 use crate::components::{Bullet, BulletImpact};
+use animation::components::{Animation, AnimationId, AnimationPrefabData};
 use physics::components::{
     Collidee, Collider, DefaultTransformation, Direction, Directions, Motion,
 };
