@@ -43,6 +43,12 @@ pub struct Player {
     pub position: Vector2<f32>,
 }
 
+impl Default for Player {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Player {
     pub fn new() -> Player {
         Player {

@@ -28,27 +28,26 @@ impl<'s> System<'s> for ShootSystem {
         {
             for (entity, player) in (&entities, &players).join() {
                 let parent = child.parent;
-                if parent == entity {
-                    if !gun.spawned_bullet
-                        && (gun.state == GunState::Shooting || gun.state == GunState::JumpShooting)
-                    {
-                        let pos_x = player.position.x;
-                        let pos_y = player.position.y;
+                if parent == entity
+                    && !gun.spawned_bullet
+                    && (gun.state == GunState::Shooting || gun.state == GunState::JumpShooting)
+                {
+                    let pos_x = player.position.x;
+                    let pos_y = player.position.y;
 
-                        let bullet_sprite_sheet_handle =
-                            { sprite_sheet_list.get(AssetType::Bullet).unwrap().clone() };
-                        spawn_bullet(
-                            &entities,
-                            gun_entity,
-                            bullet_sprite_sheet_handle,
-                            pos_x,
-                            pos_y,
-                            direction,
-                            &lazy_update,
-                        );
-                        gun.shots_fired += 1;
-                        gun.spawned_bullet = true;
-                    }
+                    let bullet_sprite_sheet_handle =
+                        { sprite_sheet_list.get(AssetType::Bullet).unwrap().clone() };
+                    spawn_bullet(
+                        &entities,
+                        gun_entity,
+                        bullet_sprite_sheet_handle,
+                        pos_x,
+                        pos_y,
+                        direction,
+                        &lazy_update,
+                    );
+                    gun.shots_fired += 1;
+                    gun.spawned_bullet = true;
                 }
             }
         }

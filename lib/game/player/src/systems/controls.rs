@@ -44,13 +44,11 @@ impl<'s> System<'s> for PlayerControlsSystem {
                     gun.state = if shoot_input && !gun.last_shoot_state && gun.shots_fired < 3 {
                         gun.last_shot_seconds = time.absolute_time_seconds();
                         GunState::Shooting
+                    } else if (time.absolute_time_seconds() - gun.last_shot_seconds) < 0.05 {
+                        GunState::Shooting
                     } else {
-                        if (time.absolute_time_seconds() - gun.last_shot_seconds) < 0.05 {
-                            GunState::Shooting
-                        } else {
-                            gun.spawned_bullet = false;
-                            GunState::Holstered
-                        }
+                        gun.spawned_bullet = false;
+                        GunState::Holstered
                     };
                     gun.last_shoot_state = shoot_input;
                     if move_input > 0. {
@@ -71,10 +69,8 @@ impl<'s> System<'s> for PlayerControlsSystem {
                     }
 
                     if let Some(collider) = maybe_collider {
-                        if !down_input {
-                            if player.is_ducking {
-                                player.is_ducking = false;
-                            }
+                        if !down_input && player.is_ducking {
+                            player.is_ducking = false;
                         }
 
                         player.state = if jump_input && !player.last_jump_state {

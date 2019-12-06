@@ -12,6 +12,12 @@ pub struct Motion {
     pub ride_velocity: Vector2<f32>,
 }
 
+impl Default for Motion {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Motion {
     pub fn new() -> Self {
         Motion {
