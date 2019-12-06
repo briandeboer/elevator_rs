@@ -991,6 +991,7 @@ dependencies = [
  "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "animation 0.1.0",
  "asset 0.1.0",
+ "camera 0.1.0",
  "door 0.1.0",
  "elevator 0.1.0",
  "map 0.1.0",
@@ -998,7 +999,6 @@ dependencies = [
  "physics 0.1.0",
  "player 0.1.0",
  "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
- "states 0.1.0",
 ]
 
 [[package]]
@@ -3103,20 +3103,6 @@ dependencies = [
 name = "stable_deref_trait"
 version = "1.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-
-[[package]]
-name = "states"
-version = "0.1.0"
-dependencies = [
- "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "asset 0.1.0",
- "camera 0.1.0",
- "elevator 0.1.0",
- "map 0.1.0",
- "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "player 0.1.0",
- "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
-]
 
 [[package]]
 name = "static_assertions"

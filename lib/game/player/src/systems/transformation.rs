@@ -1,6 +1,7 @@
 use amethyst::{
     core::Transform,
     ecs::{Entities, Join, ReadStorage, System, WriteStorage},
+    renderer::Camera,
 };
 
 use crate::components::{Gun, Player, PlayerState};
@@ -152,6 +153,35 @@ impl<'s> System<'s> for GunTransformationSystem {
                         transform.set_translation_z(0.7);
                     }
                 }
+            }
+        }
+    }
+}
+
+pub struct CameraTransformationSystem;
+
+const CAMERA_MOVE_FACTOR: f32 = 35.;
+
+impl<'s> System<'s> for CameraTransformationSystem {
+    type SystemData = (
+        Entities<'s>,
+        ReadStorage<'s, Player>,
+        ReadStorage<'s, Camera>,
+        WriteStorage<'s, Transform>,
+    );
+
+    fn run(&mut self, data: Self::SystemData) {
+        let (entities, players, cameras, mut transforms) = data;
+        for (_camera, transform) in (&cameras, &mut transforms).join() {
+            for (_, player) in (&entities, &players).join() {
+                if player.state != PlayerState::Jumping && player.state != PlayerState::Ducking {
+                    // move towards it but not too fast
+                    let current_translation = transform.translation();
+                    let new_y = current_translation.y + (player.position.y - current_translation.y) / CAMERA_MOVE_FACTOR;
+                    transform.set_translation_y(new_y);
+                }
+                // for now we only support one player at a time
+                break;
             }
         }
     }

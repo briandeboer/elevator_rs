@@ -1,3 +1,5 @@
+mod states;
+
 use amethyst::{
     animation::AnimationBundle,
     assets::{PrefabLoaderSystemDesc, Processor},
@@ -93,6 +95,11 @@ fn main() -> amethyst::Result<()> {
             PlayerTransformationSystem,
             "player_transformation_system",
             &["elevator_transformation_system"],
+        )
+        .with (
+            CameraTransformationSystem,
+            "camera_transformation_system",
+            &["player_transformation_system"],
         )
         .with(
             ProximitySystem,

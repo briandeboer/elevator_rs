@@ -9,10 +9,6 @@ use elevator::load_elevator;
 use map::{Map, Tileset};
 use player::load_player;
 
-// TODO: move these to a resource
-pub const GAME_WIDTH: f32 = 208.0;
-pub const GAME_HEIGHT: f32 = 200.0;
-
 /// state struct for the game state
 #[derive(Default)]
 pub struct GameState {

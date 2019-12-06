@@ -8,20 +8,19 @@
 - [x] open doors when user is nearby and facing and they have documents
 - [x] reorganize the packages to improve compilation and organization
 - [x] draw the empty room behind it
+- [x] "parallax" movement of camera
+- [ ] draw out a fuller map
 - [ ] animate the user going into the room and coming out
 - [ ] mark room as used when user comes out
-- [ ] animate user when he enters a door
 - [ ] create a system for knowing when the player is near an elevator (or on an elevator)
 - [ ] draw elevators in proper places based on tiles
-- [ ] draw out a fuller map
+- [ ] player falls off the elevator when going up from bottom floor
 - [ ] don't move elevators unless user is inside (ie. can't control from the top)
-- [ ] parallax
 - [ ] add bad guys and AI
 
 ## Medium priority
 - [x] fix gun transformations so that it looks correct
 - [x] fix elevator so that it waits 
-- [ ] player falls off the elevator when going up from bottom floor
 - [ ] lamps falling and lights out
 
 ## Low priority

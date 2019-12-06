@@ -10,9 +10,9 @@ objc = "=0.2.6"
 serde = "1.0.102"
 animation = { path = "../lib/core/animation" }
 asset = { path = "../lib/core/asset" }
+camera = { path = "../lib/core/camera" }
 door = { path = "../lib/game/door" }
 elevator = { path = "../lib/game/elevator" }
 map = { path = "../lib/game/map" }
 physics = { path = "../lib/core/physics" }
 player = { path = "../lib/game/player" }
-states = { path = "../lib/states" }

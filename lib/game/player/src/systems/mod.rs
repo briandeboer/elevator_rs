@@ -12,5 +12,6 @@ pub use self::bullet_collision::BulletCollisionSystem;
 pub use self::controls::PlayerControlsSystem;
 pub use self::kinematics::PlayerKinematicsSystem;
 pub use self::shoot::ShootSystem;
+pub use self::transformation::CameraTransformationSystem;
 pub use self::transformation::GunTransformationSystem;
 pub use self::transformation::PlayerTransformationSystem;

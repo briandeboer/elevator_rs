@@ -9,6 +9,5 @@ members = [
   "lib/game/elevator",
   "lib/game/player",
   "lib/game/map",
-  "lib/states",
 ]
 
