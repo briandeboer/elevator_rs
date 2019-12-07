@@ -11,10 +11,11 @@
 - [x] "parallax" movement of camera
 - [x] draw out a fuller map
 - [x] add a frame rate counter
-- [ ] draw elevators in proper places based on tiles
+- [x] draw elevators in proper places based on tiles
 - [ ] use a resource to keep track of which levels are drawn
 - [ ] don't draw offscreen collision layers, doors, lamps, elevators
 - [ ] remove offscreen collision layers, doors, lamps, elevators
+- [ ] escalator logic and movement
 - [ ] animate the user going into the room and coming out
 - [ ] mark room as used when user comes out
 - [ ] create a system for knowing when the player is near an elevator (or on an elevator)
@@ -26,6 +27,7 @@
 - [x] fix gun transformations so that it looks correct
 - [x] fix elevator so that it waits 
 - [ ] lamps as sprites, ie. falling and lights out
+- [ ] draw elevator cable
 
 ## Low priority
 - [ ] increase user velocity when riding up elevator so jump is additional

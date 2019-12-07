@@ -70,7 +70,7 @@ pub fn spawn_bullet(
 
     transform.set_translation_x(bullet_start_position);
     transform.set_translation_y(shoot_start_position_y + OFFSET_Y);
-    transform.set_translation_z(0.5);
+    transform.set_translation_z(1.0);
 
     lazy_update.insert(bullet_entity, Bullet::new(Some(gun_entity)));
     lazy_update.insert(bullet_entity, Named::new("Bullet"));

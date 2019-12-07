@@ -8,13 +8,20 @@ use amethyst::{
 
 use serde::{Deserialize, Serialize};
 
-use asset::{AssetType, PrefabList};
+use asset::{AssetType, PrefabList, SpriteSheetList};
 use door::load_door;
+use elevator::load_elevator;
 use physics::components::{Collider, Direction, Motion};
 
 const Y_OFFSET: f32 = 220.0;
 const TILE_SIZE: f32 = 8.0;
 const NUM_COLUMNS: usize = 32;
+
+#[derive(Clone, Debug, Default, Deserialize, PartialEq, Serialize)]
+pub struct Property {
+    pub name: String,
+    pub value: usize,
+}
 
 #[derive(Clone, Debug, Default, Deserialize, PartialEq, Serialize)]
 pub struct Object {
@@ -25,6 +32,7 @@ pub struct Object {
     pub x: f32,
     pub y: f32,
     pub visible: bool,
+    pub properties: Option<Vec<Property>>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, PartialEq, Serialize)]
@@ -75,6 +83,9 @@ impl Map {
                 "map" => {
                     self.load_tile_layer(world, layer, &sprite_sheet_handle);
                 }
+                "elevators" => {
+                    self.load_sprite_layer(world, layer);
+                }
                 _ => {
                     // do nothing with the other layers...yet
                 }
@@ -89,8 +100,8 @@ impl Map {
         let offset_y: f32 = 223.;
         if let Some(objects) = &layer.objects {
             for (_index, obj) in objects.iter().enumerate() {
-                let x = offset_x + obj.x;
-                let y = offset_y - obj.y;
+                let x = offset_x + obj.x + (obj.width / 2.);
+                let y = offset_y - obj.y - (obj.height / 2.);
 
                 if layer.name == "doors" {
                     println!(
@@ -101,7 +112,32 @@ impl Map {
                         let prefab_list = world.read_resource::<PrefabList>();
                         prefab_list.get(AssetType::Door).unwrap().clone()
                     };
-                    load_door(world, prefab_handle, Vector2::new(x, y), obj.name == "red");
+                    load_door(world, prefab_handle, Vector2::new(x, y), &obj.name);
+                } else if layer.name == "elevators" {
+                    let mut min_floor: usize = 0;
+                    let mut max_floor: usize = 0;
+                    let mut start_floor: usize = 0;
+                    if let Some(properties) = &obj.properties {
+                        for property in properties {
+                            if property.name == "min_floor" {
+                                min_floor = property.value;
+                            } else if property.name == "max_floor" {
+                                max_floor = property.value;
+                            } else if property.name == "start_floor" {
+                                start_floor = property.value;
+                            }
+                        }
+                    }
+                    println!(
+                        "### Adding elevator object {}, x: {}, y: {}, min: {}, max: {}, start: {} ###",
+                        obj.name, x, y, min_floor, max_floor, start_floor,
+                    );
+                    let elevator_sprite_sheet_handle = {
+                        let sprite_sheet_list = world.read_resource::<SpriteSheetList>();
+                        sprite_sheet_list.get(AssetType::Elevator).unwrap().clone()
+                    };
+                    // FIXME: elevator y needs to be offset by 1...not sure why yet?
+                    load_elevator(world, elevator_sprite_sheet_handle, Vector2::new(x, y + 1.0), min_floor, max_floor, start_floor);
                 }
             }
         }

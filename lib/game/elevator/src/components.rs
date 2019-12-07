@@ -82,26 +82,25 @@ impl Default for Elevator {
 impl Elevator {
     pub fn new(
         position: Vector2<f32>,
-        num_floors: usize,
+        min_floor: usize,
+        max_floor: usize,
         start_floor: usize,
-        current_floor: f32,
         velocity: f32,
     ) -> Self {
         let mut boundaries: Vec<f32> = Vec::new();
-        let floored_current_floor: usize = current_floor.floor() as usize;
-        for i in 1..=num_floors {
+        for i in min_floor..=max_floor {
             boundaries.push(
-                position.y - ((floored_current_floor - start_floor) as f32 * 48.)
-                    + (i - 1) as f32 * 48.,
+                position.y - ((start_floor - min_floor) as f32 * 48.)
+                    + (i - min_floor) as f32 * 48.,
             );
         }
         println!("Set elevator boundaries -- boundaries: {:?}", boundaries);
         Elevator {
             position,
             boundaries,
-            num_floors,
+            num_floors: max_floor - min_floor + 1,
             start_floor,
-            current_floor,
+            current_floor: start_floor as f32,
             velocity,
             ..Elevator::default()
         }

@@ -24,7 +24,7 @@ impl<'s> System<'s> for DoorTransformationSystem {
         {
             match door.state {
                 DoorState::Open => {
-                    transform.set_translation_z(1.5);
+                    transform.set_translation_z(0.9);
                     collider.is_collidable = true;
                 }
                 _ => {

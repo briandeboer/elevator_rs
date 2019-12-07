@@ -13,4 +13,5 @@ serde = "1.0.102"
 
 asset = { path = "../../core/asset" }
 door = { path = "../door" }
+elevator = { path = "../elevator" }
 physics = { path = "../../core/physics" }

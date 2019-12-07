@@ -4,9 +4,8 @@ use amethyst::{
     ui::UiCreator,
 };
 
-use asset::{load_assets, AssetType, PrefabList, SpriteSheetList};
+use asset::{load_assets, AssetType, PrefabList};
 use camera::init_camera;
-use elevator::load_elevator;
 use map::{Map, Tileset};
 use player::load_player;
 
@@ -93,12 +92,6 @@ impl SimpleState for GameState {
                 println!("### Loading player ###");
                 load_player(data.world, player_prefab_handle, guns_prefab_handle);
 
-                println!("### Loading elevator ###");
-                let elevator_sprite_sheet_handle = {
-                    let sprite_sheet_list = data.world.read_resource::<SpriteSheetList>();
-                    sprite_sheet_list.get(AssetType::Elevator).unwrap().clone()
-                };
-                load_elevator(data.world, elevator_sprite_sheet_handle);
                 self.progress_counter = None;
             } else {
                 println!(

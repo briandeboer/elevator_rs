@@ -1657,6 +1657,7 @@ dependencies = [
  "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "asset 0.1.0",
  "door 0.1.0",
+ "elevator 0.1.0",
  "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "physics 0.1.0",
  "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",

@@ -11,14 +11,13 @@ use crate::components::{Elevator, ElevatorComponent};
 use hierarchy::components::Child;
 use physics::components::{Collidee, Collider, Motion, Proximity};
 
-const ELEVATOR_START_X: f32 = 124.0;
-const ELEVATOR_START_Y: f32 = 124.0; // 166.0; //70.0;
-const ELEVATOR_START_Z: f32 = 0.;
+const ELEVATOR_Z: f32 = 0.;
 const ELEVATOR_OFFSET: f32 = 24.;
 
 fn create_elevator_component(
     world: &mut World,
     elevator_entity: Entity,
+    position: Vector2<f32>,
     component: ElevatorComponent,
     sprite_sheet_handle: SpriteSheetHandle,
 ) {
@@ -33,11 +32,11 @@ fn create_elevator_component(
     collider.allow_proximity = collider.is_collidable;
     let bbox = &mut collider.bounding_box;
     bbox.position = Vector2::new(
-        ELEVATOR_START_X + component.offsets.x,
-        ELEVATOR_START_Y + component.offsets.y,
+        position.x + component.offsets.x,
+        position.y + component.offsets.y,
     );
     bbox.old_position = bbox.position;
-    transform.set_translation_z(ELEVATOR_START_Z + component.offsets.z);
+    transform.set_translation_z(ELEVATOR_Z + component.offsets.z);
     let offsets = component.offsets;
     let _entity = world
         .create_entity()
@@ -45,8 +44,8 @@ fn create_elevator_component(
         .with(component)
         .with(Child::new(
             elevator_entity,
-            ELEVATOR_START_X + offsets.x,
-            ELEVATOR_START_Y + offsets.y,
+            position.x + offsets.x,
+            position.y + offsets.y,
             offsets.z,
         ))
         .with(collider)
@@ -58,17 +57,22 @@ fn create_elevator_component(
         .build();
 }
 
-pub fn load_elevator(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) {
+pub fn load_elevator(
+    world: &mut World,
+    sprite_sheet_handle: SpriteSheetHandle,
+    position: Vector2<f32>,
+    min_floor: usize,
+    max_floor: usize,
+    start_floor: usize,
+) {
     // parent component
     let mut transform = Transform::default();
-    transform.set_translation_xyz(ELEVATOR_START_X, ELEVATOR_START_Y, ELEVATOR_START_Z);
-    let num_floors: usize = 3;
-    let start_floor: usize = 15;
+    transform.set_translation_xyz(position.x, position.y, ELEVATOR_Z);
     let elevator = Elevator::new(
-        Vector2::new(ELEVATOR_START_X, ELEVATOR_START_Y),
-        num_floors,
-        start_floor + 2,
-        start_floor as f32,
+        Vector2::new(position.x, position.y),
+        min_floor,
+        max_floor,
+        start_floor,
         0.,
     );
     let elevator_entity = world
@@ -87,7 +91,7 @@ pub fn load_elevator(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) 
         Vector3::new(0., 0., 0.),
         false,
     );
-    create_elevator_component(world, elevator_entity, inside, sprite_sheet_handle.clone());
+    create_elevator_component(world, elevator_entity, position, inside, sprite_sheet_handle.clone());
 
     let bottom = ElevatorComponent::new(
         "ElevatorBottom",
@@ -97,7 +101,7 @@ pub fn load_elevator(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) 
         Vector3::new(0., -ELEVATOR_OFFSET, 0.),
         true,
     );
-    create_elevator_component(world, elevator_entity, bottom, sprite_sheet_handle.clone());
+    create_elevator_component(world, elevator_entity, position, bottom, sprite_sheet_handle.clone());
 
     let top = ElevatorComponent::new(
         "ElevatorTop",
@@ -107,5 +111,5 @@ pub fn load_elevator(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) 
         Vector3::new(0., ELEVATOR_OFFSET, 0.),
         true,
     );
-    create_elevator_component(world, elevator_entity, top, sprite_sheet_handle);
+    create_elevator_component(world, elevator_entity, position, top, sprite_sheet_handle);
 }
