@@ -1,6 +1,6 @@
 # Unwanted files
 target
-elevator_rs
+elevator_main
 
 # Backup files
 .DS_Store

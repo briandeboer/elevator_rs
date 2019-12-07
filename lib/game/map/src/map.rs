@@ -12,9 +12,9 @@ use asset::{AssetType, PrefabList};
 use door::load_door;
 use physics::components::{Collider, Direction, Motion};
 
-const Y_OFFSET: f32 = 150.0;
+const Y_OFFSET: f32 = 220.0;
 const TILE_SIZE: f32 = 8.0;
-const NUM_COLUMNS: usize = 26;
+const NUM_COLUMNS: usize = 32;
 
 #[derive(Clone, Debug, Default, Deserialize, PartialEq, Serialize)]
 pub struct Object {
@@ -86,7 +86,7 @@ impl Map {
         // let scale_x: f32 = 1.0;
         // let scale_y: f32 = 1.0;
         let offset_x: f32 = 0.0;
-        let offset_y: f32 = 153.;
+        let offset_y: f32 = 223.;
         if let Some(objects) = &layer.objects {
             for (_index, obj) in objects.iter().enumerate() {
                 let x = offset_x + obj.x;
@@ -111,13 +111,16 @@ impl Map {
         let scale_x: f32 = 1.0;
         let scale_y: f32 = 1.0;
         let offset_x: f32 = 0.0;
-        let offset_y: f32 = 153.;
+        let offset_y: f32 = 223.;
 
         if let Some(objects) = &layer.objects {
             for (_index, obj) in objects.iter().enumerate() {
                 let mut transform = Transform::default();
                 let mut collider = Collider::new(obj.width * scale_x, obj.height * scale_y);
                 let bbox = &mut collider.bounding_box;
+                if obj.name == "shaft" || obj.name == "entry" {
+                    collider.is_collidable = false;
+                }
                 let x = offset_x + obj.x;
                 let y = offset_y - obj.y;
                 transform.set_translation_z(-10.0);

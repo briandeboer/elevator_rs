@@ -9,11 +9,15 @@
 - [x] reorganize the packages to improve compilation and organization
 - [x] draw the empty room behind it
 - [x] "parallax" movement of camera
-- [ ] draw out a fuller map
+- [x] draw out a fuller map
+- [x] add a frame rate counter
+- [ ] draw elevators in proper places based on tiles
+- [ ] use a resource to keep track of which levels are drawn
+- [ ] don't draw offscreen collision layers, doors, lamps, elevators
+- [ ] remove offscreen collision layers, doors, lamps, elevators
 - [ ] animate the user going into the room and coming out
 - [ ] mark room as used when user comes out
 - [ ] create a system for knowing when the player is near an elevator (or on an elevator)
-- [ ] draw elevators in proper places based on tiles
 - [ ] player falls off the elevator when going up from bottom floor
 - [ ] don't move elevators unless user is inside (ie. can't control from the top)
 - [ ] add bad guys and AI
@@ -21,12 +25,16 @@
 ## Medium priority
 - [x] fix gun transformations so that it looks correct
 - [x] fix elevator so that it waits 
-- [ ] lamps falling and lights out
+- [ ] lamps as sprites, ie. falling and lights out
 
 ## Low priority
 - [ ] increase user velocity when riding up elevator so jump is additional
+- [ ] draw floor numbers
+- [ ] animate intro
+- [ ] scoring
 - [ ] Ducking when on top of elevator
 - [ ] add sounds
 - [ ] add music
 - [ ] adjust door entry mechanism so he doesn't open it too early
 - [ ] don't animate stuff that doesn't need to be animated
+- [ ] two player game

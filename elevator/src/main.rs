@@ -12,7 +12,7 @@ use amethyst::{
         RenderingBundle,
     },
     ui::{RenderUi, UiBundle},
-    utils::application_root_dir,
+    utils::{application_root_dir, fps_counter::FpsCounterBundle},
     Application, GameDataBuilder,
 };
 
@@ -22,6 +22,7 @@ use animation::{
 };
 use door::systems::{DoorAnimationSystem, DoorEntryCollisionSystem, DoorTransformationSystem};
 use elevator::systems::{ElevatorControlSystem, ElevatorTransformationSystem};
+use fps::systems::UiFpsSystem;
 use map::{Map, Tileset};
 use physics::systems::*;
 use player::systems::*;
@@ -54,7 +55,9 @@ fn main() -> amethyst::Result<()> {
                 .with_dep(&["sprite_animation_control", "sprite_sampler_interpolation"]),
         )?
         .with_bundle(input_bundle)?
+        .with_bundle(FpsCounterBundle {})?
         .with_bundle(UiBundle::<StringBindings>::new())?
+        .with(UiFpsSystem::default(), "ui_fps_system", &[])
         .with(Processor::<Tileset>::new(), "tileset_processor", &[])
         .with(Processor::<Map>::new(), "map_processor", &[])
         .with(PlayerControlsSystem, "player_controls_system", &[])

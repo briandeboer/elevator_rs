@@ -11,8 +11,8 @@ use crate::components::{Elevator, ElevatorComponent};
 use hierarchy::components::Child;
 use physics::components::{Collidee, Collider, Motion, Proximity};
 
-const ELEVATOR_START_X: f32 = 116.0;
-const ELEVATOR_START_Y: f32 = 70.0; // 166.0; //70.0;
+const ELEVATOR_START_X: f32 = 124.0;
+const ELEVATOR_START_Y: f32 = 124.0; // 166.0; //70.0;
 const ELEVATOR_START_Z: f32 = 0.;
 const ELEVATOR_OFFSET: f32 = 24.;
 
@@ -67,7 +67,7 @@ pub fn load_elevator(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) 
     let elevator = Elevator::new(
         Vector2::new(ELEVATOR_START_X, ELEVATOR_START_Y),
         num_floors,
-        start_floor,
+        start_floor + 2,
         start_floor as f32,
         0.,
     );

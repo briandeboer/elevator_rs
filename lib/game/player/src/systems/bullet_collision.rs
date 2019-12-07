@@ -6,7 +6,7 @@ use physics::components::{Collidee, Collider, Motion};
 use crate::bullet::show_bullet_impact;
 use asset::{AssetType, PrefabList};
 
-const IMPACT_OFFSET_X: f32 = -14.;
+const IMPACT_OFFSET_X: f32 = -8.;
 
 pub struct BulletCollisionSystem;
 

@@ -4,6 +4,7 @@ members = [
   "lib/core/animation",
   "lib/core/asset",
   "lib/core/camera",
+  "lib/core/fps",
   "lib/core/physics",
   "lib/game/door",
   "lib/game/elevator",

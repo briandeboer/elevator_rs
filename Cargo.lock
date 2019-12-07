@@ -994,6 +994,7 @@ dependencies = [
  "camera 0.1.0",
  "door 0.1.0",
  "elevator 0.1.0",
+ "fps 0.1.0",
  "map 0.1.0",
  "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "physics 0.1.0",
@@ -1161,6 +1162,15 @@ dependencies = [
 name = "foreign-types-shared"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "fps"
+version = "0.1.0"
+dependencies = [
+ "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "freetype"

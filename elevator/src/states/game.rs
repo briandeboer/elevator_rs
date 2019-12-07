@@ -1,6 +1,7 @@
 use amethyst::{
     assets::{AssetStorage, Handle, JsonFormat, Loader, ProgressCounter},
     prelude::*,
+    ui::UiCreator,
 };
 
 use asset::{load_assets, AssetType, PrefabList, SpriteSheetList};
@@ -33,10 +34,14 @@ impl SimpleState for GameState {
                 AssetType::Elevator,
             ],
         ));
+
+        let mut progress = ProgressCounter::default();
+        world.exec(|mut creator: UiCreator<'_>| creator.create("ui/fps.ron", &mut progress));
+
         self.map_handle = {
             let loader = world.read_resource::<Loader>();
             Some(loader.load(
-                "tilesets/elevator.json",
+                "tilesets/level_1.json",
                 JsonFormat,
                 self.progress_counter.as_mut().expect("map"),
                 &world.read_resource::<AssetStorage<Map>>(),
