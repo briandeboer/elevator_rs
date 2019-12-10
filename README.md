@@ -1,6 +1,6 @@
 # elevator_rs
 
-Clone and then run `cargo run` or `cargo run --release`
+Clone and then run `cargo +nightly run` or `cargo +nightly run --release`
 
 Use arrow keys, space bar shoots gun and Z jumps.
 
