@@ -12,20 +12,24 @@
 - [x] draw out a fuller map
 - [x] add a frame rate counter
 - [x] draw elevators in proper places based on tiles
+- [ ] render elevator shafts as a sprite
 - [ ] use a resource to keep track of which levels are drawn
 - [ ] don't draw offscreen collision layers, doors, lamps, elevators
 - [ ] remove offscreen collision layers, doors, lamps, elevators
+- [ ] player falls off the elevator when going up in elevator
+- [ ] player still bounces on elevator
 - [ ] escalator logic and movement
 - [ ] animate the user going into the room and coming out
 - [ ] mark room as used when user comes out
 - [ ] create a system for knowing when the player is near an elevator (or on an elevator)
-- [ ] player falls off the elevator when going up from bottom floor
 - [ ] don't move elevators unless user is inside (ie. can't control from the top)
 - [ ] add bad guys and AI
 
 ## Medium priority
 - [x] fix gun transformations so that it looks correct
 - [x] fix elevator so that it waits 
+
+- [ ] draw lamps above doors as part of door rendering
 - [ ] lamps as sprites, ie. falling and lights out
 - [ ] draw elevator cable
 
@@ -38,5 +42,5 @@
 - [ ] add sounds
 - [ ] add music
 - [ ] adjust door entry mechanism so he doesn't open it too early
-- [ ] don't animate stuff that doesn't need to be animated
 - [ ] two player game
+- [ ] add an EntityLoader type of trait to move stuff out of map

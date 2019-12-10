@@ -13,9 +13,10 @@ use door::load_door;
 use elevator::load_elevator;
 use physics::components::{Collider, Direction, Motion};
 
-const Y_OFFSET: f32 = 220.0;
-const TILE_SIZE: f32 = 8.0;
-const NUM_COLUMNS: usize = 32;
+const TILE_OFFSET_Y: f32 = 224.0;
+const TILE_WIDTH: f32 = 256.0;
+const TILE_HEIGHT: f32 = 48.0;
+const NUM_COLUMNS: usize = 1;
 
 #[derive(Clone, Debug, Default, Deserialize, PartialEq, Serialize)]
 pub struct Property {
@@ -72,6 +73,7 @@ impl Asset for Map {
 impl Map {
     pub fn load_layers(&self, world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
         println!("### Load layers ###");
+
         for layer in self.layers.iter() {
             match layer.name.as_ref() {
                 "collision" => {
@@ -100,10 +102,9 @@ impl Map {
         let offset_y: f32 = 223.;
         if let Some(objects) = &layer.objects {
             for (_index, obj) in objects.iter().enumerate() {
-                let x = offset_x + obj.x + (obj.width / 2.);
-                let y = offset_y - obj.y - (obj.height / 2.);
-
                 if layer.name == "doors" {
+                    let x = offset_x + obj.x + (obj.width / 2.);
+                    let y = offset_y - obj.y - (obj.height / 2.);
                     println!(
                         "### Adding door object {}, x: {}, y: {}, width: {}, height: {} ###",
                         obj.name, x, y, obj.width, obj.height
@@ -114,6 +115,8 @@ impl Map {
                     };
                     load_door(world, prefab_handle, Vector2::new(x, y), &obj.name);
                 } else if layer.name == "elevators" {
+                    let x = offset_x + obj.x + (obj.width / 2.);
+                    let y = offset_y - obj.y - (48. / 2.);
                     let mut min_floor: usize = 0;
                     let mut max_floor: usize = 0;
                     let mut start_floor: usize = 0;
@@ -129,15 +132,26 @@ impl Map {
                         }
                     }
                     println!(
-                        "### Adding elevator object {}, x: {}, y: {}, min: {}, max: {}, start: {} ###",
-                        obj.name, x, y, min_floor, max_floor, start_floor,
+                        "### Adding elevator object {:?}, x: {}, y: {}, min: {}, max: {}, start: {} ###",
+                        obj, x, y, min_floor, max_floor, start_floor,
                     );
                     let elevator_sprite_sheet_handle = {
                         let sprite_sheet_list = world.read_resource::<SpriteSheetList>();
                         sprite_sheet_list.get(AssetType::Elevator).unwrap().clone()
                     };
                     // FIXME: elevator y needs to be offset by 1...not sure why yet?
-                    load_elevator(world, elevator_sprite_sheet_handle, Vector2::new(x, y + 1.0), min_floor, max_floor, start_floor);
+                    let top_left = Vector2::new(x, y + 1.);
+                    let bottom_right = Vector2::new(x + 48., y - obj.height);
+
+                    load_elevator(
+                        world,
+                        elevator_sprite_sheet_handle,
+                        top_left,
+                        bottom_right,
+                        min_floor,
+                        max_floor,
+                        start_floor,
+                    );
                 }
             }
         }
@@ -195,14 +209,17 @@ impl Map {
         // get the ssprite sheet handle
         if let Some(data) = &layer.data {
             for (index, d) in data.iter().enumerate() {
+                let x = TILE_WIDTH / 2.0 + TILE_HEIGHT * (index % NUM_COLUMNS) as f32; // offset is half tile width
+                let y = TILE_OFFSET_Y
+                    - TILE_HEIGHT / 2.0
+                    - (TILE_HEIGHT * (index / NUM_COLUMNS) as f32);
+
                 let tile_sprite = SpriteRender {
                     sprite_sheet: sprite_sheet_handle.clone(),
                     sprite_number: (*d - 1) as usize, // sprite numbers are off by 1 in t
                 };
                 let mut tile_transform = Transform::default();
                 // TODO: make these not hardcoded
-                let x = 4.0 + TILE_SIZE * (index % NUM_COLUMNS) as f32;
-                let y = Y_OFFSET - (TILE_SIZE * (index / NUM_COLUMNS) as f32);
                 tile_transform.set_translation_xyz(x, y, -10.0);
                 world
                     .create_entity()

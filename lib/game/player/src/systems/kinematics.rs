@@ -6,7 +6,7 @@ use amethyst::{
 use crate::components::{Player, PlayerState};
 use physics::components::{Collider, Direction, Motion};
 
-const GRAVITY_AMOUNT: f32 = -5.;
+const GRAVITY_AMOUNT: f32 = -6.;
 const FRICTION_AMOUNT: f32 = -12.0;
 const WALK_ACCELERATION: f32 = 16.0;
 

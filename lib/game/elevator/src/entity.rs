@@ -11,7 +11,7 @@ use crate::components::{Elevator, ElevatorComponent};
 use hierarchy::components::Child;
 use physics::components::{Collidee, Collider, Motion, Proximity};
 
-const ELEVATOR_Z: f32 = 0.;
+const ELEVATOR_Z: f32 = 0.0;
 const ELEVATOR_OFFSET: f32 = 24.;
 
 fn create_elevator_component(
@@ -60,16 +60,17 @@ fn create_elevator_component(
 pub fn load_elevator(
     world: &mut World,
     sprite_sheet_handle: SpriteSheetHandle,
-    position: Vector2<f32>,
+    top_left: Vector2<f32>,
+    _bottom_right: Vector2<f32>,
     min_floor: usize,
     max_floor: usize,
     start_floor: usize,
 ) {
     // parent component
     let mut transform = Transform::default();
-    transform.set_translation_xyz(position.x, position.y, ELEVATOR_Z);
+    transform.set_translation_xyz(top_left.x, top_left.y, ELEVATOR_Z);
     let elevator = Elevator::new(
-        Vector2::new(position.x, position.y),
+        Vector2::new(top_left.x, top_left.y),
         min_floor,
         max_floor,
         start_floor,
@@ -83,6 +84,24 @@ pub fn load_elevator(
         .with(transform)
         .build();
 
+    // loop through each floor
+    for i in (min_floor..=max_floor).rev() {
+        let mut shaft_transform = Transform::default();
+        let y = top_left.y - 48.0 * (max_floor - i) as f32 - 4.0; // FIXME: not sure why, but something is off (sprite height?)
+        shaft_transform.set_translation_xyz(top_left.x, y, ELEVATOR_Z - 0.1);
+        let shaft_sprite = SpriteRender {
+            sprite_sheet: sprite_sheet_handle.clone(),
+            sprite_number: if i == min_floor { 5 } else { 3 },
+        };
+        // load the elevator shaft
+        world
+            .create_entity()
+            .named("ElevatorShaft")
+            .with(shaft_sprite)
+            .with(shaft_transform)
+            .build();
+    }
+
     let inside = ElevatorComponent::new(
         "ElevatorInside",
         2,
@@ -91,7 +110,13 @@ pub fn load_elevator(
         Vector3::new(0., 0., 0.),
         false,
     );
-    create_elevator_component(world, elevator_entity, position, inside, sprite_sheet_handle.clone());
+    create_elevator_component(
+        world,
+        elevator_entity,
+        top_left,
+        inside,
+        sprite_sheet_handle.clone(),
+    );
 
     let bottom = ElevatorComponent::new(
         "ElevatorBottom",
@@ -101,15 +126,21 @@ pub fn load_elevator(
         Vector3::new(0., -ELEVATOR_OFFSET, 0.),
         true,
     );
-    create_elevator_component(world, elevator_entity, position, bottom, sprite_sheet_handle.clone());
+    create_elevator_component(
+        world,
+        elevator_entity,
+        top_left,
+        bottom,
+        sprite_sheet_handle.clone(),
+    );
 
     let top = ElevatorComponent::new(
         "ElevatorTop",
-        3,
+        7,
         24.,
         4.,
         Vector3::new(0., ELEVATOR_OFFSET, 0.),
         true,
     );
-    create_elevator_component(world, elevator_entity, position, top, sprite_sheet_handle);
+    create_elevator_component(world, elevator_entity, top_left, top, sprite_sheet_handle);
 }

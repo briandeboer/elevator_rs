@@ -177,7 +177,8 @@ impl<'s> System<'s> for CameraTransformationSystem {
                 if player.state != PlayerState::Jumping && player.state != PlayerState::Ducking {
                     // move towards it but not too fast
                     let current_translation = transform.translation();
-                    let new_y = current_translation.y + (player.position.y - current_translation.y) / CAMERA_MOVE_FACTOR;
+                    let new_y = current_translation.y
+                        + (player.position.y - current_translation.y) / CAMERA_MOVE_FACTOR;
                     transform.set_translation_y(new_y);
                 }
                 // for now we only support one player at a time

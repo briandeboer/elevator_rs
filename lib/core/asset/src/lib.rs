@@ -15,7 +15,6 @@ use animation::components::AnimationPrefabData;
 #[allow(dead_code)] // remove when asset types are all completed
 #[derive(Copy, Clone, Eq, Hash, PartialEq)]
 pub enum AssetType {
-    Building,
     Bullet,
     BulletImpact,
     Door,
@@ -72,7 +71,6 @@ pub fn load_assets(world: &mut World, asset_type_list: Vec<AssetType>) -> Progre
         let (texture_path, ron_path) = match asset_type {
             // seems like this should live somewhere else
             AssetType::Player => ("texture/player.png", "prefabs/player.ron"),
-            AssetType::Building => ("texture/building.png", "prefabs/building.ron"),
             AssetType::Bullet => ("texture/bullet.png", "prefabs/bullet.ron"),
             AssetType::BulletImpact => ("texture/bullet_impact.png", "prefabs/bullet_impact.ron"),
             AssetType::Door => ("texture/doors.png", "prefabs/doors.ron"),
@@ -82,7 +80,7 @@ pub fn load_assets(world: &mut World, asset_type_list: Vec<AssetType>) -> Progre
 
         match asset_type {
             // without animation
-            AssetType::Building | AssetType::Bullet | AssetType::Elevator => {
+            AssetType::Bullet | AssetType::Elevator => {
                 let sprite_sheet_handle =
                     get_sprite_sheet_handle(world, texture_path, ron_path, &mut progress_counter);
                 sprite_sheet_list.insert(asset_type, sprite_sheet_handle);

@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="-1" width="1" height="34" tilewidth="256" tileheight="48" infinite="0" nextlayerid="6" nextobjectid="307">
+ <editorsettings>
+  <export target="floors_1.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" source="floors.tsx"/>
+ <layer id="1" name="map" width="1" height="34" locked="1">
+  <data encoding="csv">
+1,
+2,
+3,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+5,
+6,
+7,
+7,
+8,
+11,
+13,
+13,
+13,
+13,
+13,
+14,
+14,
+14,
+14,
+14,
+14,
+14,
+14,
+14,
+14,
+15
+</data>
+ </layer>
+ <objectgroup id="2" name="collision" visible="0" locked="1">
+  <object id="1" name="floor" x="36" y="185" width="76" height="3"/>
+  <object id="2" name="wall" x="32" y="140" width="4" height="480"/>
+  <object id="3" name="shaft" x="112" y="185" width="24" height="3"/>
+  <object id="4" name="wall" x="212" y="140" width="4" height="480"/>
+  <object id="5" name="floor" x="136" y="185" width="76" height="3"/>
+  <object id="6" name="floor" x="36" y="140" width="76" height="3"/>
+  <object id="7" name="shaft" x="112" y="140" width="24" height="3"/>
+  <object id="8" name="floor" x="136" y="140" width="76" height="3"/>
+  <object id="9" name="floor" x="36" y="233" width="76" height="3"/>
+  <object id="10" name="shaft" x="112" y="233" width="24" height="3"/>
+  <object id="11" name="floor" x="136" y="233" width="76" height="3"/>
+  <object id="12" name="floor" x="36" y="281" width="76" height="3"/>
+  <object id="13" name="shaft" x="112" y="281" width="24" height="3"/>
+  <object id="14" name="floor" x="136" y="281" width="76" height="3"/>
+  <object id="15" name="floor" x="36" y="329" width="76" height="3"/>
+  <object id="16" name="shaft" x="112" y="329" width="24" height="3"/>
+  <object id="17" name="floor" x="136" y="329" width="76" height="3"/>
+  <object id="18" name="floor" x="36" y="377" width="76" height="3"/>
+  <object id="19" name="shaft" x="112" y="377" width="24" height="3"/>
+  <object id="20" name="floor" x="136" y="377" width="76" height="3"/>
+  <object id="21" name="floor" x="36" y="425" width="76" height="3"/>
+  <object id="22" name="shaft" x="112" y="425" width="24" height="3"/>
+  <object id="23" name="floor" x="136" y="425" width="76" height="3"/>
+  <object id="24" name="floor" x="36" y="473" width="76" height="3"/>
+  <object id="25" name="shaft" x="112" y="473" width="24" height="3"/>
+  <object id="26" name="floor" x="136" y="473" width="76" height="3"/>
+  <object id="27" name="floor" x="36" y="521" width="76" height="3"/>
+  <object id="28" name="shaft" x="112" y="521" width="24" height="3"/>
+  <object id="29" name="floor" x="136" y="521" width="76" height="3"/>
+  <object id="30" name="floor" x="36" y="569" width="76" height="3"/>
+  <object id="31" name="shaft" x="112" y="569" width="24" height="3"/>
+  <object id="32" name="floor" x="136" y="569" width="76" height="3"/>
+  <object id="33" name="floor" x="36" y="617" width="76" height="3"/>
+  <object id="34" name="shaft" x="112" y="617" width="24" height="3"/>
+  <object id="35" name="floor" x="136" y="617" width="76" height="3"/>
+  <object id="36" name="wall" x="136" y="92" width="4" height="48"/>
+  <object id="37" name="wall" x="108" y="92" width="28" height="4"/>
+  <object id="38" name="entry" x="108" y="96" width="4" height="44"/>
+  <object id="39" name="wall" x="0" y="620" width="3" height="970"/>
+  <object id="40" name="wall" x="252" y="620" width="4" height="1012"/>
+  <object id="41" name="ground" x="0" y="1625" width="252" height="7"/>
+  <object id="42" name="floor" x="3" y="665" width="109" height="3"/>
+  <object id="43" name="shaft" x="112" y="665" width="24" height="3"/>
+  <object id="44" name="floor" x="136" y="665" width="116" height="3"/>
+  <object id="45" name="floor" x="3" y="713" width="249" height="3"/>
+  <object id="46" name="wall" x="172" y="620" width="4" height="45"/>
+  <object id="47" name="floor" x="3" y="761" width="249" height="3"/>
+  <object id="48" name="wall" x="122" y="716" width="4" height="45"/>
+  <object id="49" name="floor" x="3" y="809" width="109" height="3"/>
+  <object id="50" name="shaft" x="112" y="809" width="24" height="3"/>
+  <object id="51" name="floor" x="136" y="809" width="116" height="3"/>
+  <object id="52" name="floor" x="3" y="857" width="109" height="3"/>
+  <object id="53" name="shaft" x="112" y="857" width="24" height="3"/>
+  <object id="54" name="floor" x="136" y="857" width="116" height="3"/>
+  <object id="55" name="floor" x="3" y="905" width="13" height="3"/>
+  <object id="56" name="shaft" x="16" y="905" width="24" height="3"/>
+  <object id="57" name="floor" x="40" y="905" width="212" height="3"/>
+  <object id="58" name="floor" x="3" y="953" width="13" height="3"/>
+  <object id="59" name="shaft" x="16" y="953" width="24" height="3"/>
+  <object id="60" name="floor" x="40" y="953" width="212" height="3"/>
+  <object id="61" name="floor" x="232" y="1001" width="20" height="3"/>
+  <object id="62" name="shaft" x="208" y="1001" width="24" height="3"/>
+  <object id="63" name="floor" x="3" y="1001" width="205" height="3"/>
+  <object id="64" name="floor" x="232" y="1049" width="20" height="3"/>
+  <object id="65" name="shaft" x="208" y="1049" width="24" height="3"/>
+  <object id="66" name="floor" x="3" y="1049" width="109" height="3"/>
+  <object id="67" name="floor" x="136" y="1049" width="72" height="3"/>
+  <object id="68" name="shaft" x="112" y="1049" width="24" height="3"/>
+  <object id="69" name="floor" x="232" y="1097" width="20" height="3"/>
+  <object id="70" name="shaft" x="208" y="1097" width="24" height="3"/>
+  <object id="71" name="floor" x="3" y="1097" width="13" height="3"/>
+  <object id="72" name="floor" x="136" y="1097" width="72" height="3"/>
+  <object id="73" name="shaft" x="112" y="1097" width="24" height="3"/>
+  <object id="74" name="floor" x="40" y="1097" width="72" height="3"/>
+  <object id="75" name="shaft" x="16" y="1097" width="24" height="3"/>
+  <object id="76" name="floor" x="232" y="1145" width="20" height="3"/>
+  <object id="77" name="shaft" x="208" y="1145" width="24" height="3"/>
+  <object id="78" name="floor" x="3" y="1145" width="13" height="3"/>
+  <object id="79" name="floor" x="40" y="1145" width="168" height="3"/>
+  <object id="80" name="shaft" x="16" y="1145" width="24" height="3"/>
+  <object id="81" name="floor" x="232" y="1193" width="20" height="3"/>
+  <object id="82" name="shaft" x="208" y="1193" width="24" height="3"/>
+  <object id="83" name="floor" x="3" y="1193" width="13" height="3"/>
+  <object id="84" name="floor" x="40" y="1193" width="168" height="3"/>
+  <object id="85" name="shaft" x="16" y="1193" width="24" height="3"/>
+  <object id="86" name="floor" x="232" y="1241" width="20" height="3"/>
+  <object id="87" name="shaft" x="208" y="1241" width="24" height="3"/>
+  <object id="88" name="floor" x="3" y="1241" width="13" height="3"/>
+  <object id="89" name="floor" x="40" y="1241" width="168" height="3"/>
+  <object id="90" name="shaft" x="16" y="1241" width="24" height="3"/>
+  <object id="91" name="floor" x="200" y="1289" width="52" height="3"/>
+  <object id="92" name="floor" x="3" y="1289" width="77" height="3"/>
+  <object id="93" name="floor" x="104" y="1289" width="40" height="3"/>
+  <object id="94" name="shaft" x="80" y="1289" width="24" height="3"/>
+  <object id="95" name="floor" x="168" y="1289" width="8" height="3"/>
+  <object id="96" name="shaft" x="144" y="1289" width="24" height="3"/>
+  <object id="97" name="shaft" x="176" y="1289" width="24" height="3"/>
+  <object id="98" name="floor" x="200" y="1337" width="52" height="3"/>
+  <object id="99" name="floor" x="3" y="1337" width="45" height="3"/>
+  <object id="100" name="floor" x="104" y="1337" width="40" height="3"/>
+  <object id="101" name="shaft" x="80" y="1337" width="24" height="3"/>
+  <object id="102" name="floor" x="168" y="1337" width="8" height="3"/>
+  <object id="103" name="shaft" x="144" y="1337" width="24" height="3"/>
+  <object id="104" name="shaft" x="176" y="1337" width="24" height="3"/>
+  <object id="105" name="shaft" x="48" y="1337" width="24" height="3"/>
+  <object id="106" name="floor" x="72" y="1337" width="8" height="3"/>
+  <object id="107" name="floor" x="200" y="1385" width="52" height="3"/>
+  <object id="108" name="floor" x="3" y="1385" width="45" height="3"/>
+  <object id="109" name="floor" x="104" y="1385" width="8" height="3"/>
+  <object id="110" name="shaft" x="80" y="1385" width="24" height="3"/>
+  <object id="111" name="floor" x="168" y="1385" width="8" height="3"/>
+  <object id="112" name="shaft" x="144" y="1385" width="24" height="3"/>
+  <object id="113" name="shaft" x="176" y="1385" width="24" height="3"/>
+  <object id="114" name="shaft" x="48" y="1385" width="24" height="3"/>
+  <object id="115" name="floor" x="72" y="1385" width="8" height="3"/>
+  <object id="116" name="floor" x="136" y="1385" width="8" height="3"/>
+  <object id="117" name="shaft" x="112" y="1385" width="24" height="3"/>
+  <object id="118" name="floor" x="200" y="1433" width="52" height="3"/>
+  <object id="119" name="floor" x="3" y="1433" width="45" height="3"/>
+  <object id="120" name="floor" x="104" y="1433" width="8" height="3"/>
+  <object id="121" name="shaft" x="80" y="1433" width="24" height="3"/>
+  <object id="122" name="floor" x="168" y="1433" width="8" height="3"/>
+  <object id="123" name="shaft" x="144" y="1433" width="24" height="3"/>
+  <object id="124" name="shaft" x="176" y="1433" width="24" height="3"/>
+  <object id="125" name="shaft" x="48" y="1433" width="24" height="3"/>
+  <object id="126" name="floor" x="72" y="1433" width="8" height="3"/>
+  <object id="127" name="floor" x="136" y="1433" width="8" height="3"/>
+  <object id="128" name="shaft" x="112" y="1433" width="24" height="3"/>
+  <object id="129" name="floor" x="200" y="1481" width="52" height="3"/>
+  <object id="130" name="floor" x="3" y="1481" width="45" height="3"/>
+  <object id="131" name="floor" x="104" y="1481" width="8" height="3"/>
+  <object id="132" name="shaft" x="80" y="1481" width="24" height="3"/>
+  <object id="133" name="floor" x="168" y="1481" width="8" height="3"/>
+  <object id="134" name="shaft" x="144" y="1481" width="24" height="3"/>
+  <object id="135" name="shaft" x="176" y="1481" width="24" height="3"/>
+  <object id="136" name="shaft" x="48" y="1481" width="24" height="3"/>
+  <object id="137" name="floor" x="72" y="1481" width="8" height="3"/>
+  <object id="138" name="floor" x="136" y="1481" width="8" height="3"/>
+  <object id="139" name="shaft" x="112" y="1481" width="24" height="3"/>
+  <object id="140" name="floor" x="200" y="1529" width="52" height="3"/>
+  <object id="141" name="floor" x="3" y="1529" width="45" height="3"/>
+  <object id="142" name="floor" x="104" y="1529" width="8" height="3"/>
+  <object id="143" name="shaft" x="80" y="1529" width="24" height="3"/>
+  <object id="144" name="floor" x="168" y="1529" width="8" height="3"/>
+  <object id="145" name="shaft" x="144" y="1529" width="24" height="3"/>
+  <object id="146" name="shaft" x="176" y="1529" width="24" height="3"/>
+  <object id="147" name="shaft" x="48" y="1529" width="24" height="3"/>
+  <object id="148" name="floor" x="72" y="1529" width="8" height="3"/>
+  <object id="149" name="floor" x="136" y="1529" width="8" height="3"/>
+  <object id="150" name="shaft" x="112" y="1529" width="24" height="3"/>
+  <object id="151" name="floor" x="136" y="1577" width="116" height="3"/>
+  <object id="152" name="floor" x="3" y="1577" width="109" height="3"/>
+  <object id="153" name="shaft" x="112" y="1577" width="24" height="3"/>
+ </objectgroup>
+ <objectgroup id="3" name="floors" visible="0" locked="1">
+  <object id="154" name="floor_30" x="0" y="144" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="30"/>
+   </properties>
+  </object>
+  <object id="155" name="floor_31" x="0" y="0" width="256" height="144">
+   <properties>
+    <property name="floor" type="float" value="31"/>
+   </properties>
+  </object>
+  <object id="156" name="floor_29" x="0" y="192" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="29"/>
+   </properties>
+  </object>
+  <object id="157" name="floor_28" x="0" y="240" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="28"/>
+   </properties>
+  </object>
+  <object id="158" name="floor_27" x="0" y="288" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="27"/>
+   </properties>
+  </object>
+  <object id="159" name="floor_26" x="0" y="336" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="26"/>
+   </properties>
+  </object>
+  <object id="160" name="floor_25" x="0" y="384" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="25"/>
+   </properties>
+  </object>
+  <object id="161" name="floor_24" x="0" y="432" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="24"/>
+   </properties>
+  </object>
+  <object id="162" name="floor_23" x="0" y="480" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="23"/>
+   </properties>
+  </object>
+  <object id="163" name="floor_22" x="0" y="528" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="22"/>
+   </properties>
+  </object>
+  <object id="164" name="floor_21" x="0" y="576" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="21"/>
+   </properties>
+  </object>
+  <object id="165" name="floor_20" x="0" y="624" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="20"/>
+   </properties>
+  </object>
+  <object id="166" name="floor_19" x="0" y="672" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="19"/>
+   </properties>
+  </object>
+  <object id="167" name="floor_18" x="0" y="720" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="18"/>
+   </properties>
+  </object>
+  <object id="168" name="floor_17" x="0" y="768" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="17"/>
+   </properties>
+  </object>
+  <object id="169" name="floor_16" x="0" y="816" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="16"/>
+   </properties>
+  </object>
+  <object id="170" name="floor_15" x="0" y="864" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="15"/>
+   </properties>
+  </object>
+  <object id="171" name="floor_14" x="0" y="912" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="14"/>
+   </properties>
+  </object>
+  <object id="172" name="floor_13" x="0" y="960" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="13"/>
+   </properties>
+  </object>
+  <object id="173" name="floor_12" x="0" y="1008" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="12"/>
+   </properties>
+  </object>
+  <object id="174" name="floor_11" x="0" y="1056" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="11"/>
+   </properties>
+  </object>
+  <object id="175" name="floor_10" x="0" y="1104" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="10"/>
+   </properties>
+  </object>
+  <object id="176" name="floor_9" x="0" y="1152" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="9"/>
+   </properties>
+  </object>
+  <object id="177" name="floor_8" x="0" y="1200" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="8"/>
+   </properties>
+  </object>
+  <object id="178" name="floor_7" x="0" y="1248" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="7"/>
+   </properties>
+  </object>
+  <object id="179" name="floor_6" x="0" y="1296" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="6"/>
+   </properties>
+  </object>
+  <object id="180" name="floor_5" x="0" y="1344" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="5"/>
+   </properties>
+  </object>
+  <object id="181" name="floor_4" x="0" y="1392" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="4"/>
+   </properties>
+  </object>
+  <object id="182" name="floor_3" x="0" y="1440" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="3"/>
+   </properties>
+  </object>
+  <object id="183" name="floor_2" x="0" y="1488" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="2"/>
+   </properties>
+  </object>
+  <object id="184" name="floor_1" x="0" y="1536" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="1"/>
+   </properties>
+  </object>
+  <object id="185" name="floor_0" x="0" y="1584" width="256" height="48">
+   <properties>
+    <property name="floor" type="float" value="0"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="doors">
+  <object id="186" name="blue_left" x="56" y="156" width="16" height="28"/>
+  <object id="187" name="blue_left" x="80" y="156" width="16" height="28"/>
+  <object id="188" name="blue_right" x="176" y="156" width="16" height="28"/>
+  <object id="189" name="blue_right" x="152" y="156" width="16" height="28"/>
+  <object id="190" name="blue_left" x="56" y="204" width="16" height="28"/>
+  <object id="191" name="blue_left" x="80" y="204" width="16" height="28"/>
+  <object id="192" name="blue_right" x="176" y="204" width="16" height="28"/>
+  <object id="193" name="blue_right" x="152" y="204" width="16" height="28"/>
+  <object id="194" name="blue_left" x="56" y="252" width="16" height="28"/>
+  <object id="195" name="blue_left" x="80" y="252" width="16" height="28"/>
+  <object id="196" name="blue_right" x="176" y="252" width="16" height="28"/>
+  <object id="197" name="blue_right" x="152" y="252" width="16" height="28"/>
+  <object id="198" name="blue_left" x="56" y="300" width="16" height="28"/>
+  <object id="199" name="blue_left" x="80" y="300" width="16" height="28"/>
+  <object id="200" name="blue_right" x="176" y="300" width="16" height="28"/>
+  <object id="201" name="blue_right" x="152" y="300" width="16" height="28"/>
+  <object id="202" name="blue_left" x="56" y="348" width="16" height="28"/>
+  <object id="203" name="blue_left" x="80" y="348" width="16" height="28"/>
+  <object id="204" name="blue_right" x="176" y="348" width="16" height="28"/>
+  <object id="205" name="blue_right" x="152" y="348" width="16" height="28"/>
+  <object id="206" name="blue_left" x="56" y="396" width="16" height="28"/>
+  <object id="207" name="blue_left" x="80" y="396" width="16" height="28"/>
+  <object id="208" name="blue_right" x="176" y="396" width="16" height="28"/>
+  <object id="209" name="blue_right" x="152" y="396" width="16" height="28"/>
+  <object id="210" name="blue_left" x="56" y="444" width="16" height="28"/>
+  <object id="211" name="blue_left" x="80" y="444" width="16" height="28"/>
+  <object id="212" name="blue_right" x="176" y="444" width="16" height="28"/>
+  <object id="213" name="blue_right" x="152" y="444" width="16" height="28"/>
+  <object id="214" name="blue_left" x="56" y="492" width="16" height="28"/>
+  <object id="215" name="blue_left" x="80" y="492" width="16" height="28"/>
+  <object id="216" name="blue_right" x="176" y="492" width="16" height="28"/>
+  <object id="217" name="blue_right" x="152" y="492" width="16" height="28"/>
+  <object id="218" name="blue_left" x="56" y="540" width="16" height="28"/>
+  <object id="219" name="blue_left" x="80" y="540" width="16" height="28"/>
+  <object id="220" name="blue_right" x="176" y="540" width="16" height="28"/>
+  <object id="221" name="blue_right" x="152" y="540" width="16" height="28"/>
+  <object id="222" name="blue_left" x="56" y="588" width="16" height="28"/>
+  <object id="223" name="blue_left" x="80" y="588" width="16" height="28"/>
+  <object id="224" name="blue_right" x="176" y="588" width="16" height="28"/>
+  <object id="225" name="blue_right" x="152" y="588" width="16" height="28"/>
+  <object id="226" name="red_left" x="56" y="636" width="16" height="28"/>
+  <object id="227" name="blue_left" x="80" y="636" width="16" height="28"/>
+  <object id="228" name="blue_right" x="176" y="636" width="16" height="28"/>
+  <object id="229" name="blue_right" x="152" y="636" width="16" height="28"/>
+  <object id="230" name="blue_left" x="56" y="684" width="16" height="28"/>
+  <object id="231" name="blue_left" x="80" y="684" width="16" height="28"/>
+  <object id="232" name="blue_right" x="176" y="684" width="16" height="28"/>
+  <object id="233" name="blue_right" x="152" y="684" width="16" height="28"/>
+  <object id="234" name="blue_left" x="56" y="732" width="16" height="28"/>
+  <object id="235" name="blue_left" x="80" y="732" width="16" height="28"/>
+  <object id="236" name="blue_right" x="176" y="732" width="16" height="28"/>
+  <object id="237" name="blue_right" x="152" y="732" width="16" height="28"/>
+  <object id="238" name="blue_left" x="104" y="732" width="16" height="28"/>
+  <object id="239" name="blue_right" x="128" y="732" width="16" height="28"/>
+  <object id="240" name="blue_right" x="152" y="780" width="16" height="28"/>
+  <object id="241" name="blue_right" x="176" y="780" width="16" height="28"/>
+  <object id="242" name="blue_left" x="56" y="780" width="16" height="28"/>
+  <object id="243" name="blue_left" x="80" y="780" width="16" height="28"/>
+  <object id="244" name="blue_left" x="32" y="828" width="16" height="28"/>
+  <object id="245" name="blue_left" x="56" y="828" width="16" height="28"/>
+  <object id="246" name="blue_left" x="80" y="828" width="16" height="28"/>
+  <object id="247" name="blue_right" x="176" y="828" width="16" height="28"/>
+  <object id="248" name="red_right" x="152" y="828" width="16" height="28"/>
+  <object id="249" name="hidden_left" x="56" y="876" width="16" height="28"/>
+  <object id="250" name="hidden_left" x="80" y="876" width="16" height="28"/>
+  <object id="251" name="hidden_right" x="152" y="876" width="16" height="28"/>
+  <object id="252" name="hidden_right" x="176" y="876" width="16" height="28"/>
+  <object id="253" name="hidden_right" x="200" y="876" width="16" height="28"/>
+  <object id="254" name="hidden_left" x="56" y="924" width="16" height="28"/>
+  <object id="255" name="hidden_left" x="80" y="924" width="16" height="28"/>
+  <object id="256" name="red_right" x="152" y="924" width="16" height="28"/>
+  <object id="257" name="hidden_right" x="176" y="924" width="16" height="28"/>
+  <object id="258" name="hidden_right" x="200" y="924" width="16" height="28"/>
+  <object id="259" name="hidden_left" x="104" y="924" width="16" height="28"/>
+  <object id="260" name="hidden_right" x="128" y="924" width="16" height="28"/>
+  <object id="261" name="hidden_left" x="56" y="972" width="16" height="28"/>
+  <object id="262" name="hidden_left" x="80" y="972" width="16" height="28"/>
+  <object id="263" name="hidden_right" x="152" y="972" width="16" height="28"/>
+  <object id="264" name="hidden_right" x="176" y="972" width="16" height="28"/>
+  <object id="265" name="hidden_left" x="104" y="972" width="16" height="28"/>
+  <object id="266" name="hidden_right" x="128" y="972" width="16" height="28"/>
+  <object id="267" name="hidden_left" x="32" y="1020" width="16" height="28"/>
+  <object id="268" name="hidden_left" x="56" y="1020" width="16" height="28"/>
+  <object id="269" name="hidden_right" x="152" y="1020" width="16" height="28"/>
+  <object id="270" name="hidden_right" x="176" y="1020" width="16" height="28"/>
+  <object id="271" name="hidden_left" x="80" y="1020" width="16" height="28"/>
+  <object id="272" name="red_left" x="56" y="1068" width="16" height="28"/>
+  <object id="273" name="hidden_right" x="152" y="1068" width="16" height="28"/>
+  <object id="274" name="hidden_right" x="176" y="1068" width="16" height="28"/>
+  <object id="275" name="hidden_left" x="80" y="1068" width="16" height="28"/>
+  <object id="276" name="blue_left" x="56" y="1116" width="16" height="28"/>
+  <object id="277" name="blue_right" x="152" y="1116" width="16" height="28"/>
+  <object id="278" name="blue_right" x="176" y="1116" width="16" height="28"/>
+  <object id="279" name="blue_left" x="80" y="1116" width="16" height="28"/>
+  <object id="280" name="blue_left" x="56" y="1164" width="16" height="28"/>
+  <object id="281" name="blue_left" x="80" y="1164" width="16" height="28"/>
+  <object id="282" name="blue_left" x="104" y="1164" width="16" height="28"/>
+  <object id="283" name="red_right" x="128" y="1164" width="16" height="28"/>
+  <object id="284" name="blue_right" x="152" y="1164" width="16" height="28"/>
+  <object id="285" name="blue_right" x="176" y="1164" width="16" height="28"/>
+  <object id="286" name="blue_left" x="56" y="1212" width="16" height="28"/>
+  <object id="287" name="blue_left" x="80" y="1212" width="16" height="28"/>
+  <object id="288" name="blue_left" x="104" y="1212" width="16" height="28"/>
+  <object id="289" name="blue_right" x="128" y="1212" width="16" height="28"/>
+  <object id="290" name="blue_right" x="152" y="1212" width="16" height="28"/>
+  <object id="291" name="blue_right" x="176" y="1212" width="16" height="28"/>
+  <object id="292" name="blue_left" x="24" y="1308" width="16" height="28"/>
+  <object id="293" name="blue_right" x="208" y="1308" width="16" height="28"/>
+  <object id="294" name="blue_left" x="24" y="1356" width="16" height="28"/>
+  <object id="295" name="blue_right" x="208" y="1356" width="16" height="28"/>
+  <object id="296" name="blue_left" x="24" y="1404" width="16" height="28"/>
+  <object id="297" name="blue_right" x="208" y="1404" width="16" height="28"/>
+  <object id="298" name="blue_left" x="24" y="1452" width="16" height="28"/>
+  <object id="299" name="blue_right" x="208" y="1452" width="16" height="28"/>
+  <object id="300" name="blue_left" x="24" y="1500" width="16" height="28"/>
+  <object id="301" name="blue_right" x="208" y="1500" width="16" height="28"/>
+  <object id="302" name="blue_left" x="24" y="1548" width="16" height="28"/>
+  <object id="303" name="blue_right" x="208" y="1548" width="16" height="28"/>
+ </objectgroup>
+ <objectgroup id="5" name="elevators">
+  <object id="304" x="112" y="92" width="24" height="624">
+   <properties>
+    <property name="max_floor" type="float" value="31"/>
+    <property name="min_floor" type="float" value="19"/>
+    <property name="start_floor" type="float" value="31"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

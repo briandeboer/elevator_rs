@@ -99,7 +99,7 @@ fn main() -> amethyst::Result<()> {
             "player_transformation_system",
             &["elevator_transformation_system"],
         )
-        .with (
+        .with(
             CameraTransformationSystem,
             "camera_transformation_system",
             &["player_transformation_system"],

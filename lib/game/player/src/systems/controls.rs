@@ -24,6 +24,7 @@ impl<'s> System<'s> for PlayerControlsSystem {
     fn run(&mut self, data: Self::SystemData) {
         let (colliders, mut directions, proximities, mut players, mut guns, input, time) = data;
 
+        // TODO: remove the maybe's and break this up
         for (maybe_collider, direction, maybe_proximity, maybe_player, maybe_gun) in (
             colliders.maybe(),
             &mut directions,

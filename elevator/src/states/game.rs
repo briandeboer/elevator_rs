@@ -40,7 +40,7 @@ impl SimpleState for GameState {
         self.map_handle = {
             let loader = world.read_resource::<Loader>();
             Some(loader.load(
-                "tilesets/level_1.json",
+                "tilesets/floors_1.json",
                 JsonFormat,
                 self.progress_counter.as_mut().expect("map"),
                 &world.read_resource::<AssetStorage<Map>>(),
@@ -50,7 +50,7 @@ impl SimpleState for GameState {
         self.tileset_handle = {
             let loader = world.read_resource::<Loader>();
             Some(loader.load(
-                "tilesets/tileset.json",
+                "tilesets/floors.json",
                 JsonFormat,
                 self.progress_counter.as_mut().expect("tileset"),
                 &world.read_resource::<AssetStorage<Tileset>>(),

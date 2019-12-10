@@ -1,18 +1,12 @@
 # elevator_rs
 
-## Step 1: Getting started
-Install amethyst
-and run `amethyst new elevator_rs`
+Clone and then run `cargo run` or `cargo run --release`
 
-- need to include features for macos
-- need to change objc to be specific version
-```
-objc = "=0.2.6"
-```
-- need to rename "Resources" to "Resource"
-- use nightly if you want extra debugging
+Use arrow keys, space bar shoots gun and Z jumps.
 
-## Step 2: Create the game state
-- Create an elevator_game.rs game state file
-- Add the struct and SimpleState impl for it
-- pull it into main.rs
+A couple notes:
+- You might need amethyst nightly build (and rust nightly)
+- The elevator itself is still pretty buggy
+- The escalators still don't work
+- look at todo.md for a "complete" list of issues
+- release build uses a lot less CPU and has higher frame rate

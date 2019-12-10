@@ -2,26 +2,26 @@
 //  Sprite sheet data for Amethyst Game Engine: https://www.amethyst.rs
 //  This file was created by TexturePacker: https://www.codeandweb.com/texturepacker
 //
-//  $TexturePacker:SmartUpdate:5f8bb65d02a06238bcf2a350090b766a:1c7a1090fa4629d47d2c7c7bf782054b:f6714f45209153d23fad6288a93a17b0$
+//  $TexturePacker:SmartUpdate:8280d872aa12f6fb253cdf33e878d27c:5109067e68bb6f1db6f46c6d8418941f:f6714f45209153d23fad6288a93a17b0$
 //
 
 #![enable(implicit_some)]
 (
-    texture_width: 30,
-    texture_height: 62,
+    texture_width: 26,
+    texture_height: 272,
     sprites: [
         (
             // 0: bottom.png
             x: 1,
-            y: 43,
+            y: 243,
             width: 24,
             height: 8,
             offsets: (0, 0),
         ),
         (
             // 1: cable.png
-            x: 27,
-            y: 1,
+            x: 1,
+            y: 263,
             width: 2,
             height: 8,
             offsets: (0, 0),
@@ -29,15 +29,47 @@
         (
             // 2: inside_pink.png
             x: 1,
-            y: 1,
+            y: 201,
             width: 24,
             height: 40,
             offsets: (0, 0),
         ),
         (
-            // 3: top.png
+            // 3: shaft_open_0.png
             x: 1,
-            y: 53,
+            y: 1,
+            width: 24,
+            height: 48,
+            offsets: (0, 0),
+        ),
+        (
+            // 4: shaft_open_1.png
+            x: 1,
+            y: 51,
+            width: 24,
+            height: 48,
+            offsets: (0, 0),
+        ),
+        (
+            // 5: shaft_solid_0.png
+            x: 1,
+            y: 101,
+            width: 24,
+            height: 48,
+            offsets: (0, 0),
+        ),
+        (
+            // 6: shaft_solid_1.png
+            x: 1,
+            y: 151,
+            width: 24,
+            height: 48,
+            offsets: (0, 0),
+        ),
+        (
+            // 7: top.png
+            x: 1,
+            y: 253,
             width: 24,
             height: 8,
             offsets: (0, 0),
