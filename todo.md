@@ -12,7 +12,8 @@
 - [x] draw out a fuller map
 - [x] add a frame rate counter
 - [x] draw elevators in proper places based on tiles
-- [ ] render elevator shafts as a sprite
+- [x] render elevator shafts as a sprite
+- [x] render the overlays separately to put at a higher z
 - [ ] use a resource to keep track of which levels are drawn
 - [ ] don't draw offscreen collision layers, doors, lamps, elevators
 - [ ] remove offscreen collision layers, doors, lamps, elevators

@@ -91,7 +91,7 @@ pub fn load_elevator(
         shaft_transform.set_translation_xyz(top_left.x, y, ELEVATOR_Z - 0.1);
         let shaft_sprite = SpriteRender {
             sprite_sheet: sprite_sheet_handle.clone(),
-            sprite_number: if i == min_floor { 5 } else { 3 },
+            sprite_number: 3,
         };
         // load the elevator shaft
         world
@@ -100,6 +100,21 @@ pub fn load_elevator(
             .with(shaft_sprite)
             .with(shaft_transform)
             .build();
+
+        let mut overlay_transform = Transform::default();
+        overlay_transform.set_translation_xyz(top_left.x, y, ELEVATOR_Z + 0.1);
+        let overlay_sprite = SpriteRender {
+            sprite_sheet: sprite_sheet_handle.clone(),
+            sprite_number: if i == min_floor { 6 } else { 4 },
+        };
+        // load the elevator shaft
+        world
+            .create_entity()
+            .named("Overlay")
+            .with(overlay_sprite)
+            .with(overlay_transform)
+            .build();
+        
     }
 
     let inside = ElevatorComponent::new(
@@ -136,7 +151,7 @@ pub fn load_elevator(
 
     let top = ElevatorComponent::new(
         "ElevatorTop",
-        7,
+        8,
         24.,
         4.,
         Vector3::new(0., ELEVATOR_OFFSET, 0.),

@@ -2,18 +2,18 @@
 //  Sprite sheet data for Amethyst Game Engine: https://www.amethyst.rs
 //  This file was created by TexturePacker: https://www.codeandweb.com/texturepacker
 //
-//  $TexturePacker:SmartUpdate:8280d872aa12f6fb253cdf33e878d27c:5109067e68bb6f1db6f46c6d8418941f:f6714f45209153d23fad6288a93a17b0$
+//  $TexturePacker:SmartUpdate:96acef74a2c4fe6d51d09d75535e2630:59a28ef36626e6db77ffe8cb8433e3bc:f6714f45209153d23fad6288a93a17b0$
 //
 
 #![enable(implicit_some)]
 (
     texture_width: 26,
-    texture_height: 272,
+    texture_height: 164,
     sprites: [
         (
             // 0: bottom.png
             x: 1,
-            y: 243,
+            y: 115,
             width: 24,
             height: 8,
             offsets: (0, 0),
@@ -21,7 +21,7 @@
         (
             // 1: cable.png
             x: 1,
-            y: 263,
+            y: 155,
             width: 2,
             height: 8,
             offsets: (0, 0),
@@ -29,13 +29,13 @@
         (
             // 2: inside_pink.png
             x: 1,
-            y: 201,
+            y: 51,
             width: 24,
             height: 40,
             offsets: (0, 0),
         ),
         (
-            // 3: shaft_open_0.png
+            // 3: shaft.png
             x: 1,
             y: 1,
             width: 24,
@@ -43,33 +43,41 @@
             offsets: (0, 0),
         ),
         (
-            // 4: shaft_open_1.png
+            // 4: shaft_open_0.png
             x: 1,
-            y: 51,
+            y: 125,
             width: 24,
-            height: 48,
-            offsets: (0, 0),
+            height: 8,
+            offsets: (0, 20),
         ),
         (
-            // 5: shaft_solid_0.png
+            // 5: shaft_open_1.png
             x: 1,
-            y: 101,
+            y: 135,
             width: 24,
-            height: 48,
-            offsets: (0, 0),
+            height: 8,
+            offsets: (0, 20),
         ),
         (
-            // 6: shaft_solid_1.png
+            // 6: shaft_solid_0.png
             x: 1,
-            y: 151,
+            y: 93,
             width: 24,
-            height: 48,
-            offsets: (0, 0),
+            height: 9,
+            offsets: (0, 19.5),
         ),
         (
-            // 7: top.png
+            // 7: shaft_solid_1.png
             x: 1,
-            y: 253,
+            y: 104,
+            width: 24,
+            height: 9,
+            offsets: (0, 19.5),
+        ),
+        (
+            // 8: top.png
+            x: 1,
+            y: 145,
             width: 24,
             height: 8,
             offsets: (0, 0),
