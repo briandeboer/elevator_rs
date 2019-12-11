@@ -75,6 +75,10 @@ impl<'s> System<'s> for PlayerKinematicsSystem {
                 _ => {}
             }
             motion.update_velocity(acceleration, dir, 0., player.max_ground_speed);
+            // move faster downward when on the elevator so that he doesn't bounce due to gravity
+            if collider.on_elevator && (player.state == PlayerState::Idling || player.state == PlayerState::Walking) {
+                motion.velocity.y = -40.;
+            }
         }
     }
 }

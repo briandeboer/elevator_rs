@@ -8,7 +8,7 @@ use crate::components::{Gun, Player, PlayerState};
 use hierarchy::components::Child;
 use physics::components::{Collidee, Collider, Direction, Motion};
 
-const SAFE_PADDING: f32 = 0.0001;
+const SAFE_PADDING: f32 = 0.01;
 
 pub struct PlayerTransformationSystem;
 
@@ -49,7 +49,7 @@ impl<'s> System<'s> for PlayerTransformationSystem {
                             + collidee_horizontal.half_size.x
                             + bbox.half_size.x
                             + SAFE_PADDING;
-                    } else {
+                    } else if collidee_horizontal.correction > 0. {
                         bbox.position.x = collidee_horizontal.position.x
                             - collidee_horizontal.half_size.x
                             - bbox.half_size.x
@@ -65,7 +65,7 @@ impl<'s> System<'s> for PlayerTransformationSystem {
                 velocity.y = 0.;
                 if collidee_vertical.is_rideable {
                     // use the correction to determine which end of the rideable and which way we are getting pushed
-                    if collidee_vertical.correction < 0. {
+                    if collidee_vertical.correction <= 0. {
                         bbox.position.y = collidee_vertical.position.y
                             + collidee_vertical.half_size.y
                             + bbox.half_size.y

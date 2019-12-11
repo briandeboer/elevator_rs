@@ -199,14 +199,14 @@ impl Collidee {
             // Might happen when an entity is added at run time.
             // As per the current game design, no correction (correction = 0.) is required for this scenario
             // This might have to be changed in future
-            self.horizontal = Some(CollideeDetails {
+            self.vertical = Some(CollideeDetails {
                 name,
                 position: box_b.position,
                 half_size: box_b.half_size,
-                correction: correction.x,
-                velocity: velocity_a.x,
+                correction: correction.y,
+                velocity: velocity_a.y,
                 collided_with_name,
-                collided_with_velocity: velocity_b.x,
+                collided_with_velocity: velocity_b.y,
                 is_rideable: collider_b.is_rideable,
             });
         } else {
