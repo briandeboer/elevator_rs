@@ -74,12 +74,14 @@ impl SimpleState for GameState {
                 };
                 let sprite_sheet = tileset.load_spritesheet(data.world);
 
-                let map = {
+                let mut map = {
                     let map_storage = &data.world.read_resource::<AssetStorage<Map>>();
                     let map_handle = &self.map_handle.take().unwrap();
                     map_storage.get(map_handle).unwrap().clone()
                 };
-                map.load_layers(data.world, sprite_sheet);
+                map.init_floors(data.world);
+                map.render_tiles(data.world, &sprite_sheet);
+                data.world.insert(map);
 
                 let player_prefab_handle = {
                     let prefab_list = data.world.read_resource::<PrefabList>();

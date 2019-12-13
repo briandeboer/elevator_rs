@@ -17,9 +17,9 @@
 - [x] player falls off the elevator when going up in elevator
 - [x] player still bounces on elevator
 - [ ] don't "overjump" when elevator is going up
-- [ ] use a resource to keep track of which levels are drawn
-- [ ] don't draw offscreen collision layers, doors, lamps, elevators
-- [ ] remove offscreen collision layers, doors, lamps, elevators
+- [x] use a resource to keep track of which levels are drawn
+- [x] don't draw offscreen collision layers, doors, lamps, elevators
+- [x] remove offscreen collision layers, doors, lamps, elevators
 - [ ] escalator logic and movement
 - [ ] animate the user going into the room and coming out
 - [ ] mark room as used when user comes out
@@ -33,6 +33,7 @@
 - [ ] draw lamps above doors as part of door rendering
 - [ ] lamps as sprites, ie. falling and lights out
 - [ ] draw elevator cable
+- [ ] draw tiles only when needed as well (remove offscreen)
 
 ## Low priority
 - [ ] increase user velocity when riding up elevator so jump is additional

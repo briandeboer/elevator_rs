@@ -1,13 +1,14 @@
 use amethyst::{
     core::{
         math::{Vector2, Vector3},
-        Transform, WithNamed,
+        Named, Transform,
     },
-    ecs::{Builder, Entity, World, WorldExt},
+    ecs::{Entities, Entity, LazyUpdate, ReadExpect},
     renderer::{sprite::SpriteSheetHandle, SpriteRender},
 };
 
 use crate::components::{Elevator, ElevatorComponent};
+use floors::Floor;
 use hierarchy::components::Child;
 use physics::components::{Collidee, Collider, Motion, Proximity};
 
@@ -15,11 +16,14 @@ const ELEVATOR_Z: f32 = 0.0;
 const ELEVATOR_OFFSET: f32 = 24.;
 
 fn create_elevator_component(
-    world: &mut World,
+    id: usize,
+    entities: &Entities,
+    lazy_update: &ReadExpect<LazyUpdate>,
     elevator_entity: Entity,
     position: Vector2<f32>,
     component: ElevatorComponent,
     sprite_sheet_handle: SpriteSheetHandle,
+    floors_overlapped: Vec<usize>,
 ) {
     let render = SpriteRender {
         sprite_sheet: sprite_sheet_handle,
@@ -38,27 +42,31 @@ fn create_elevator_component(
     bbox.old_position = bbox.position;
     transform.set_translation_z(ELEVATOR_Z + component.offsets.z);
     let offsets = component.offsets;
-    let _entity = world
-        .create_entity()
-        .named(component.name)
-        .with(component)
-        .with(Child::new(
+    let entity: Entity = entities.create();
+    lazy_update.insert(entity, Named::new(component.name));
+    lazy_update.insert(entity, component);
+    lazy_update.insert(
+        entity,
+        Child::new(
             elevator_entity,
             position.x + offsets.x,
             position.y + offsets.y,
             offsets.z,
-        ))
-        .with(collider)
-        .with(Collidee::default())
-        .with(Motion::new())
-        .with(Proximity::default())
-        .with(render)
-        .with(transform)
-        .build();
+        ),
+    );
+    lazy_update.insert(entity, collider);
+    lazy_update.insert(entity, Collidee::default());
+    lazy_update.insert(entity, Motion::new());
+    lazy_update.insert(entity, Proximity::default());
+    lazy_update.insert(entity, render);
+    lazy_update.insert(entity, transform);
+    lazy_update.insert(entity, Floor::new(vec![id], floors_overlapped));
 }
 
 pub fn load_elevator(
-    world: &mut World,
+    id: usize,
+    entities: &Entities,
+    lazy_update: &ReadExpect<LazyUpdate>,
     sprite_sheet_handle: SpriteSheetHandle,
     top_left: Vector2<f32>,
     _bottom_right: Vector2<f32>,
@@ -67,6 +75,7 @@ pub fn load_elevator(
     start_floor: usize,
 ) {
     // parent component
+    let floors_overlapped: Vec<usize> = (min_floor..=max_floor).collect();
     let mut transform = Transform::default();
     transform.set_translation_xyz(top_left.x, top_left.y, ELEVATOR_Z);
     let elevator = Elevator::new(
@@ -76,13 +85,15 @@ pub fn load_elevator(
         start_floor,
         0.,
     );
-    let elevator_entity = world
-        .create_entity()
-        .named("Elevator")
-        .with(elevator)
-        .with(Collidee::default())
-        .with(transform)
-        .build();
+    let elevator_entity: Entity = entities.create();
+    lazy_update.insert(elevator_entity, Named::new("Elevator"));
+    lazy_update.insert(elevator_entity, elevator);
+    lazy_update.insert(elevator_entity, Collidee::default());
+    lazy_update.insert(elevator_entity, transform);
+    lazy_update.insert(
+        elevator_entity,
+        Floor::new(vec![id], floors_overlapped.clone()),
+    );
 
     // loop through each floor
     for i in (min_floor..=max_floor).rev() {
@@ -94,12 +105,14 @@ pub fn load_elevator(
             sprite_number: 3,
         };
         // load the elevator shaft
-        world
-            .create_entity()
-            .named("ElevatorShaft")
-            .with(shaft_sprite)
-            .with(shaft_transform)
-            .build();
+        let shaft_entity: Entity = entities.create();
+        lazy_update.insert(shaft_entity, Named::new("ElevatorShaft"));
+        lazy_update.insert(shaft_entity, shaft_sprite);
+        lazy_update.insert(shaft_entity, shaft_transform);
+        lazy_update.insert(
+            shaft_entity,
+            Floor::new(vec![id], floors_overlapped.clone()),
+        );
 
         let mut overlay_transform = Transform::default();
         overlay_transform.set_translation_xyz(top_left.x, y, ELEVATOR_Z + 0.1);
@@ -107,14 +120,14 @@ pub fn load_elevator(
             sprite_sheet: sprite_sheet_handle.clone(),
             sprite_number: if i == min_floor { 6 } else { 4 },
         };
-        // load the elevator shaft
-        world
-            .create_entity()
-            .named("Overlay")
-            .with(overlay_sprite)
-            .with(overlay_transform)
-            .build();
-        
+        let overlay_entity = entities.create();
+        lazy_update.insert(overlay_entity, Named::new("Overlay"));
+        lazy_update.insert(overlay_entity, overlay_sprite);
+        lazy_update.insert(overlay_entity, overlay_transform);
+        lazy_update.insert(
+            overlay_entity,
+            Floor::new(vec![id], floors_overlapped.clone()),
+        );
     }
 
     let inside = ElevatorComponent::new(
@@ -126,11 +139,14 @@ pub fn load_elevator(
         false,
     );
     create_elevator_component(
-        world,
+        id,
+        entities,
+        lazy_update,
         elevator_entity,
         top_left,
         inside,
         sprite_sheet_handle.clone(),
+        floors_overlapped.clone(),
     );
 
     let bottom = ElevatorComponent::new(
@@ -142,11 +158,14 @@ pub fn load_elevator(
         true,
     );
     create_elevator_component(
-        world,
+        id,
+        entities,
+        lazy_update,
         elevator_entity,
         top_left,
         bottom,
         sprite_sheet_handle.clone(),
+        floors_overlapped.clone(),
     );
 
     let top = ElevatorComponent::new(
@@ -157,5 +176,14 @@ pub fn load_elevator(
         Vector3::new(0., ELEVATOR_OFFSET, 0.),
         true,
     );
-    create_elevator_component(world, elevator_entity, top_left, top, sprite_sheet_handle);
+    create_elevator_component(
+        id,
+        entities,
+        lazy_update,
+        elevator_entity,
+        top_left,
+        top,
+        sprite_sheet_handle,
+        floors_overlapped.clone(),
+    );
 }

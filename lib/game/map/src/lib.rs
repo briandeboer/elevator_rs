@@ -1,5 +1,6 @@
 mod map;
 mod tileset;
 
-pub use self::map::Map;
+pub mod systems;
+pub use self::map::{Layer, Map};
 pub use self::tileset::Tileset;

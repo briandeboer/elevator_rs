@@ -42,7 +42,7 @@
 15
 </data>
  </layer>
- <objectgroup id="2" name="collision" visible="0" locked="1">
+ <objectgroup id="2" name="collision">
   <object id="1" name="floor" x="36" y="185" width="76" height="3"/>
   <object id="2" name="wall" x="32" y="140" width="4" height="480"/>
   <object id="3" name="shaft" x="112" y="185" width="24" height="3"/>
@@ -87,9 +87,9 @@
   <object id="42" name="floor" x="3" y="665" width="109" height="3"/>
   <object id="43" name="shaft" x="112" y="665" width="24" height="3"/>
   <object id="44" name="floor" x="136" y="665" width="116" height="3"/>
-  <object id="45" name="floor" x="3" y="713" width="249" height="3"/>
+  <object id="45" name="floor" x="24" y="713" width="228" height="3"/>
   <object id="46" name="wall" x="172" y="620" width="4" height="45"/>
-  <object id="47" name="floor" x="3" y="761" width="249" height="3"/>
+  <object id="47" name="floor" x="25" y="761" width="227" height="3"/>
   <object id="48" name="wall" x="122" y="716" width="4" height="45"/>
   <object id="49" name="floor" x="3" y="809" width="109" height="3"/>
   <object id="50" name="shaft" x="112" y="809" width="24" height="3"/>
@@ -197,7 +197,7 @@
   <object id="152" name="floor" x="3" y="1577" width="109" height="3"/>
   <object id="153" name="shaft" x="112" y="1577" width="24" height="3"/>
  </objectgroup>
- <objectgroup id="3" name="floors" visible="0" locked="1">
+ <objectgroup id="3" name="floors" visible="0">
   <object id="154" name="floor_30" x="0" y="144" width="256" height="48">
    <properties>
     <property name="floor" type="float" value="30"/>
@@ -359,7 +359,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="4" name="doors">
+ <objectgroup id="4" name="doors" visible="0">
   <object id="186" name="blue_left" x="56" y="156" width="16" height="28"/>
   <object id="187" name="blue_left" x="80" y="156" width="16" height="28"/>
   <object id="188" name="blue_right" x="176" y="156" width="16" height="28"/>
@@ -479,7 +479,7 @@
   <object id="302" name="blue_left" x="24" y="1548" width="16" height="28"/>
   <object id="303" name="blue_right" x="208" y="1548" width="16" height="28"/>
  </objectgroup>
- <objectgroup id="5" name="elevators">
+ <objectgroup id="5" name="elevators" visible="0">
   <object id="304" x="112" y="92" width="24" height="624">
    <properties>
     <property name="max_floor" type="float" value="31"/>

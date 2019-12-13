@@ -11,5 +11,6 @@ amethyst = { version = "0.13.2", features = ["metal", "nightly", "json"] }
 objc = "=0.2.6"
 serde = "1.0.102"
 
+floors = { path = "../../core/floors" }
 hierarchy = { path = "../../core/hierarchy" }
 physics = { path = "../../core/physics" }

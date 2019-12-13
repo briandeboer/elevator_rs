@@ -23,7 +23,7 @@ use animation::{
 use door::systems::{DoorAnimationSystem, DoorEntryCollisionSystem, DoorTransformationSystem};
 use elevator::systems::{ElevatorControlSystem, ElevatorTransformationSystem};
 use fps::systems::UiFpsSystem;
-use map::{Map, Tileset};
+use map::{systems::MapRenderSystem, Map, Tileset};
 use physics::systems::*;
 use player::systems::*;
 
@@ -60,6 +60,7 @@ fn main() -> amethyst::Result<()> {
         .with(UiFpsSystem::default(), "ui_fps_system", &[])
         .with(Processor::<Tileset>::new(), "tileset_processor", &[])
         .with(Processor::<Map>::new(), "map_processor", &[])
+        .with(MapRenderSystem, "map_render_system", &[])
         .with(PlayerControlsSystem, "player_controls_system", &[])
         .with(ElevatorControlSystem, "elevator_control_system", &[])
         .with(
