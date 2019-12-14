@@ -3,20 +3,20 @@ use amethyst::{
     ecs::{Join, ReadStorage, System, WriteStorage},
 };
 
-use crate::components::{Player, PlayerState};
+use crate::components::{Person, PersonState};
 use physics::components::{Collider, Direction, Motion};
 
 const GRAVITY_AMOUNT: f32 = -5.;
 const FRICTION_AMOUNT: f32 = -12.0;
 const WALK_ACCELERATION: f32 = 16.0;
 
-pub struct PlayerKinematicsSystem;
+pub struct PersonKinematicsSystem;
 
-impl<'s> System<'s> for PlayerKinematicsSystem {
+impl<'s> System<'s> for PersonKinematicsSystem {
     type SystemData = (
         WriteStorage<'s, Collider>,
         ReadStorage<'s, Direction>,
-        ReadStorage<'s, Player>,
+        ReadStorage<'s, Person>,
         WriteStorage<'s, Motion>,
     );
 
@@ -28,7 +28,7 @@ impl<'s> System<'s> for PlayerKinematicsSystem {
         {
             let mut acceleration = Vector2::new(0., 0.);
             match player.state {
-                PlayerState::Idling | PlayerState::Ducking => {
+                PersonState::Idling | PersonState::Ducking => {
                     // how much skidding happens
                     let acceleration_x = if motion.velocity.x != 0. && collider.on_ground {
                         // slow down on ground when he stops
@@ -41,10 +41,10 @@ impl<'s> System<'s> for PlayerKinematicsSystem {
                     };
                     acceleration = Vector2::new(acceleration_x, GRAVITY_AMOUNT);
                 }
-                PlayerState::Walking => {
+                PersonState::Walking => {
                     acceleration = Vector2::new(WALK_ACCELERATION, GRAVITY_AMOUNT);
                 }
-                PlayerState::Jumping => {
+                PersonState::Jumping => {
                     if collider.on_ground {
                         motion.velocity.y = if collider.on_elevator {
                             // for now this is a bit hacky to make sure the player doesn't overjump
@@ -66,14 +66,14 @@ impl<'s> System<'s> for PlayerKinematicsSystem {
                     };
                     acceleration = Vector2::new(acceleration_x, GRAVITY_AMOUNT);
                 }
-                PlayerState::Hopping => {
+                PersonState::Hopping => {
                     if collider.on_ground {
                         motion.velocity.y = player.max_jump_velocity / 2.;
                         collider.on_ground = false;
                     }
                     acceleration = Vector2::new(WALK_ACCELERATION, GRAVITY_AMOUNT);
                 }
-                // PlayerState::Dying => {
+                // PersonState::Dying => {
                 //     if collider.on_ground {
                 //         motion.velocity.x = 0.;
                 //         motion.velocity.y = 8.;
@@ -86,7 +86,7 @@ impl<'s> System<'s> for PlayerKinematicsSystem {
             motion.update_velocity(acceleration, dir, 0., player.max_ground_speed);
             // move faster downward when on the elevator so that he doesn't bounce due to gravity
             if collider.on_elevator
-                && (player.state == PlayerState::Idling || player.state == PlayerState::Walking)
+                && (player.state == PersonState::Idling || player.state == PersonState::Walking)
             {
                 motion.velocity.y = -40.;
             }

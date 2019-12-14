@@ -25,12 +25,13 @@ impl SimpleState for GameState {
         self.progress_counter = Some(load_assets(
             world,
             vec![
-                AssetType::Player,
-                AssetType::Guns,
                 AssetType::Bullet,
                 AssetType::BulletImpact,
                 AssetType::Door,
                 AssetType::Elevator,
+                AssetType::Enemy,
+                AssetType::Guns,
+                AssetType::Player,
             ],
         ));
 
@@ -93,7 +94,6 @@ impl SimpleState for GameState {
                 };
                 println!("### Loading player ###");
                 load_player(data.world, player_prefab_handle, guns_prefab_handle);
-
                 self.progress_counter = None;
             } else {
                 println!(

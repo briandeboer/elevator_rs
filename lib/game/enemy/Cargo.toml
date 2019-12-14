@@ -1,5 +1,5 @@
 [package]
-name = "map"
+name = "enemy"
 version = "0.1.0"
 authors = ["Brian DeBoer <bdeboer@noreply.com>"]
 edition = "2018"
@@ -10,13 +10,10 @@ edition = "2018"
 amethyst = { version = "0.13.2", features = ["metal", "nightly", "json"] }
 objc = "=0.2.6"
 serde = "1.0.102"
-array_tool = "1.0.3"
 
 animation = { path = "../../core/animation" }
 asset = { path = "../../core/asset" }
-door = { path = "../door" }
-elevator = { path = "../elevator" }
-floors = { path = "../../core/floors" }
-person = { path = "../../core/person" }
+hierarchy = { path = "../../core/hierarchy" }
 physics = { path = "../../core/physics" }
+person = { path = "../../core/person" }
 player = { path = "../player" }

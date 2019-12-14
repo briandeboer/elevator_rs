@@ -1,7 +1,7 @@
 use amethyst::ecs::{Entities, Join, LazyUpdate, ReadExpect, ReadStorage, System, WriteStorage};
 
 use crate::bullet::spawn_bullet;
-use crate::components::{Gun, GunState, Player};
+use crate::components::{Gun, GunState, Person};
 use asset::{AssetType, SpriteSheetList};
 use hierarchy::components::Child;
 use physics::components::Direction;
@@ -13,27 +13,27 @@ impl<'s> System<'s> for ShootSystem {
         Entities<'s>,
         WriteStorage<'s, Gun>,
         ReadStorage<'s, Child>,
-        ReadStorage<'s, Player>,
+        ReadStorage<'s, Person>,
         ReadStorage<'s, Direction>,
         ReadExpect<'s, SpriteSheetList>,
         ReadExpect<'s, LazyUpdate>,
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (entities, mut guns, children, players, directions, sprite_sheet_list, lazy_update) =
+        let (entities, mut guns, children, persons, directions, sprite_sheet_list, lazy_update) =
             data;
 
         for (gun_entity, gun, child, direction) in
             (&entities, &mut guns, &children, &directions).join()
         {
-            for (entity, player) in (&entities, &players).join() {
+            for (entity, person) in (&entities, &persons).join() {
                 let parent = child.parent;
                 if parent == entity
                     && !gun.spawned_bullet
                     && (gun.state == GunState::Shooting || gun.state == GunState::JumpShooting)
                 {
-                    let pos_x = player.position.x;
-                    let pos_y = player.position.y;
+                    let pos_x = person.position.x;
+                    let pos_y = person.position.y;
 
                     let bullet_sprite_sheet_handle =
                         { sprite_sheet_list.get(AssetType::Bullet).unwrap().clone() };

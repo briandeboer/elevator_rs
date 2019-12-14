@@ -21,12 +21,16 @@
 - [x] don't draw offscreen collision layers, doors, lamps, elevators
 - [x] remove offscreen collision layers, doors, lamps, elevators
 - [x] draw all elevators
+- [x] separate out "person" behavior to be re-used with enemy
+- [ ] spawn bad guys system
+- [ ] bad guy AI
+- [ ] scoring
+- [ ] don't move elevators unless user is inside (ie. can't control from the top)
+- [ ] add sounds
 - [ ] escalator logic and movement
 - [ ] animate the user going into the room and coming out
 - [ ] mark room as used when user comes out
 - [ ] create a system for knowing when the player is near an elevator (or on an elevator)
-- [ ] don't move elevators unless user is inside (ie. can't control from the top)
-- [ ] add bad guys and AI
 - [ ] door entry draws on the wrong side depending on the direction
 
 ## Medium priority
@@ -44,9 +48,7 @@
 - [ ] increase user velocity when riding up elevator so jump is additional
 - [ ] draw floor numbers
 - [ ] animate intro
-- [ ] scoring
 - [ ] Ducking when on top of elevator
-- [ ] add sounds
 - [ ] add music
 - [ ] adjust door entry mechanism so he doesn't open it too early
 - [ ] two player game

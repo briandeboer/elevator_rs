@@ -7,9 +7,10 @@ use amethyst::{
     prelude::Builder,
 };
 
-use crate::components::{Gun, Player};
+use crate::components::Player;
 use animation::components::{Animation, AnimationId, AnimationPrefabData};
 use hierarchy::components::Child;
+use person::components::{Gun, Person};
 use physics::components::{Collidee, Collider, Direction, Directions, Motion, Proximity};
 
 /// Initialises one player in the middle-ish space
@@ -41,6 +42,7 @@ pub fn load_player(
     let player = world
         .create_entity()
         .named("Player")
+        .with(Person::new())
         .with(Player::new())
         .with(collider)
         .with(Collidee::default())
@@ -78,8 +80,8 @@ pub fn load_player(
         .with(Animation::new(
             AnimationId::Holster,
             vec![
-                AnimationId::PlayerShoot,
-                AnimationId::PlayerJumpShoot,
+                AnimationId::PersonShoot,
+                AnimationId::PersonJumpShoot,
                 AnimationId::Holster,
             ],
         ))

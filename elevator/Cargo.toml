@@ -13,7 +13,9 @@ asset = { path = "../lib/core/asset" }
 camera = { path = "../lib/core/camera" }
 door = { path = "../lib/game/door" }
 elevator = { path = "../lib/game/elevator" }
+enemy = { path = "../lib/game/enemy" }
 fps = { path = "../lib/core/fps" }
 map = { path = "../lib/game/map" }
+person = { path = "../lib/core/person" }
 physics = { path = "../lib/core/physics" }
 player = { path = "../lib/game/player" }

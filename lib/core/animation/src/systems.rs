@@ -34,7 +34,7 @@ impl<'s> System<'s> for AnimationControlSystem {
                     // This ensures they are re-added after a call to abort().
                     if !animation_control_set.has_animation(animation_id) {
                         let end = match animation_id {
-                            AnimationId::PlayerShoot
+                            AnimationId::PersonShoot
                             | AnimationId::Idle
                             | AnimationId::BulletImpact => EndControl::Stay,
                             _ => EndControl::Loop(None),

@@ -5,15 +5,17 @@ use amethyst::{
 
 use crate::components::{Door, DoorEntry, DoorState};
 use hierarchy::components::Child;
+use person::components::{Person, PersonState};
 use physics::components::{Collider, Direction};
-use player::components::{Player, PlayerState};
+use player::components::Player;
 
 pub struct DoorEntryCollisionSystem;
 
 impl<'s> System<'s> for DoorEntryCollisionSystem {
     type SystemData = (
         Entities<'s>,
-        WriteStorage<'s, Player>,
+        ReadStorage<'s, Player>,
+        WriteStorage<'s, Person>,
         ReadStorage<'s, Child>,
         ReadStorage<'s, DoorEntry>,
         WriteStorage<'s, Door>,
@@ -25,7 +27,8 @@ impl<'s> System<'s> for DoorEntryCollisionSystem {
     fn run(&mut self, data: Self::SystemData) {
         let (
             entities,
-            mut players,
+            players,
+            mut persons,
             children,
             door_entries,
             mut doors,
@@ -35,10 +38,17 @@ impl<'s> System<'s> for DoorEntryCollisionSystem {
         ) = data;
 
         // check if a player is facing the same direction and is idle
-        for (_, player, player_collider, player_direction, _name) in
-            (&entities, &mut players, &colliders, &directions, &names).join()
+        for (_, person, _player, player_collider, player_direction, _name) in (
+            &entities,
+            &mut persons,
+            &players,
+            &colliders,
+            &directions,
+            &names,
+        )
+            .join()
         {
-            if player.state == PlayerState::Idling {
+            if person.state == PersonState::Idling {
                 for (_, child, door_entry_collider, _door_entry, door_direction) in
                     (&entities, &children, &colliders, &door_entries, &directions).join()
                 {
@@ -52,7 +62,7 @@ impl<'s> System<'s> for DoorEntryCollisionSystem {
                                 if door.state == DoorState::Closed {
                                     println!("Opening door...");
                                     door.state = DoorState::Open;
-                                    player.state = PlayerState::EnteringRoom;
+                                    person.state = PersonState::EnteringRoom;
                                 }
                                 break;
                             }

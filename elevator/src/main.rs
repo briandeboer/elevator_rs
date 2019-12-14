@@ -24,6 +24,7 @@ use door::systems::{DoorAnimationSystem, DoorEntryCollisionSystem, DoorTransform
 use elevator::systems::{ElevatorControlSystem, ElevatorTransformationSystem};
 use fps::systems::UiFpsSystem;
 use map::{systems::MapRenderSystem, Map, Tileset};
+use person::systems::*;
 use physics::systems::*;
 use player::systems::*;
 
@@ -62,16 +63,17 @@ fn main() -> amethyst::Result<()> {
         .with(Processor::<Map>::new(), "map_processor", &[])
         .with(MapRenderSystem, "map_render_system", &[])
         .with(PlayerControlsSystem, "player_controls_system", &[])
+        .with(PlayerGunControlsSystem, "player_gun_controls_system", &[])
         .with(ElevatorControlSystem, "elevator_control_system", &[])
         .with(
-            PlayerKinematicsSystem,
-            "player_kinematics_system",
+            PersonKinematicsSystem,
+            "person_kinematics_system",
             &["player_controls_system"],
         )
         .with(
             KinematicsSystem,
             "kinematics_system",
-            &["player_kinematics_system"],
+            &["person_kinematics_system"],
         )
         .with(ShootSystem, "shoot_system", &["kinematics_system"])
         // PincerAi
@@ -96,21 +98,21 @@ fn main() -> amethyst::Result<()> {
             &[],
         )
         .with(
-            PlayerTransformationSystem,
-            "player_transformation_system",
+            PersonTransformationSystem,
+            "person_transformation_system",
             &["elevator_transformation_system"],
         )
         .with(
             CameraTransformationSystem,
             "camera_transformation_system",
-            &["player_transformation_system"],
+            &["person_transformation_system"],
         )
         .with(
             ProximitySystem,
             "proximity_system",
             &[
                 "elevator_transformation_system",
-                "player_transformation_system",
+                "person_transformation_system",
             ],
         )
         .with(
@@ -118,7 +120,7 @@ fn main() -> amethyst::Result<()> {
             "gun_transformation_system",
             &[
                 "default_transformation_system",
-                "player_transformation_system",
+                "person_transformation_system",
             ],
         )
         // BulletTransformation
@@ -128,18 +130,18 @@ fn main() -> amethyst::Result<()> {
             "bullet_impact_animation_system",
             &[],
         )
-        .with(PlayerAnimationSystem, "player_animation_system", &[])
+        .with(PersonAnimationSystem, "person_animation_system", &[])
         .with(DoorAnimationSystem, "door_animation_system", &[])
         .with(GunAnimationSystem, "gun_animation_system", &[])
         .with(
             AnimationControlSystem,
             "animation_control_system",
-            &["player_animation_system", "gun_animation_system"],
+            &["person_animation_system", "gun_animation_system"],
         )
         .with(
             DirectionSystem,
             "direction_system",
-            &["player_transformation_system"], //"gun_transformations_system"],
+            &["person_transformation_system"], //"gun_transformations_system"],
         )
         .with_bundle(
             RenderingBundle::<DefaultBackend>::new()

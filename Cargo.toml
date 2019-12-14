@@ -6,9 +6,11 @@ members = [
   "lib/core/camera",
   "lib/core/floors",
   "lib/core/fps",
+  "lib/core/person",
   "lib/core/physics",
   "lib/game/door",
   "lib/game/elevator",
+  "lib/game/enemy",
   "lib/game/player",
   "lib/game/map",
 ]

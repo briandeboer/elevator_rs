@@ -949,6 +949,7 @@ dependencies = [
  "floors 0.1.0",
  "hierarchy 0.1.0",
  "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "person 0.1.0",
  "physics 0.1.0",
  "player 0.1.0",
  "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1001,9 +1002,26 @@ dependencies = [
  "camera 0.1.0",
  "door 0.1.0",
  "elevator 0.1.0",
+ "enemy 0.1.0",
  "fps 0.1.0",
  "map 0.1.0",
  "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "person 0.1.0",
+ "physics 0.1.0",
+ "player 0.1.0",
+ "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "enemy"
+version = "0.1.0"
+dependencies = [
+ "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "animation 0.1.0",
+ "asset 0.1.0",
+ "hierarchy 0.1.0",
+ "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "person 0.1.0",
  "physics 0.1.0",
  "player 0.1.0",
  "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1678,6 +1696,7 @@ dependencies = [
  "elevator 0.1.0",
  "floors 0.1.0",
  "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "person 0.1.0",
  "physics 0.1.0",
  "player 0.1.0",
  "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -2142,6 +2161,19 @@ version = "2.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
+name = "person"
+version = "0.1.0"
+dependencies = [
+ "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "animation 0.1.0",
+ "asset 0.1.0",
+ "hierarchy 0.1.0",
+ "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "physics 0.1.0",
+ "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "phf"
 version = "0.7.24"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2198,6 +2230,7 @@ dependencies = [
  "asset 0.1.0",
  "hierarchy 0.1.0",
  "objc 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "person 0.1.0",
  "physics 0.1.0",
  "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
 ]

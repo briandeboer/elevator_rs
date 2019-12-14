@@ -4,7 +4,7 @@ use amethyst::{
     renderer::SpriteRender,
 };
 
-use crate::components::{BulletImpact, Gun, GunState, Player, PlayerState};
+use crate::components::{BulletImpact, Gun, GunState, Person, PersonState};
 use animation::components::{Animation, AnimationId};
 
 pub struct BulletImpactAnimationSystem;
@@ -68,8 +68,8 @@ impl<'s> System<'s> for GunAnimationSystem {
             .join()
         {
             let new_animation_id = match gun.state {
-                GunState::Shooting => AnimationId::PlayerShoot,
-                GunState::JumpShooting => AnimationId::PlayerJumpShoot,
+                GunState::Shooting => AnimationId::PersonShoot,
+                GunState::JumpShooting => AnimationId::PersonJumpShoot,
                 _ => AnimationId::Holster,
             };
 
@@ -86,34 +86,34 @@ impl<'s> System<'s> for GunAnimationSystem {
 }
 
 #[derive(Default)]
-pub struct PlayerAnimationSystem;
+pub struct PersonAnimationSystem;
 
-impl<'s> System<'s> for PlayerAnimationSystem {
+impl<'s> System<'s> for PersonAnimationSystem {
     type SystemData = (
         Entities<'s>,
-        ReadStorage<'s, Player>,
+        ReadStorage<'s, Person>,
         WriteStorage<'s, Animation>,
         WriteStorage<'s, AnimationControlSet<AnimationId, SpriteRender>>,
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (entities, players, mut animations, mut animation_control_sets) = data;
+        let (entities, persons, mut animations, mut animation_control_sets) = data;
 
-        for (_, player, mut animation, animation_control_set) in (
+        for (_, person, mut animation, animation_control_set) in (
             &entities,
-            &players,
+            &persons,
             &mut animations,
             &mut animation_control_sets,
         )
             .join()
         {
-            let new_animation_id = match player.state {
-                PlayerState::Hopping => AnimationId::Hop,
-                PlayerState::Jumping => AnimationId::Jump,
-                PlayerState::Walking => AnimationId::Walk,
-                PlayerState::Shooting => AnimationId::Shoot,
-                PlayerState::Dying => AnimationId::Die,
-                PlayerState::Ducking => AnimationId::Duck,
+            let new_animation_id = match person.state {
+                PersonState::Hopping => AnimationId::Hop,
+                PersonState::Jumping => AnimationId::Jump,
+                PersonState::Walking => AnimationId::Walk,
+                PersonState::Shooting => AnimationId::Shoot,
+                PersonState::Dying => AnimationId::Die,
+                PersonState::Ducking => AnimationId::Duck,
                 _ => AnimationId::Idle,
             };
 

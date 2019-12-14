@@ -9,7 +9,7 @@ Prefab(
                     // SpriteSheetPrefab with index 0
                     sheet: Sheet(
                         // TexturePrefab
-                        texture: File("texture/player.png", (
+                        texture: File("texture/enemy.png", (
                             "IMAGE", (
                                 sampler_info: (
                                     min_filter: Nearest,
@@ -29,162 +29,114 @@ Prefab(
                         )),
                         sprites: [
                             List((
-                              texture_width: 288,
-                              texture_height: 24,
-                              sprites: [
-                                  (
-                                      // 0: 00.png
-                                      x: 0,
-                                      y: 0,
-                                      width: 10,
-                                      height: 24,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 1: 01.png
-                                      x: 16,
-                                      y: 0,
-                                      width: 12,
-                                      height: 24,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 2: 02.png
-                                      x: 32,
-                                      y: 0,
-                                      width: 11,
-                                      height: 15,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 3: 03.png
-                                      x: 48,
-                                      y: 0,
-                                      width: 12,
-                                      height: 22,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 4: 04.png
-                                      x: 64,
-                                      y: 0,
-                                      width: 13,
-                                      height: 16,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 5: 05.png
-                                      x: 80,
-                                      y: 0,
-                                      width: 9,
-                                      height: 16,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 6: 06.png
-                                      x: 96,
-                                      y: 0,
-                                      width: 10,
-                                      height: 15,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 7: 07.png
-                                      x: 112,
-                                      y: 0,
-                                      width: 16,
-                                      height: 16,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 8: 08.png
-                                      x: 128,
-                                      y: 0,
-                                      width: 16,
-                                      height: 13,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 9: 09.png
-                                      x: 144,
-                                      y: 0,
-                                      width: 15,
-                                      height: 15,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 10: 10.png
-                                      x: 160,
-                                      y: 0,
-                                      width: 16,
-                                      height: 16,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 11: 11.png
-                                      x: 176,
-                                      y: 0,
-                                      width: 12,
-                                      height: 24,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 12: 12.png
-                                      x: 192,
-                                      y: 0,
-                                      width: 12,
-                                      height: 24,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 13: 13.png
-                                      x: 208,
-                                      y: 0,
-                                      width: 11,
-                                      height: 15,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 14: 14.png
-                                      x: 224,
-                                      y: 0,
-                                      width: 13,
-                                      height: 22,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 15: 15.png
-                                      x: 240,
-                                      y: 0,
-                                      width: 15,
-                                      height: 16,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 16: 16.png
-                                      x: 256,
-                                      y: 0,
-                                      width: 16,
-                                      height: 9,
-                                      offsets: (0, 0),
-                                  ),
-                                  (
-                                      // 17: 17.png
-                                      x: 272,
-                                      y: 0,
-                                      width: 16,
-                                      height: 9,
-                                      offsets: (0, 0),
-                                  )
-                              ]
-                          )),
+                                texture_width: 228,
+                                texture_height: 24,
+                                sprites: [
+                                    (
+                                        // 0: 0.png
+                                        x: 0,
+                                        y: 0,
+                                        width: 9,
+                                        height: 24,
+                                        offsets: (0, 0),
+                                    ),
+                                    (
+                                        // 1: 1.png
+                                        x: 19,
+                                        y: 0,
+                                        width: 11,
+                                        height: 24,
+                                        offsets: (0, 0),
+                                    ),
+                                    (
+                                        // 2: 2.png
+                                        x: 38,
+                                        y: 0,
+                                        width: 11,
+                                        height: 16,
+                                        offsets: (0, 0),
+                                    ),
+                                    (
+                                        // 3: 3.png
+                                        x: 57,
+                                        y: 0,
+                                        width: 12,
+                                        height: 22,
+                                        offsets: (0, 0),
+                                    ),
+                                    (
+                                        // 4: 4.png
+                                        x: 76,
+                                        y: 0,
+                                        width: 13,
+                                        height: 16,
+                                        offsets: (0, 0),
+                                    ),
+                                    (
+                                        // 5: 5.png
+                                        x: 95,
+                                        y: 0,
+                                        width: 8,
+                                        height: 16,
+                                        offsets: (0, 0),
+                                    ),
+                                    (
+                                        // 6: 6.png
+                                        x: 114,
+                                        y: 0,
+                                        width: 16,
+                                        height: 16,
+                                        offsets: (0, 0),
+                                    ),
+                                    (
+                                        // 7: 7.png
+                                        x: 133,
+                                        y: 0,
+                                        width: 16,
+                                        height: 13,
+                                        offsets: (0, 0),
+                                    ),
+                                    (
+                                        // 8: 8.png
+                                        x: 152,
+                                        y: 0,
+                                        width: 13,
+                                        height: 24,
+                                        offsets: (0, 0),
+                                    ),
+                                    (
+                                        // 9: 9.png
+                                        x: 171,
+                                        y: 0,
+                                        width: 16,
+                                        height: 24,
+                                        offsets: (0, 0),
+                                    ),
+                                    (
+                                        // 10: 10.png
+                                        x: 190,
+                                        y: 0,
+                                        width: 15,
+                                        height: 16,
+                                        offsets: (0, 0),
+                                    ),
+                                    (
+                                        // 11: 11.png
+                                        x: 209,
+                                        y: 0,
+                                        width: 19,
+                                        height: 23,
+                                        offsets: (0, 0),
+                                    )
+                                ]
+                            )),
                         ],
                         // optional
-                        name: "player",
+                        name: "enemy",
                     ),
                     // SpriteRenderPrefab
                     render: (
-                        sheet: "player",
+                        sheet: "enemy",
                         sprite_number: 0,
                     ),
                 ),
@@ -202,9 +154,9 @@ Prefab(
                                         SpriteIndex,
                                         (
                                             // Time of key frames
-                                            input: [0.0, 0.1, 0.2, 0.3],
+                                            input: [0.0, 0.1, 1.0],
                                             // Sprite indexes from SpriteSheet for key frames
-                                            output: [0, 1, 2, 3],
+                                            output: [8, 9, 10],
                                             // Sprites can only ever be animated with Step
                                             function: Step,
                                         ),

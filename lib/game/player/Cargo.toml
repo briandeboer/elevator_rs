@@ -14,4 +14,5 @@ serde = "1.0.102"
 animation = { path = "../../core/animation" }
 asset = { path = "../../core/asset" }
 hierarchy = { path = "../../core/hierarchy" }
+person = { path = "../../core/person" }
 physics = { path = "../../core/physics" }

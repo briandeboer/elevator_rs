@@ -26,8 +26,8 @@ pub enum AnimationId {
     Shoot,
     Walk,
     // gun
-    PlayerShoot,
-    PlayerJumpShoot,
+    PersonShoot,
+    PersonJumpShoot,
     Holster, // hidden
     // doors
     DoorEntry,
