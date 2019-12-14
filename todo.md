@@ -16,24 +16,29 @@
 - [x] render the overlays separately to put at a higher z
 - [x] player falls off the elevator when going up in elevator
 - [x] player still bounces on elevator
-- [ ] don't "overjump" when elevator is going up
+- [x] don't "overjump" when elevator is going up
 - [x] use a resource to keep track of which levels are drawn
 - [x] don't draw offscreen collision layers, doors, lamps, elevators
 - [x] remove offscreen collision layers, doors, lamps, elevators
+- [x] draw all elevators
 - [ ] escalator logic and movement
 - [ ] animate the user going into the room and coming out
 - [ ] mark room as used when user comes out
 - [ ] create a system for knowing when the player is near an elevator (or on an elevator)
 - [ ] don't move elevators unless user is inside (ie. can't control from the top)
 - [ ] add bad guys and AI
+- [ ] door entry draws on the wrong side depending on the direction
 
 ## Medium priority
 - [x] fix gun transformations so that it looks correct
-- [x] fix elevator so that it waits 
+- [x] fix elevator so that it waits
+- [ ] elevators can go above their boundaries when controlling (hold up arrow key) - only some elevators
 - [ ] draw lamps above doors as part of door rendering
 - [ ] lamps as sprites, ie. falling and lights out
 - [ ] draw elevator cable
 - [ ] draw tiles only when needed as well (remove offscreen)
+- [ ] draw properly colored elevator overlay bottoms and tops depending on color or all the way at the top
+- [ ] still not always 100% accurate with crossing between elevator and floor
 
 ## Low priority
 - [ ] increase user velocity when riding up elevator so jump is additional

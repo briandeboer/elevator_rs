@@ -41,6 +41,7 @@ pub struct Player {
     pub max_ground_speed: f32,
     pub max_jump_velocity: f32,
     pub position: Vector2<f32>,
+    pub ride_velocity: Vector2<f32>,
 }
 
 impl Default for Player {
@@ -62,11 +63,17 @@ impl Player {
             max_ground_speed: 36.,
             max_jump_velocity: 110.,
             position: Vector2::new(0., 0.),
+            ride_velocity: Vector2::new(0., 0.),
         }
     }
 
     pub fn update_position(&mut self, x: f32, y: f32) {
         self.position.x = x;
         self.position.y = y;
+    }
+
+    pub fn update_ride_velocity(&mut self, x: f32, y: f32) {
+        self.ride_velocity.x = x;
+        self.ride_velocity.y = y;
     }
 }

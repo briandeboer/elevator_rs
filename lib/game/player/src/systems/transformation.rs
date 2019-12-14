@@ -86,9 +86,11 @@ impl<'s> System<'s> for PlayerTransformationSystem {
                 if collidee_vertical.name == "ElevatorBottom"
                     || collidee_vertical.name == "ElevatorTop"
                 {
+                    player.update_ride_velocity(0., collidee_vertical.collided_with_velocity);
                     collider.on_elevator = true;
                 }
             } else {
+                player.update_ride_velocity(0., 0.);
                 collider.on_elevator = false;
             }
 

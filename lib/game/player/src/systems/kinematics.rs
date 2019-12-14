@@ -6,7 +6,7 @@ use amethyst::{
 use crate::components::{Player, PlayerState};
 use physics::components::{Collider, Direction, Motion};
 
-const GRAVITY_AMOUNT: f32 = -6.;
+const GRAVITY_AMOUNT: f32 = -5.;
 const FRICTION_AMOUNT: f32 = -12.0;
 const WALK_ACCELERATION: f32 = 16.0;
 
@@ -46,7 +46,16 @@ impl<'s> System<'s> for PlayerKinematicsSystem {
                 }
                 PlayerState::Jumping => {
                     if collider.on_ground {
-                        motion.velocity.y = player.max_jump_velocity;
+                        motion.velocity.y = if collider.on_elevator {
+                            // for now this is a bit hacky to make sure the player doesn't overjump
+                            if player.ride_velocity.y > 0. {
+                                player.max_jump_velocity + player.ride_velocity.y + 5.
+                            } else {
+                                player.max_jump_velocity + player.ride_velocity.y / 2. - 10.
+                            }
+                        } else {
+                            player.max_jump_velocity
+                        };
                         collider.on_ground = false;
                     }
                     // how much he slows down when he's in the air and not running

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="-1" width="1" height="34" tilewidth="256" tileheight="48" infinite="0" nextlayerid="6" nextobjectid="307">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="-1" width="1" height="34" tilewidth="256" tileheight="48" infinite="0" nextlayerid="6" nextobjectid="317">
  <editorsettings>
   <export target="floors_1.json" format="json"/>
  </editorsettings>
@@ -479,12 +479,82 @@
   <object id="302" name="blue_left" x="24" y="1548" width="16" height="28"/>
   <object id="303" name="blue_right" x="208" y="1548" width="16" height="28"/>
  </objectgroup>
- <objectgroup id="5" name="elevators" visible="0">
+ <objectgroup id="5" name="elevators">
   <object id="304" x="112" y="92" width="24" height="624">
    <properties>
     <property name="max_floor" type="float" value="31"/>
     <property name="min_floor" type="float" value="19"/>
     <property name="start_floor" type="float" value="31"/>
+   </properties>
+  </object>
+  <object id="307" x="111" y="764" width="24" height="148">
+   <properties>
+    <property name="max_floor" type="float" value="17"/>
+    <property name="min_floor" type="float" value="15"/>
+    <property name="start_floor" type="float" value="17"/>
+   </properties>
+  </object>
+  <object id="308" x="16" y="860" width="24" height="148">
+   <properties>
+    <property name="max_floor" type="float" value="15"/>
+    <property name="min_floor" type="float" value="13"/>
+    <property name="start_floor" type="float" value="15"/>
+   </properties>
+  </object>
+  <object id="309" x="16" y="1052" width="24" height="240">
+   <properties>
+    <property name="max_floor" type="float" value="11"/>
+    <property name="min_floor" type="float" value="7"/>
+    <property name="start_floor" type="float" value="11"/>
+   </properties>
+  </object>
+  <object id="310" x="208" y="956" width="24" height="336">
+   <properties>
+    <property name="max_floor" type="float" value="13"/>
+    <property name="min_floor" type="float" value="7"/>
+    <property name="start_floor" type="float" value="13"/>
+   </properties>
+  </object>
+  <object id="311" x="112" y="1004" width="24" height="144">
+   <properties>
+    <property name="max_floor" type="float" value="12"/>
+    <property name="min_floor" type="float" value="10"/>
+    <property name="start_floor" type="float" value="12"/>
+   </properties>
+  </object>
+  <object id="312" x="80" y="1244" width="24" height="336">
+   <properties>
+    <property name="max_floor" type="float" value="7"/>
+    <property name="min_floor" type="float" value="1"/>
+    <property name="start_floor" type="float" value="7"/>
+   </properties>
+  </object>
+  <object id="313" x="144" y="1244" width="24" height="336">
+   <properties>
+    <property name="max_floor" type="float" value="7"/>
+    <property name="min_floor" type="float" value="1"/>
+    <property name="start_floor" type="float" value="7"/>
+   </properties>
+  </object>
+  <object id="314" x="176" y="1244" width="24" height="336">
+   <properties>
+    <property name="max_floor" type="float" value="7"/>
+    <property name="min_floor" type="float" value="1"/>
+    <property name="start_floor" type="float" value="7"/>
+   </properties>
+  </object>
+  <object id="315" x="48" y="1292" width="24" height="288">
+   <properties>
+    <property name="max_floor" type="float" value="6"/>
+    <property name="min_floor" type="float" value="1"/>
+    <property name="start_floor" type="float" value="6"/>
+   </properties>
+  </object>
+  <object id="316" x="112" y="1340" width="24" height="288">
+   <properties>
+    <property name="max_floor" type="float" value="5"/>
+    <property name="min_floor" type="float" value="0"/>
+    <property name="start_floor" type="float" value="5"/>
    </properties>
   </object>
  </objectgroup>
