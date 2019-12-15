@@ -203,14 +203,25 @@ impl Collidee {
             // As per the current game design, no correction (correction = 0.) is required for this scenario
             // This might have to be changed in future
             self.vertical = Some(CollideeDetails {
-                name,
+                name: name.clone(),
                 collided_with_entity,
                 position: box_b.position,
                 half_size: box_b.half_size,
                 correction: correction.y,
                 velocity: velocity_a.y,
-                collided_with_name,
+                collided_with_name: collided_with_name.clone(),
                 collided_with_velocity: velocity_b.y,
+                is_rideable: collider_b.is_rideable,
+            });
+            self.horizontal = Some(CollideeDetails {
+                name,
+                collided_with_entity,
+                position: box_b.position,
+                half_size: box_b.half_size,
+                correction: correction.x,
+                velocity: velocity_a.x,
+                collided_with_name,
+                collided_with_velocity: velocity_b.x,
                 is_rideable: collider_b.is_rideable,
             });
         } else {
@@ -247,6 +258,7 @@ pub struct Collider {
     pub hit_box_offset_back: f32,
     pub is_collidable: bool,
     pub is_rideable: bool,
+    pub is_person: bool,
     pub allow_proximity: bool,
 }
 
@@ -263,6 +275,7 @@ impl Default for Collider {
             hit_box_offset_back: 0.,
             is_collidable: true,
             is_rideable: false,
+            is_person: false,
             allow_proximity: true,
         }
     }

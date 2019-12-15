@@ -30,7 +30,11 @@ impl<'s> System<'s> for CollisionSystem {
                     let velocity_b = motion_b.velocity;
                     let use_hit_box =
                         (velocity_a.x * velocity_b.x != 0.) || (velocity_a.y * velocity_b.y != 0.);
-                    if entity_a != entity_b && collider_b.is_collidable {
+                    // can't be the same, must be collidable, can't both be people
+                    if entity_a != entity_b
+                        && collider_b.is_collidable
+                        && (!collider_a.is_person || !collider_b.is_person)
+                    {
                         if collider_a.is_overlapping_with(collider_b, use_hit_box) {
                             collidee.set_collidee_details(
                                 name_b.name.to_string(),

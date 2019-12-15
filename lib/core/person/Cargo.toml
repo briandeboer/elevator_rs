@@ -13,5 +13,6 @@ serde = "1.0.102"
 
 animation = { path = "../animation" }
 asset = { path = "../asset" }
+floors = { path = "../floors" }
 hierarchy = { path = "../hierarchy" }
 physics = { path = "../physics" }

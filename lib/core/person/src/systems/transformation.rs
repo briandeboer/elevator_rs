@@ -132,23 +132,23 @@ impl<'s> System<'s> for GunTransformationSystem {
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (entities, guns, children, directions, players, mut transforms) = data;
+        let (entities, guns, children, directions, persons, mut transforms) = data;
 
         // loop through all guns and get the parent entity
         for (_gun, child, direction, transform) in
             (&guns, &children, &directions, &mut transforms).join()
         {
             let parent = child.parent;
-            for (entity, player) in (&entities, &players).join() {
+            for (entity, person) in (&entities, &persons).join() {
                 if entity == parent {
                     if direction.x != direction.default_x {
-                        transform.set_translation_x(player.position.x - child.offset_x);
+                        transform.set_translation_x(person.position.x - child.offset_x);
                     } else {
-                        transform.set_translation_x(player.position.x + child.offset_x);
+                        transform.set_translation_x(person.position.x + child.offset_x);
                     }
-                    transform.set_translation_y(player.position.y + child.offset_y);
+                    transform.set_translation_y(person.position.y + child.offset_y);
 
-                    if player.state == PersonState::EnteringRoom {
+                    if person.state == PersonState::EnteringRoom {
                         transform.set_translation_z(0.);
                     } else {
                         transform.set_translation_z(0.7);

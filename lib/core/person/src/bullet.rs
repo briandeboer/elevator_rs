@@ -15,7 +15,7 @@ use physics::components::{
 };
 
 const SCALE: f32 = 1.0;
-const OFFSET_X: f32 = 11.;
+const OFFSET_X: f32 = 8.;
 const OFFSET_Y: f32 = 3.;
 const BULLET_WIDTH: f32 = 6.;
 const BULLET_HEIGHT: f32 = 3.;

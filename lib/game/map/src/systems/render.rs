@@ -14,7 +14,6 @@ use crate::Map;
 use array_tool::vec::Intersect;
 use asset::{AssetType, PrefabList, SpriteSheetList};
 use floors::{Floor, FloorsDrawn};
-use person::components::Person;
 use player::components::Player;
 
 #[derive(SystemDesc)]
@@ -23,7 +22,6 @@ pub struct MapRenderSystem;
 impl<'s> System<'s> for MapRenderSystem {
     type SystemData = (
         Entities<'s>,
-        ReadStorage<'s, Person>,
         ReadStorage<'s, Player>,
         Read<'s, Map>,
         Write<'s, FloorsDrawn>,
@@ -38,7 +36,6 @@ impl<'s> System<'s> for MapRenderSystem {
     fn run(&mut self, data: Self::SystemData) {
         let (
             entities,
-            persons,
             players,
             map,
             mut floors_drawn,
@@ -52,9 +49,10 @@ impl<'s> System<'s> for MapRenderSystem {
 
         // determine which floor the player is on
         let mut current_floors: Vec<usize> = Vec::new();
-        for (_entity, person, _player) in (&entities, &persons, &players).join() {
+        for (_entity, _player, floor) in (&entities, &players, &floors).join() {
             // TODO: actually calculate here
-            current_floors = floors_drawn.find_floors(person.position, 12., 24.);
+            current_floors = floor.floors_overlapped.clone();
+            break;
         }
 
         // render any floors that are not drawn

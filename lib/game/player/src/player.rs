@@ -9,6 +9,7 @@ use amethyst::{
 
 use crate::components::Player;
 use animation::components::{Animation, AnimationId, AnimationPrefabData};
+use floors::Floor;
 use hierarchy::components::Child;
 use person::components::{Gun, Person};
 use physics::components::{Collidee, Collider, Direction, Directions, Motion, Proximity};
@@ -30,6 +31,7 @@ pub fn load_player(
 
     let mut collider = Collider::new(12., 24.);
     collider.allow_proximity = true;
+    collider.is_person = true;
     let bbox = &mut collider.bounding_box;
     bbox.position = Vector2::new(x + bbox.half_size.x, y - bbox.half_size.y);
     bbox.old_position = bbox.position;
@@ -67,6 +69,7 @@ pub fn load_player(
             Directions::Neutral,
         ))
         .with(Proximity::default())
+        .with(Floor::new(vec![0], vec![30,31]))
         .build();
 
     let mut gun_transform = Transform::default();
@@ -92,5 +95,6 @@ pub fn load_player(
             Directions::Right,
             Directions::Neutral,
         ))
+        .with(Floor::new(vec![0], vec![30,31]))
         .build();
 }

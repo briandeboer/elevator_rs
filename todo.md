@@ -22,7 +22,10 @@
 - [x] remove offscreen collision layers, doors, lamps, elevators
 - [x] draw all elevators
 - [x] separate out "person" behavior to be re-used with enemy
-- [ ] spawn bad guys system
+- [x] spawn bad guys system
+- [x] persons shouldn't collide with persons
+- [x] gun firing needs to move (4. for OFFSET), which causes a collision and falling through floors
+- [x] create a system to calculate what floors a person is on
 - [ ] bad guy AI
 - [ ] scoring
 - [ ] don't move elevators unless user is inside (ie. can't control from the top)

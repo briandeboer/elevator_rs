@@ -31,6 +31,7 @@ pub fn spawn_enemy(
 
     let mut collider = Collider::new(12., 24.);
     collider.allow_proximity = true;
+    collider.is_person = true;
     let bbox = &mut collider.bounding_box;
     bbox.position = Vector2::new(position.x + bbox.half_size.x, position.y - bbox.half_size.y);
     bbox.old_position = bbox.position;

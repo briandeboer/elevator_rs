@@ -63,6 +63,7 @@ fn main() -> amethyst::Result<()> {
         .with(UiFpsSystem::default(), "ui_fps_system", &[])
         .with(Processor::<Tileset>::new(), "tileset_processor", &[])
         .with(Processor::<Map>::new(), "map_processor", &[])
+        .with(PersonFloorSystem, "person_floor_system", &[])
         .with(MapRenderSystem, "map_render_system", &[])
         .with(EnemySpawnSystem, "enemy_spawn_system", &[])
         .with(PlayerControlsSystem, "player_controls_system", &[])
