@@ -35,6 +35,7 @@ impl<'s> System<'s> for CollisionSystem {
                             collidee.set_collidee_details(
                                 name_b.name.to_string(),
                                 name_a.name.to_string(),
+                                entity_b,
                                 collider_a,
                                 collider_b,
                                 velocity_a,

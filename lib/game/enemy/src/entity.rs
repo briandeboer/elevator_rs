@@ -9,6 +9,7 @@ use amethyst::{
 use crate::components::Enemy;
 
 use animation::components::{Animation, AnimationId, AnimationPrefabData};
+use floors::Floor;
 use hierarchy::components::Child;
 use person::components::{Gun, Person};
 use physics::components::{Collidee, Collider, Direction, Directions, Motion, Proximity};
@@ -22,6 +23,8 @@ pub fn spawn_enemy(
     enemy_prefab_handle: Handle<Prefab<AnimationPrefabData>>,
     guns_prefab_handle: Handle<Prefab<AnimationPrefabData>>,
     position: Vector2<f32>,
+    spawn_time: f64,
+    floors_overlapped: Vec<usize>,
 ) {
     let mut transform = Transform::default();
     transform.set_translation_z(ENEMY_Z);
@@ -34,7 +37,7 @@ pub fn spawn_enemy(
 
     let enemy_entity: Entity = entities.create();
     lazy_update.insert(enemy_entity, Named::new("Enemy"));
-    lazy_update.insert(enemy_entity, Enemy::new());
+    lazy_update.insert(enemy_entity, Enemy::new(spawn_time));
     lazy_update.insert(enemy_entity, Person::new());
     lazy_update.insert(enemy_entity, collider);
     lazy_update.insert(enemy_entity, Collidee::default());
@@ -65,6 +68,13 @@ pub fn spawn_enemy(
         ),
     );
     lazy_update.insert(enemy_entity, Proximity::default());
+    lazy_update.insert(
+        enemy_entity,
+        Floor::new(
+            vec![enemy_entity.id() as usize + 10_000],
+            floors_overlapped.clone(),
+        ),
+    );
 
     let mut gun_transform = Transform::default();
     gun_transform.set_translation_xyz(position.x, position.y, ENEMY_Z + 0.2);
@@ -92,6 +102,13 @@ pub fn spawn_enemy(
             Directions::Neutral,
             Directions::Right,
             Directions::Neutral,
+        ),
+    );
+    lazy_update.insert(
+        gun_entity,
+        Floor::new(
+            vec![gun_entity.id() as usize + 10_000],
+            floors_overlapped.clone(),
         ),
     );
 }

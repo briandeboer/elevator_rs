@@ -6,6 +6,7 @@ use amethyst::{
 
 use crate::components::{BulletImpact, Gun, GunState, Person, PersonState};
 use animation::components::{Animation, AnimationId};
+use hierarchy::components::Child;
 
 pub struct BulletImpactAnimationSystem;
 
@@ -59,7 +60,7 @@ impl<'s> System<'s> for GunAnimationSystem {
     fn run(&mut self, data: Self::SystemData) {
         let (entities, guns, mut animations, mut animation_control_sets) = data;
 
-        for (_, gun, mut animation, animation_control_set) in (
+        for (_entity, gun, mut animation, animation_control_set) in (
             &entities,
             &guns,
             &mut animations,
@@ -92,14 +93,15 @@ impl<'s> System<'s> for PersonAnimationSystem {
     type SystemData = (
         Entities<'s>,
         ReadStorage<'s, Person>,
+        ReadStorage<'s, Child>,
         WriteStorage<'s, Animation>,
         WriteStorage<'s, AnimationControlSet<AnimationId, SpriteRender>>,
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (entities, persons, mut animations, mut animation_control_sets) = data;
+        let (entities, persons, children, mut animations, mut animation_control_sets) = data;
 
-        for (_, person, mut animation, animation_control_set) in (
+        for (entity, person, mut animation, animation_control_set) in (
             &entities,
             &persons,
             &mut animations,
@@ -119,13 +121,31 @@ impl<'s> System<'s> for PersonAnimationSystem {
 
             // If the new AnimationId is different to the current one, abort the
             // current animation and start the new one
-            if animation.current != new_animation_id {
-                animation_control_set.abort(animation.current);
-                animation_control_set.start(new_animation_id);
+            if animation.show {
+                if animation.current != new_animation_id {
+                    animation_control_set.abort(animation.current);
+                    animation_control_set.start(new_animation_id);
 
-                animation.current = new_animation_id;
-            } else if new_animation_id == AnimationId::Die {
-                animation.show = false;
+                    animation.current = new_animation_id;
+                    if new_animation_id == AnimationId::Die {
+                        animation.show = false;
+                    }
+                }
+            } else {
+                let die_animation = animation_control_set
+                    .animations
+                    .iter()
+                    .find(|(id, _)| *id == AnimationId::Die);
+
+                if die_animation.is_none() {
+                    // need to get rid of any children
+                    for (child_entity, child) in (&entities, &children).join() {
+                        if child.parent == entity {
+                            let _ = entities.delete(child_entity);
+                        }
+                    }
+                    let _ = entities.delete(entity);
+                }
             }
         }
     }

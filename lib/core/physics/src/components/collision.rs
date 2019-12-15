@@ -1,6 +1,6 @@
 use amethyst::{
     core::math::Vector2,
-    ecs::{Component, DenseVecStorage},
+    ecs::{Component, DenseVecStorage, Entity},
 };
 
 #[derive(Clone)]
@@ -32,6 +32,7 @@ impl GenericBox {
 #[derive(Debug)]
 pub struct CollideeDetails {
     pub name: String,
+    pub collided_with_entity: Entity,
     pub position: Vector2<f32>,
     pub half_size: Vector2<f32>,
     pub correction: f32,
@@ -141,6 +142,7 @@ impl Collidee {
         &mut self,
         name: String,
         collided_with_name: String,
+        collided_with_entity: Entity,
         collider_a: &Collider,
         collider_b: &Collider,
         velocity_a: Vector2<f32>,
@@ -187,6 +189,7 @@ impl Collidee {
             // and both bodies are moving in the same direction
             self.horizontal = Some(CollideeDetails {
                 name,
+                collided_with_entity,
                 position: box_b.position,
                 half_size: box_b.half_size,
                 correction: correction.x,
@@ -201,6 +204,7 @@ impl Collidee {
             // This might have to be changed in future
             self.vertical = Some(CollideeDetails {
                 name,
+                collided_with_entity,
                 position: box_b.position,
                 half_size: box_b.half_size,
                 correction: correction.y,
@@ -217,6 +221,7 @@ impl Collidee {
             };
             self.vertical = Some(CollideeDetails {
                 name,
+                collided_with_entity,
                 position: box_b.position,
                 half_size: box_b.half_size,
                 correction: correction.y,

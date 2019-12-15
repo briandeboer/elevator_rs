@@ -36,7 +36,8 @@ impl<'s> System<'s> for AnimationControlSystem {
                         let end = match animation_id {
                             AnimationId::PersonShoot
                             | AnimationId::Idle
-                            | AnimationId::BulletImpact => EndControl::Stay,
+                            | AnimationId::BulletImpact
+                            | AnimationId::Die => EndControl::Stay,
                             _ => EndControl::Loop(None),
                         };
                         animation_control_set.add_animation(

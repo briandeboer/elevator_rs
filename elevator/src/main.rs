@@ -20,7 +20,9 @@ use animation::{
     components::{AnimationId, AnimationPrefabData},
     systems::AnimationControlSystem,
 };
-use door::systems::{DoorAnimationSystem, DoorEntryCollisionSystem, DoorTransformationSystem};
+use door::systems::{
+    DoorAnimationSystem, DoorEntryCollisionSystem, DoorTransformationSystem, EnemySpawnSystem,
+};
 use elevator::systems::{ElevatorControlSystem, ElevatorTransformationSystem};
 use fps::systems::UiFpsSystem;
 use map::{systems::MapRenderSystem, Map, Tileset};
@@ -62,6 +64,7 @@ fn main() -> amethyst::Result<()> {
         .with(Processor::<Tileset>::new(), "tileset_processor", &[])
         .with(Processor::<Map>::new(), "map_processor", &[])
         .with(MapRenderSystem, "map_render_system", &[])
+        .with(EnemySpawnSystem, "enemy_spawn_system", &[])
         .with(PlayerControlsSystem, "player_controls_system", &[])
         .with(PlayerGunControlsSystem, "player_gun_controls_system", &[])
         .with(ElevatorControlSystem, "elevator_control_system", &[])
