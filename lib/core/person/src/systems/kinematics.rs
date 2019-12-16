@@ -21,13 +21,13 @@ impl<'s> System<'s> for PersonKinematicsSystem {
     );
 
     fn run(&mut self, data: Self::SystemData) {
-        let (mut colliders, dirs, players, mut motions) = data;
+        let (mut colliders, dirs, persons, mut motions) = data;
 
-        for (collider, dir, player, motion) in
-            (&mut colliders, &dirs, &players, &mut motions).join()
+        for (collider, dir, person, motion) in
+            (&mut colliders, &dirs, &persons, &mut motions).join()
         {
             let mut acceleration = Vector2::new(0., 0.);
-            match player.state {
+            match person.state {
                 PersonState::Idling | PersonState::Ducking => {
                     // how much skidding happens
                     let acceleration_x = if motion.velocity.x != 0. && collider.on_ground {
@@ -47,14 +47,14 @@ impl<'s> System<'s> for PersonKinematicsSystem {
                 PersonState::Jumping => {
                     if collider.on_ground {
                         motion.velocity.y = if collider.on_elevator {
-                            // for now this is a bit hacky to make sure the player doesn't overjump
-                            if player.ride_velocity.y > 0. {
-                                player.max_jump_velocity + player.ride_velocity.y + 5.
+                            // for now this is a bit hacky to make sure the person doesn't overjump
+                            if person.ride_velocity.y > 0. {
+                                person.max_jump_velocity + person.ride_velocity.y + 5.
                             } else {
-                                player.max_jump_velocity + player.ride_velocity.y / 2. - 10.
+                                person.max_jump_velocity + person.ride_velocity.y / 2. - 10.
                             }
                         } else {
-                            player.max_jump_velocity
+                            person.max_jump_velocity
                         };
                         collider.on_ground = false;
                     }
@@ -68,25 +68,21 @@ impl<'s> System<'s> for PersonKinematicsSystem {
                 }
                 PersonState::Hopping => {
                     if collider.on_ground {
-                        motion.velocity.y = player.max_jump_velocity / 2.;
+                        motion.velocity.y = person.max_jump_velocity / 2.;
                         collider.on_ground = false;
                     }
                     acceleration = Vector2::new(WALK_ACCELERATION, GRAVITY_AMOUNT);
                 }
-                // PersonState::Dying => {
-                //     if collider.on_ground {
-                //         motion.velocity.x = 0.;
-                //         motion.velocity.y = 8.;
-                //         collider.on_ground = false;
-                //     }
-                //     acceleration = Vector2::new(0., GRAVITY_AMOUNT);
-                // }
+                PersonState::Dying => {
+                    motion.velocity.x = -motion.velocity.x;
+                    acceleration = Vector2::new(0., GRAVITY_AMOUNT);
+                }
                 _ => {}
             }
-            motion.update_velocity(acceleration, dir, 0., player.max_ground_speed);
-            // move faster downward when on the elevator so that he doesn't bounce due to gravity
+            motion.update_velocity(acceleration, dir, 0., person.max_ground_speed);
+            // move faster downward when on the elevator sperson he doesn't bounce due to gravity
             if collider.on_elevator
-                && (player.state == PersonState::Idling || player.state == PersonState::Walking)
+                && (person.state == PersonState::Idling || person.state == PersonState::Walking)
             {
                 motion.velocity.y = -40.;
             }

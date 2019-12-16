@@ -10,6 +10,8 @@ edition = "2018"
 amethyst = { version = "0.13.2", features = ["metal", "nightly", "json"] }
 objc = "=0.2.6"
 serde = "1.0.102"
+array_tool = "1.0.3"
+rand = "0.7.2"
 
 animation = { path = "../../core/animation" }
 asset = { path = "../../core/asset" }

@@ -53,11 +53,11 @@ impl<'s> System<'s> for BulletCollisionSystem {
                     for (person_entity, person) in (&entities, &mut persons).join() {
                         if person_entity == collidee_horizontal.collided_with_entity {
                             person.state = PersonState::Dying;
+                            motion.velocity.x = 0.;
                             break;
                         }
                     }
                 }
-                println!("collidee_horizontal.name: {}", collidee_horizontal.name);
                 show_bullet_impact(
                     &entities,
                     bullet_impact_prefab_handle,

@@ -1020,6 +1020,7 @@ version = "0.1.0"
 dependencies = [
  "amethyst 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "animation 0.1.0",
+ "array_tool 1.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "asset 0.1.0",
  "floors 0.1.0",
  "hierarchy 0.1.0",
@@ -1027,6 +1028,7 @@ dependencies = [
  "person 0.1.0",
  "physics 0.1.0",
  "player 0.1.0",
+ "rand 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.103 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 

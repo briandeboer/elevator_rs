@@ -60,7 +60,6 @@ impl<'s> System<'s> for DoorEntryCollisionSystem {
                         for (door_entity, door) in (&entities, &mut doors).join() {
                             if child.parent == door_entity {
                                 if door.state == DoorState::Closed {
-                                    println!("Opening door...");
                                     door.state = DoorState::Open;
                                     person.state = PersonState::EnteringRoom;
                                 }

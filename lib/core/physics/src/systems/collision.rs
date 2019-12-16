@@ -46,7 +46,6 @@ impl<'s> System<'s> for CollisionSystem {
                                 velocity_b,
                                 use_hit_box,
                             );
-                            // println!("name_a: {}, name_b: {}", name_a.name.to_string(), name_b.name.to_string());
                         }
                     }
                 }

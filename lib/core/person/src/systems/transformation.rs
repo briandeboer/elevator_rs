@@ -7,7 +7,7 @@ use crate::components::{Gun, Person, PersonState};
 use hierarchy::components::Child;
 use physics::components::{Collidee, Collider, Direction, Motion};
 
-const SAFE_PADDING: f32 = 0.01;
+const SAFE_PADDING: f32 = 0.1;
 
 pub struct PersonTransformationSystem;
 

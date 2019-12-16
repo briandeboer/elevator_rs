@@ -26,6 +26,7 @@
 - [x] persons shouldn't collide with persons
 - [x] gun firing needs to move (4. for OFFSET), which causes a collision and falling through floors
 - [x] create a system to calculate what floors a person is on
+- [ ] decide if something is overlapping that it should go on one side or the other
 - [ ] bad guy AI
 - [ ] scoring
 - [ ] don't move elevators unless user is inside (ie. can't control from the top)

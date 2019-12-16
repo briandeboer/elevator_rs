@@ -69,7 +69,7 @@ pub fn load_player(
             Directions::Neutral,
         ))
         .with(Proximity::default())
-        .with(Floor::new(vec![0], vec![30,31]))
+        .with(Floor::new(vec![0], vec![30, 31]))
         .build();
 
     let mut gun_transform = Transform::default();
@@ -95,6 +95,6 @@ pub fn load_player(
             Directions::Right,
             Directions::Neutral,
         ))
-        .with(Floor::new(vec![0], vec![30,31]))
+        .with(Floor::new(vec![0], vec![30, 31]))
         .build();
 }

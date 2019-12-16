@@ -24,6 +24,7 @@ use door::systems::{
     DoorAnimationSystem, DoorEntryCollisionSystem, DoorTransformationSystem, EnemySpawnSystem,
 };
 use elevator::systems::{ElevatorControlSystem, ElevatorTransformationSystem};
+use enemy::systems::EnemyAISystem;
 use fps::systems::UiFpsSystem;
 use map::{systems::MapRenderSystem, Map, Tileset};
 use person::systems::*;
@@ -111,6 +112,7 @@ fn main() -> amethyst::Result<()> {
             "camera_transformation_system",
             &["person_transformation_system"],
         )
+        .with(EnemyAISystem, "enemy_ai_system", &[])
         .with(
             ProximitySystem,
             "proximity_system",
